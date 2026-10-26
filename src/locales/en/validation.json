@@ -1,0 +1,9 @@
+{
+  "identifierRequired": "Enter your phone number or username",
+  "identifierInvalid": "Enter a valid mobile number, for example 050-123-4567",
+  "usernameInvalid": "Usernames have 3–50 letters, numbers, dots, dashes or underscores",
+  "passwordRequired": "Enter your password",
+  "phoneInvalid": "Enter a valid mobile number, for example 50-123-4567",
+  "passwordReused": "You used this password recently. Choose a different one.",
+  "passwordPolicy": "This password doesn't meet the rules. Check the list and try again."
+}

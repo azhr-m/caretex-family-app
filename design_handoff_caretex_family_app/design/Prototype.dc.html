@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
+<script src="./icons.js"></script>
+<style>body{margin:0;background:#E9E5DE}a{color:#2A4FB8}a:hover{color:#1F2A44}button{font:inherit}</style>
+</helmet>
+<div style="min-height:100vh;box-sizing:border-box;padding:32px;display:flex;gap:40px;justify-content:center;align-items:flex-start;flex-wrap:wrap;font-family:'Nunito',system-ui,sans-serif;background:#E9E5DE;color:#1A2233">
+<div style="width:280px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;font-weight:900;letter-spacing:.18em;color:#1F2A44">CARETEX · FAMILY APP</span><span style="font-size:28px;font-weight:900;line-height:1.1">Clickable prototype</span><span style="font-size:14px;color:#5C6474">Tap through the app. Tabs, cards, buttons and back links move between all phases.</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;font-weight:800;letter-spacing:.08em;color:#6B7180">LANGUAGE</span><div style="display:flex;gap:6px"><sc-for list="{{ langs }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.onClick }}" style="flex:1;height:44px;border-radius:12px;border:1px solid {{ o.bd }};background:{{ o.bg }};color:{{ o.fg }};font-weight:800;cursor:pointer">{{ o.label }}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;font-weight:800;letter-spacing:.08em;color:#6B7180">THEME</span><div style="display:flex;gap:6px"><sc-for list="{{ themes }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.onClick }}" style="flex:1;height:44px;border-radius:12px;border:1px solid {{ o.bd }};background:{{ o.bg }};color:{{ o.fg }};font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><lc-icon name="{{ o.icon }}" size="16"></lc-icon><span>{{ o.label }}</span></button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;font-weight:800;letter-spacing:.08em;color:#6B7180">JUMP TO</span>
+<div style="display:flex;flex-direction:column;gap:4px"><sc-for list="{{ jumps }}" as="j" hint-placeholder-count="10"><button onClick="{{ j.onClick }}" style="display:flex;align-items:center;gap:10px;min-height:40px;padding:0 12px;border-radius:10px;border:1px solid {{ j.bd }};background:{{ j.bg }};color:#1A2233;font-size:14px;font-weight:700;cursor:pointer;text-align:start"><lc-icon name="{{ j.icon }}" size="16"></lc-icon><span>{{ j.label }}</span></button></sc-for></div></div>
+<span style="font-size:13px;color:#5C6474">Current screen: <span style="font-family:ui-monospace,Menlo,monospace;font-weight:700">{{ screen }}</span></span>
+<a href="./Phase%201%20-%20Onboarding%20Home%20Resident.dc.html" style="font-size:14px;font-weight:800">Back to the flow boards</a>
+</div>
+<div>
+<sc-if value="{{ isP1 }}"><dc-import name="FamilyScreen" screen="{{ screen }}" lang="{{ lang }}" theme="{{ theme }}" interactive="{{ true }}" on-nav="{{ onNav }}" on-pref="{{ onPref }}" hint-size="410px,864px"></dc-import></sc-if>
+<sc-if value="{{ isP2 }}"><dc-import name="FamilyStaffCal" screen="{{ screen }}" lang="{{ lang }}" theme="{{ theme }}" interactive="{{ true }}" on-nav="{{ onNav }}" hint-size="410px,864px"></dc-import></sc-if>
+<sc-if value="{{ isP3 }}"><dc-import name="FamilyMore" screen="{{ screen }}" lang="{{ lang }}" theme="{{ theme }}" interactive="{{ true }}" on-nav="{{ onNav }}" hint-size="410px,864px"></dc-import></sc-if>
+<sc-if value="{{ isP4 }}"><dc-import name="FamilyAccount" screen="{{ screen }}" lang="{{ lang }}" theme="{{ theme }}" interactive="{{ true }}" on-nav="{{ onNav }}" on-pref="{{ onPref }}" hint-size="410px,864px"></dc-import></sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { screen: 'splash', lang: 'en', theme: 'light', n: 0 };
+  componentDidMount() {
+    try { const v = JSON.parse(localStorage.getItem('caretex-proto') || 'null'); if (v && v.screen) this.setState(v); } catch (e) {}
+  }
+  componentDidUpdate() { try { localStorage.setItem('caretex-proto', JSON.stringify({ screen: this.state.screen, lang: this.state.lang, theme: this.state.theme })); } catch (e) {} }
+  renderVals() {
+    const S = this.state;
+    const P2 = ['inqList', 'inqNoResults', 'inqNew1', 'inqNew2', 'inqSent', 'inqThread', 'inqThreadNew', 'inqReplied', 'inqClosed', 'calMonth', 'calWeek', 'calList', 'calAppt', 'calApptOk', 'calEvent'];
+    const P3 = ['moreMenu', 'docsList', 'docView', 'docSign', 'docSigned', 'docConfirm', 'docConfirmed', 'docApprove', 'docApproved', 'surveyList', 'surveyIntro', 'surveyDraft', 'surveyReview', 'surveyThanks', 'feed', 'newsletter', 'newsletterOk', 'eventInvite', 'rsvp', 'rsvpSaved', 'archive', 'sq1', 'sq2', 'sq3', 'sq3b', 'sq4', 'sq5', 'sq6', 'sq7', 'sq8', 'sq9'];
+    const P4 = ['serviceList', 'serviceNew', 'serviceSent', 'serviceDetail', 'centerInfo', 'centerGuide', 'permissions', 'payments', 'settings', 'logoutSheet', 'notifCenter', 'lockScreen', 'stateSkeleton', 'stateEmpty', 'stateError', 'stateOffline', 'stateChanged', 'stateToast'];
+    const sc = S.screen, inP2 = P2.includes(sc), inP3 = P3.includes(sc), inP4 = P4.includes(sc);
+    const go = k => () => this.setState({ screen: k });
+    const sel = (a) => ({ bd: a ? '#1F2A44' : '#CFC8BB', bg: a ? '#1F2A44' : '#FFFFFF', fg: a ? '#FFFFFF' : '#1A2233' });
+    const J = [['splash', 'power', 'Start (splash)'], ['login', 'log-in', 'Sign in'], ['home', 'house', 'Home'], ['resGeneral', 'user-round', 'Resident'], ['inqList', 'messages-square', 'Contact Staff'], ['calMonth', 'calendar-days', 'Calendar'], ['moreMenu', 'layout-grid', 'More'], ['docsList', 'folder-open', 'Documents'], ['surveyIntro', 'clipboard-list', 'Survey'], ['eventInvite', 'party-popper', 'Event RSVP'], ['notifCenter', 'bell', 'Notifications'], ['settings', 'settings', 'Settings']];
+    return {
+      screen: sc, lang: S.lang, theme: S.theme,
+      isP2: inP2, isP3: inP3, isP4: inP4, isP1: !inP2 && !inP3 && !inP4,
+      onNav: k => this.setState({ screen: k }),
+      onPref: o => this.setState(o),
+      langs: [['en', 'English'], ['he', 'עברית']].map(([k, label]) => ({ label, ...sel(S.lang === k), onClick: () => this.setState({ lang: k }) })),
+      themes: [['light', 'sun', 'Light'], ['dark', 'moon', 'Dark']].map(([k, icon, label]) => ({ icon, label, ...sel(S.theme === k), onClick: () => this.setState({ theme: k }) })),
+      jumps: J.map(([k, icon, label]) => ({ icon, label, bd: sc === k ? '#1F2A44' : '#DDD7CC', bg: sc === k ? '#E9EDF6' : '#FFFFFF', onClick: go(k) })),
+    };
+  }
+}
+</script>
+</body>
+</html>

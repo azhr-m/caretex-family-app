@@ -1,0 +1,72 @@
+{
+  "brand": "CARETEX",
+  "tabs": {
+    "label": "Main navigation",
+    "home": "Home",
+    "resident": "Resident",
+    "staff": "Contact Staff",
+    "calendar": "Calendar",
+    "more": "More"
+  },
+  "header": {
+    "switch": "Switch",
+    "alerts": "Alerts",
+    "notificationsLabel_one": "Notifications, {{count}} unread",
+    "notificationsLabel_other": "Notifications, {{count}} unread",
+    "switchResidentLabel": "Switch resident. Current: {{name}}",
+    "tabBadge_one": "{{count}} new",
+    "tabBadge_other": "{{count}} new"
+  },
+  "actions": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "done": "Done",
+    "edit": "Edit",
+    "exit": "Exit",
+    "show": "Show",
+    "hide": "Hide",
+    "tryAgain": "Try again",
+    "refresh": "Refresh",
+    "selected": "Selected",
+    "more": "More"
+  },
+  "toggle": {
+    "on": "On",
+    "off": "Off",
+    "locked": "Locked"
+  },
+  "status": {
+    "new": "New",
+    "in_progress": "In progress",
+    "needs_action": "Needs action",
+    "waiting_for_you": "Waiting for you",
+    "to_sign": "To sign",
+    "to_confirm": "To confirm",
+    "to_approve": "To approve",
+    "completed": "Completed",
+    "handled": "Handled",
+    "signed": "Signed",
+    "confirmed": "Confirmed",
+    "achieved": "Achieved",
+    "overdue": "Overdue",
+    "blocked": "Blocked",
+    "closed": "Closed",
+    "no_permission": "No permission",
+    "coming_soon": "Coming soon",
+    "not_shared": "Not yet shared",
+    "awaiting_rsvp": "Awaiting RSVP",
+    "draft": "Draft",
+    "read": "Read",
+    "assigned": "Assigned",
+    "waiting_to_send": "Waiting to send"
+  },
+  "field": {
+    "counter": "{{count}} / {{max}}"
+  },
+  "stub": {
+    "comingIn": "Coming in Phase {{phase}}"
+  }
+}

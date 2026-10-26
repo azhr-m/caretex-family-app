@@ -1,0 +1,74 @@
+{
+  "brand": "CARETEX",
+  "tabs": {
+    "label": "ניווט ראשי",
+    "home": "בית",
+    "resident": "הדייר",
+    "staff": "פנייה לצוות",
+    "calendar": "יומן",
+    "more": "עוד"
+  },
+  "header": {
+    "switch": "החלפה",
+    "alerts": "התראות",
+    "notificationsLabel_one": "התראות, {{count}} שלא נקראה",
+    "notificationsLabel_two": "התראות, {{count}} שלא נקראו",
+    "notificationsLabel_other": "התראות, {{count}} שלא נקראו",
+    "switchResidentLabel": "החלפת דייר. נוכחי: {{name}}",
+    "tabBadge_one": "{{count}} חדש",
+    "tabBadge_two": "{{count}} חדשים",
+    "tabBadge_other": "{{count}} חדשים"
+  },
+  "actions": {
+    "back": "חזרה",
+    "cancel": "ביטול",
+    "close": "סגירה",
+    "next": "הבאה",
+    "previous": "הקודמת",
+    "done": "בוצע",
+    "edit": "עריכה",
+    "exit": "יציאה",
+    "show": "הצגה",
+    "hide": "הסתרה",
+    "tryAgain": "ניסיון חוזר",
+    "refresh": "רענון",
+    "selected": "נבחר",
+    "more": "עוד"
+  },
+  "toggle": {
+    "on": "פועל",
+    "off": "כבוי",
+    "locked": "נעול"
+  },
+  "status": {
+    "new": "חדש",
+    "in_progress": "בטיפול",
+    "needs_action": "נדרשת פעולה",
+    "waiting_for_you": "ממתין לכם",
+    "to_sign": "לחתימה",
+    "to_confirm": "לאישור קריאה",
+    "to_approve": "לאישור",
+    "completed": "הושלם",
+    "handled": "טופל",
+    "signed": "נחתם",
+    "confirmed": "אושר",
+    "achieved": "הושג",
+    "overdue": "באיחור",
+    "blocked": "חסום",
+    "closed": "סגור",
+    "no_permission": "אין הרשאה",
+    "coming_soon": "בקרוב",
+    "not_shared": "טרם שותף",
+    "awaiting_rsvp": "ממתין לאישור הגעה",
+    "draft": "טיוטה",
+    "read": "נקרא",
+    "assigned": "שובצה",
+    "waiting_to_send": "ממתין לשליחה"
+  },
+  "field": {
+    "counter": "{{count}} / {{max}}"
+  },
+  "stub": {
+    "comingIn": "יגיע בשלב {{phase}}"
+  }
+}

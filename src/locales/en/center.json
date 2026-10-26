@@ -1,0 +1,16 @@
+{
+  "phone": "Phone",
+  "email": "Email",
+  "address": "Address",
+  "officeHours": "Office hours",
+  "days": {
+    "sun": "Sun",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat"
+  },
+  "hours": "{{days}} {{range}}"
+}

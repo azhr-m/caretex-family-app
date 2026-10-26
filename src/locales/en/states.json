@@ -1,0 +1,52 @@
+{
+  "loading": "Loading the latest from CARETEX…",
+  "slow": "This is taking longer than usual. Check your connection.",
+  "error": {
+    "title": "We couldn't load this",
+    "body": "Something went wrong on our side. Your information is safe.",
+    "contact": "Contact the care center",
+    "requestId": "Request ID <ltr>{{id}}</ltr>"
+  },
+  "sectionError": "Couldn't load this section",
+  "notFound": {
+    "title": "This item is no longer available"
+  },
+  "offlineEmpty": {
+    "title": "You're offline",
+    "body": "Connect to the internet to see this."
+  },
+  "offline": {
+    "title": "No internet connection",
+    "body": "Showing information saved at <ltr>{{time}}</ltr>. New requests will be sent when you're back online."
+  },
+  "backOnline": "You're back online",
+  "changed": {
+    "title": "This information has changed since you opened it",
+    "refresh": "Refresh"
+  },
+  "mutationError": {
+    "title": "We couldn't send your request",
+    "body": "The connection to CARETEX was interrupted. Your text is saved; tap Try again to send it."
+  },
+  "deadline": "The deadline for this passed on {{date}}.",
+  "rateLimited_one": "Too many attempts. Try again in {{count}} minute.",
+  "rateLimited_other": "Too many attempts. Try again in {{count}} minutes.",
+  "stillSending": "Still sending…",
+  "queued": "Will send when you're back online",
+  "permission": {
+    "noPermissionTitle": "No permission",
+    "noPermissionBody": "Permissions are managed by the care center. You can ask the social worker to review them.",
+    "notSharedTitle": "Not yet shared by the care center",
+    "notSharedBody": "You have permission to see this section once it is shared.",
+    "askSocialWorker": "Ask the social worker",
+    "viewMyPermissions": "View my permissions"
+  },
+  "toast": {
+    "saved": "Saved",
+    "sent": "Sent",
+    "signed": "Signed",
+    "allCaughtUp": "All caught up",
+    "prefsUpdated": "Your notification preferences were updated",
+    "allMarkedRead": "All notifications were marked as read"
+  }
+}

@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;family=Rubik:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+<script src="./icons.js"></script>
+<style>button{font:inherit;color:inherit}</style>
+</helmet>
+<div dir="{{ dir }}" style="width:410px;height:864px;padding:10px;box-sizing:border-box;background:#0D1017;border-radius:58px;box-shadow:0 30px 60px -24px rgba(20,25,35,.45)">
+<div style="position:relative;width:390px;height:844px;border-radius:48px;overflow:hidden;background:{{ c.bg }};color:{{ c.text }};font-family:{{ font }};font-size:16px;line-height:1.4">
+
+<div dir="ltr" style="position:absolute;top:0;left:0;right:0;height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 36px;z-index:40;color:{{ sbColor }};font-family:-apple-system,system-ui,sans-serif;font-weight:600;font-size:16px;pointer-events:none">
+<span>09:41</span>
+<div style="position:absolute;left:50%;top:11px;width:122px;height:35px;margin-left:-61px;border-radius:20px;background:#000"></div>
+<div style="display:flex;gap:6px;align-items:center"><lc-icon name="signal" size="17"></lc-icon><lc-icon name="wifi" size="17"></lc-icon><lc-icon name="battery-full" size="22"></lc-icon></div>
+</div>
+
+<div style="position:absolute;top:47px;left:0;right:0;bottom:0;display:flex;flex-direction:column;filter:{{ blur }}">
+
+<sc-if value="{{ isMain }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:center;gap:10px;padding:6px 14px 12px;border-bottom:1px solid {{ c.border }};background:{{ c.bg }}">
+<button onClick="{{ go.pickerSheet }}" style="flex:1;min-width:0;display:flex;align-items:center;gap:10px;padding:6px 10px;border:1px solid {{ c.border }};border-radius:16px;background:{{ c.surface }};cursor:pointer;text-align:start;min-height:56px">
+<div style="width:42px;height:42px;border-radius:50%;background:{{ res.av.bg }};color:{{ res.av.fg }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex-shrink:0">{{ res.initials }}</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ res.name }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ res.place }}</span></div>
+<div style="display:flex;flex-direction:column;align-items:center;color:{{ c.text2 }}"><lc-icon name="chevrons-up-down" size="18"></lc-icon><span style="font-size:11px;font-weight:700">{{ t.switch }}</span></div>
+</button>
+<button onClick="{{ navNotif }}" style="position:relative;width:62px;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid {{ c.border }};border-radius:16px;background:{{ c.surface }};cursor:pointer">
+<div style="position:relative;display:flex"><lc-icon name="bell" size="22"></lc-icon><span style="position:absolute;top:-6px;inset-inline-end:-10px;min-width:19px;height:19px;padding:0 5px;box-sizing:border-box;border-radius:10px;background:{{ c.danger }};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid {{ c.surface }}">5</span></div>
+<span style="font-size:11px;font-weight:700;color:{{ c.text2 }}">{{ t.alerts }}</span>
+</button>
+</div>
+</sc-if>
+
+<div ref="{{ scrollRef }}" style="flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none">
+
+<sc-if value="{{ s.lang }}">
+<div style="min-height:100%;box-sizing:border-box;padding:40px 24px 36px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+<div style="width:76px;height:76px;border-radius:22px;background:{{ c.navy }};color:#fff;display:flex;align-items:center;justify-content:center"><lc-icon name="languages" size="38"></lc-icon></div>
+<div dir="ltr" style="font-size:15px;font-weight:900;letter-spacing:.18em;color:{{ c.text2 }}">CARETEX · FAMILY</div>
+<div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'Nunito',sans-serif;font-size:26px;font-weight:800">Choose your language</span><span dir="rtl" style="font-family:'Rubik',sans-serif;font-size:24px;font-weight:700">בחרו את השפה שלכם</span></div>
+<span style="font-size:15px;color:{{ c.text2 }};max-width:300px">{{ t.langSub }}</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{ langOpts }}" as="o" hint-placeholder-count="2">
+<button onClick="{{ o.onClick }}" style="display:flex;align-items:center;gap:14px;padding:18px;border-radius:18px;border:2px solid {{ o.bd }};background:{{ o.bg }};cursor:pointer;text-align:start;min-height:80px">
+<div style="width:48px;height:48px;border-radius:14px;background:{{ c.surface2 }};display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;font-family:{{ o.font }}">{{ o.code }}</div>
+<div dir="{{ o.dir }}" style="flex:1;display:flex;flex-direction:column;font-family:{{ o.font }};text-align:start"><span style="font-size:20px;font-weight:800">{{ o.label }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ o.sub }}</span></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:2px;color:{{ o.mark }}"><lc-icon name="{{ o.icon }}" size="26"></lc-icon><span style="font-size:11px;font-weight:700">{{ o.state }}</span></div>
+</button>
+</sc-for>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;padding:14px;border-radius:14px;background:{{ c.surface2 }};color:{{ c.text2 }};font-size:14px"><lc-icon name="settings" size="18"></lc-icon><span>{{ t.langLater }}</span></div>
+<div style="flex:1"></div>
+<button onClick="{{ go.login }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><span>{{ t.continue }}</span><lc-icon name="{{ ic.fwd }}" size="20"></lc-icon></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLogin }}">
+<div style="padding:8px 20px 32px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;justify-content:flex-end;gap:8px">
+<button onClick="{{ toggleLang }}" style="display:flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};cursor:pointer;font-size:14px;font-weight:700"><lc-icon name="languages" size="18"></lc-icon><span>{{ t.otherLang }}</span></button>
+<button onClick="{{ toggleTheme }}" style="display:flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};cursor:pointer;font-size:14px;font-weight:700"><lc-icon name="{{ themeIcon }}" size="18"></lc-icon><span>{{ themeLabel }}</span></button>
+</div>
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:52px;height:52px;border-radius:16px;background:{{ c.navy }};color:#fff;display:flex;align-items:center;justify-content:center"><lc-icon name="heart-handshake" size="28"></lc-icon></div>
+<div style="display:flex;flex-direction:column"><span dir="ltr" style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;letter-spacing:.14em;text-align:start">CARETEX</span><span style="font-size:13px;font-weight:700;color:{{ c.text2 }}">{{ t.familyApp }}</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:28px;font-weight:800;line-height:1.2">{{ t.loginTitle }}</span><span style="font-size:16px;color:{{ c.text2 }}">{{ t.loginSub }}</span></div>
+<sc-if value="{{ s.loginError }}">
+<div style="display:flex;gap:12px;padding:14px;border-radius:14px;background:{{ tR.bg }};border:1px solid {{ tR.bd }};color:{{ tR.fg }}"><lc-icon name="circle-alert" size="22"></lc-icon><div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:800;font-size:15px">{{ t.errTitle }}</span><span style="font-size:14px">{{ t.errBody }}</span></div></div>
+</sc-if>
+<div style="display:flex;flex-direction:column;gap:6px">
+<span style="font-size:14px;font-weight:700">{{ t.idLabel }}</span>
+<div style="display:flex;align-items:center;gap:10px;height:54px;padding:0 14px;border-radius:14px;border:1.5px solid {{ fieldBd }};background:{{ c.surface }}"><lc-icon name="smartphone" size="20" style="color:{{ c.text2 }}"></lc-icon><span dir="ltr" style="flex:1;font-size:17px;text-align:start;unicode-bidi:plaintext">050-123-4127</span></div>
+<span style="font-size:13px;color:{{ c.text2 }}">{{ t.idHelp }}</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<span style="font-size:14px;font-weight:700">{{ t.pwLabel }}</span>
+<div style="display:flex;align-items:center;gap:10px;height:54px;padding:0 6px 0 14px;padding-inline:14px 6px;border-radius:14px;border:1.5px solid {{ fieldBd }};background:{{ c.surface }}"><lc-icon name="key-round" size="20" style="color:{{ c.text2 }}"></lc-icon><span dir="ltr" style="flex:1;font-size:17px;letter-spacing:{{ pwSpacing }};unicode-bidi:plaintext;text-align:start">{{ pwText }}</span>
+<button onClick="{{ togglePw }}" style="display:flex;align-items:center;gap:6px;height:42px;padding:0 10px;border:none;border-radius:10px;background:{{ c.surface2 }};cursor:pointer;font-size:13px;font-weight:700;color:{{ c.text2 }}"><lc-icon name="{{ pwIcon }}" size="18"></lc-icon><span>{{ pwToggle }}</span></button></div>
+<sc-if value="{{ s.loginError }}"><span style="display:flex;gap:6px;align-items:center;font-size:13px;color:{{ c.danger }};font-weight:700"><lc-icon name="circle-x" size="15"></lc-icon>{{ t.errField }}</span></sc-if>
+</div>
+<button onClick="{{ go.forgot1 }}" style="align-self:flex-start;display:flex;align-items:center;gap:6px;min-height:44px;padding:0;border:none;background:none;cursor:pointer;color:{{ c.link }};font-size:15px;font-weight:800"><lc-icon name="key-square" size="18"></lc-icon><span>{{ t.forgot }}</span></button>
+<button onClick="{{ loginNext }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="log-in" size="20"></lc-icon><span>{{ t.signIn }}</span></button>
+<div style="display:flex;gap:12px;padding:14px;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }}"><div style="width:40px;height:40px;border-radius:12px;background:{{ tB.bg }};color:{{ tB.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="building-2" size="20"></lc-icon></div><div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:800;font-size:15px">{{ t.acctTitle }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ t.acctBody }} <span dir="ltr" style="unicode-bidi:isolate;font-weight:700;color:{{ c.text }}">03-555-0100</span></span></div></div>
+<div style="display:flex;justify-content:center;align-items:center;gap:6px;font-size:13px;color:{{ c.text2 }}"><lc-icon name="shield-check" size="16"></lc-icon><span>{{ t.secure }}</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasTopBar }}">
+<div style="display:flex;align-items:center;gap:8px;padding:4px 12px 10px;border-bottom:1px solid {{ c.border }}">
+<button onClick="{{ backGo }}" style="display:flex;align-items:center;gap:4px;min-height:44px;min-width:80px;padding:0 8px;border:none;background:none;cursor:pointer;font-size:15px;font-weight:700;color:{{ c.link }}"><lc-icon name="{{ ic.back }}" size="20"></lc-icon><span>{{ t.back }}</span></button>
+<span style="flex:1;text-align:center;font-size:17px;font-weight:800">{{ topTitle }}</span>
+<div style="min-width:80px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasStepper }}">
+<div style="display:flex;align-items:flex-start;padding:18px 20px 4px">
+<sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative">
+<div style="position:absolute;top:15px;inset-inline-start:50%;width:100%;height:2px;background:{{ st.line }};display:{{ st.lineDisp }}"></div>
+<div style="position:relative;width:32px;height:32px;border-radius:50%;background:{{ st.bg }};color:{{ st.fg }};border:2px solid {{ st.bd }};box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800"><lc-icon name="{{ st.icon }}" size="16"></lc-icon></div>
+<span style="font-size:12px;font-weight:{{ st.weight }};color:{{ st.lbl }};text-align:center">{{ st.label }}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.firstPw }}">
+<div style="padding:16px 20px 32px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;flex-direction:column;gap:8px"><div style="width:56px;height:56px;border-radius:16px;background:{{ tV.bg }};color:{{ tV.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="key-round" size="28"></lc-icon></div><span style="font-size:26px;font-weight:800;line-height:1.2">{{ t.fpTitle }}</span><span style="font-size:15px;color:{{ c.text2 }}">{{ t.fpSub }}</span></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:700">{{ t.newPw }}</span><div style="display:flex;align-items:center;gap:10px;height:54px;padding-inline:14px 6px;border-radius:14px;border:2px solid {{ c.primary }};background:{{ c.surface }}"><lc-icon name="lock" size="20" style="color:{{ c.text2 }}"></lc-icon><span dir="ltr" style="flex:1;font-size:17px;unicode-bidi:plaintext;text-align:start">Miriam2026</span><button style="display:flex;align-items:center;gap:6px;height:42px;padding:0 10px;border:none;border-radius:10px;background:{{ c.surface2 }};font-size:13px;font-weight:700;color:{{ c.text2 }}"><lc-icon name="eye-off" size="18"></lc-icon><span>{{ t.hide }}</span></button></div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:700">{{ t.confirmPw }}</span><div style="display:flex;align-items:center;gap:10px;height:54px;padding:0 14px;border-radius:14px;border:1.5px solid {{ c.border }};background:{{ c.surface }}"><lc-icon name="lock" size="20" style="color:{{ c.text2 }}"></lc-icon><span dir="ltr" style="flex:1;font-size:17px;letter-spacing:3px;unicode-bidi:plaintext;text-align:start">••••••</span></div></div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700"><span>{{ t.strength }}</span><span style="color:{{ tA.fg }}">{{ t.medium }}</span></div>
+<div style="display:flex;gap:4px"><div style="flex:1;height:6px;border-radius:3px;background:{{ tA.fg }}"></div><div style="flex:1;height:6px;border-radius:3px;background:{{ tA.fg }}"></div><div style="flex:1;height:6px;border-radius:3px;background:{{ c.border }}"></div><div style="flex:1;height:6px;border-radius:3px;background:{{ c.border }}"></div></div>
+</div>
+<div style="display:flex;flex-direction:column;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }}">
+<div style="padding:12px 14px 4px;font-size:12px;font-weight:800;letter-spacing:.06em;color:{{ c.label }}">{{ t.pwRules }}</div>
+<sc-for list="{{ rulesFp }}" as="r" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;color:{{ r.fg }}"><lc-icon name="{{ r.icon }}" size="20"></lc-icon><span style="flex:1;font-size:15px;color:{{ c.text }}">{{ r.label }}</span><span style="font-size:12px;font-weight:800">{{ r.state }}</span></div>
+</sc-for>
+</div>
+<button onClick="{{ go.picker }}" style="height:56px;border-radius:16px;border:none;background:{{ c.disabled }};color:{{ c.text2 }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="check" size="20"></lc-icon><span>{{ t.saveCont }}</span></button>
+<span style="font-size:13px;color:{{ c.text2 }};text-align:center;margin-top:-8px">{{ t.saveHint }}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.forgot1 }}">
+<div style="padding:20px 20px 32px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:24px;font-weight:800;line-height:1.25">{{ t.f1Title }}</span><span style="font-size:15px;color:{{ c.text2 }}">{{ t.f1Sub }}</span></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:700">{{ t.phone }}</span>
+<div dir="ltr" style="display:flex;gap:8px"><div style="display:flex;align-items:center;gap:6px;height:54px;padding:0 12px;border-radius:14px;border:1.5px solid {{ c.border }};background:{{ c.surface }};font-size:17px;font-weight:700">+972<lc-icon name="chevron-down" size="16"></lc-icon></div><div style="flex:1;display:flex;align-items:center;height:54px;padding:0 14px;border-radius:14px;border:2px solid {{ c.primary }};background:{{ c.surface }};font-size:17px">50-123-4127</div></div>
+<span style="font-size:13px;color:{{ c.text2 }}">{{ t.f1Help }}</span></div>
+<button onClick="{{ go.forgot2 }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="message-square-text" size="20"></lc-icon><span>{{ t.sendCode }}</span></button>
+<div style="display:flex;gap:10px;padding:14px;border-radius:14px;background:{{ c.surface2 }};font-size:14px;color:{{ c.text2 }}"><lc-icon name="info" size="18"></lc-icon><span>{{ t.f1Note }}</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.forgot2 }}">
+<div style="padding:20px 20px 32px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:24px;font-weight:800;line-height:1.25">{{ t.f2Title }}</span><span style="font-size:15px;color:{{ c.text2 }}">{{ t.f2Sub }} <span dir="ltr" style="unicode-bidi:isolate;font-weight:800;color:{{ c.text }}">050-***-4127</span></span></div>
+<div dir="ltr" style="display:flex;gap:8px;justify-content:space-between">
+<sc-for list="{{ otp }}" as="d" hint-placeholder-count="6">
+<div style="width:48px;height:60px;border-radius:14px;border:2px solid {{ d.bd }};background:{{ c.surface }};display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800">{{ d.v }}</div>
+</sc-for>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+<span style="display:flex;align-items:center;gap:6px;font-size:14px;color:{{ c.text2 }}"><lc-icon name="timer" size="18"></lc-icon><span>{{ t.resendIn }} <span dir="ltr" style="font-weight:800;color:{{ c.text }}">00:42</span></span></span>
+<button style="display:flex;align-items:center;gap:6px;min-height:44px;border:none;background:none;font-size:14px;font-weight:800;color:{{ c.disabledText }}"><lc-icon name="rotate-cw" size="16"></lc-icon><span>{{ t.resend }}</span></button>
+</div>
+<button onClick="{{ go.forgot3 }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="shield-check" size="20"></lc-icon><span>{{ t.verify }}</span></button>
+<button onClick="{{ go.forgot1 }}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;border:none;background:none;font-size:15px;font-weight:800;color:{{ c.link }};cursor:pointer"><lc-icon name="pencil" size="16"></lc-icon><span>{{ t.wrongNum }}</span></button>
+<div style="display:flex;gap:10px;padding:14px;border-radius:14px;background:{{ c.surface2 }};font-size:14px;color:{{ c.text2 }}"><lc-icon name="info" size="18"></lc-icon><span>{{ t.f2Note }}</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.forgot3 }}">
+<div style="padding:20px 20px 32px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:24px;font-weight:800;line-height:1.25">{{ t.f3Title }}</span><span style="font-size:15px;color:{{ c.text2 }}">{{ t.f3Sub }}</span></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:700">{{ t.newPw }}</span><div style="display:flex;align-items:center;gap:10px;height:54px;padding-inline:14px 6px;border-radius:14px;border:1.5px solid {{ c.border }};background:{{ c.surface }}"><lc-icon name="lock" size="20" style="color:{{ c.text2 }}"></lc-icon><span dir="ltr" style="flex:1;font-size:17px;letter-spacing:3px;unicode-bidi:plaintext;text-align:start">••••••••••••</span><button style="display:flex;align-items:center;gap:6px;height:42px;padding:0 10px;border:none;border-radius:10px;background:{{ c.surface2 }};font-size:13px;font-weight:700;color:{{ c.text2 }}"><lc-icon name="eye" size="18"></lc-icon><span>{{ t.show }}</span></button></div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:700">{{ t.confirmPw }}</span><div style="display:flex;align-items:center;gap:10px;height:54px;padding:0 14px;border-radius:14px;border:2px solid {{ tG.fg }};background:{{ c.surface }}"><lc-icon name="lock" size="20" style="color:{{ c.text2 }}"></lc-icon><span dir="ltr" style="flex:1;font-size:17px;letter-spacing:3px;unicode-bidi:plaintext;text-align:start">••••••••••••</span><lc-icon name="circle-check" size="20" style="color:{{ tG.fg }}"></lc-icon></div><span style="font-size:13px;color:{{ tG.fg }};font-weight:700">{{ t.match }}</span></div>
+<div style="display:flex;flex-direction:column;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }}">
+<div style="padding:12px 14px 4px;font-size:12px;font-weight:800;letter-spacing:.06em;color:{{ c.label }}">{{ t.pwRules }}</div>
+<sc-for list="{{ rulesOk }}" as="r" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;color:{{ r.fg }}"><lc-icon name="{{ r.icon }}" size="20"></lc-icon><span style="flex:1;font-size:15px;color:{{ c.text }}">{{ r.label }}</span><span style="font-size:12px;font-weight:800">{{ r.state }}</span></div>
+</sc-for>
+</div>
+<button onClick="{{ go.forgot4 }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="save" size="20"></lc-icon><span>{{ t.saveNew }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isResult }}">
+<div style="min-height:100%;box-sizing:border-box;padding:40px 22px 32px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px">
+<div style="width:96px;height:96px;border-radius:28px;background:{{ rs.tone.bg }};color:{{ rs.tone.fg }};border:1px solid {{ rs.tone.bd }};display:flex;align-items:center;justify-content:center"><lc-icon name="{{ rs.icon }}" size="46"></lc-icon></div>
+<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:{{ rs.tone.bg }};color:{{ rs.tone.fg }};border:1px solid {{ rs.tone.bd }};font-size:13px;font-weight:800"><lc-icon name="{{ rs.chipIcon }}" size="15"></lc-icon><span>{{ rs.chip }}</span></span>
+<span style="font-size:26px;font-weight:800;line-height:1.2">{{ rs.title }}</span>
+<span style="font-size:16px;color:{{ c.text2 }}">{{ rs.body }}</span>
+</div>
+<sc-if value="{{ s.locked }}">
+<div style="display:flex;flex-direction:column;gap:10px">
+<span style="font-size:12px;font-weight:800;letter-spacing:.06em;color:{{ c.label }}">{{ t.nextSteps }}</span>
+<sc-for list="{{ lockSteps }}" as="ls" hint-placeholder-count="3">
+<div style="display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }}"><div style="width:40px;height:40px;border-radius:12px;background:{{ c.surface2 }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ ls.icon }}" size="20"></lc-icon></div><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:800">{{ ls.title }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ ls.body }}</span></div></div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ s.blocked }}">
+<div style="display:flex;flex-direction:column;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<div style="display:flex;gap:12px;align-items:center;padding:14px;border-bottom:1px solid {{ c.border }}"><div style="width:44px;height:44px;border-radius:12px;background:{{ c.navy }};color:#fff;display:flex;align-items:center;justify-content:center"><lc-icon name="building-2" size="22"></lc-icon></div><div style="display:flex;flex-direction:column"><span style="font-weight:800">{{ t.centerName }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ t.familyOffice }}</span></div></div>
+<sc-for list="{{ centerRows }}" as="cr" hint-placeholder-count="4">
+<div style="display:flex;gap:12px;align-items:center;padding:12px 14px;min-height:44px"><lc-icon name="{{ cr.icon }}" size="20" style="color:{{ c.text2 }}"></lc-icon><div style="display:flex;flex-direction:column"><span style="font-size:12px;color:{{ c.text2 }};font-weight:700">{{ cr.label }}</span><span dir="{{ cr.dir }}" style="font-size:15px;font-weight:700;unicode-bidi:isolate;text-align:start">{{ cr.value }}</span></div></div>
+</sc-for>
+</div>
+</sc-if>
+<div style="flex:1"></div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<button onClick="{{ rs.go1 }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="{{ rs.b1icon }}" size="20"></lc-icon><span>{{ rs.b1 }}</span></button>
+<sc-if value="{{ rs.hasB2 }}"><button onClick="{{ rs.go2 }}" style="height:56px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="{{ rs.b2icon }}" size="20"></lc-icon><span>{{ rs.b2 }}</span></button></sc-if>
+<sc-if value="{{ rs.hasB3 }}"><button onClick="{{ go.login }}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;border:none;background:none;font-size:15px;font-weight:800;color:{{ c.link }};cursor:pointer"><lc-icon name="{{ ic.back }}" size="18"></lc-icon><span>{{ t.backToSignIn }}</span></button></sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.picker }}">
+<div style="padding:28px 20px 32px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:15px;font-weight:700;color:{{ c.text2 }}">{{ t.hiDana }}</span><span style="font-size:26px;font-weight:800;line-height:1.2">{{ t.pickTitle }}</span><span style="font-size:15px;color:{{ c.text2 }}">{{ t.pickSub }}</span></div>
+<sc-for list="{{ residents }}" as="r" hint-placeholder-count="2">
+<button onClick="{{ r.onPick }}" style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:18px;border:1px solid {{ c.border }};background:{{ c.surface }};cursor:pointer;text-align:start;box-shadow:{{ c.shadow }}">
+<div style="width:60px;height:60px;border-radius:50%;background:{{ r.av.bg }};color:{{ r.av.fg }};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;flex-shrink:0">{{ r.initials }}</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:18px;font-weight:800">{{ r.name }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ r.place }}</span><span style="font-size:13px;color:{{ c.text2 }};display:flex;align-items:center;gap:5px"><lc-icon name="heart" size="14"></lc-icon>{{ r.relation }}</span>
+<span style="align-self:flex-start;display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;background:{{ r.chip.bg }};color:{{ r.chip.fg }};border:1px solid {{ r.chip.bd }};font-size:12px;font-weight:800;margin-top:4px"><lc-icon name="{{ r.chip.icon }}" size="14"></lc-icon>{{ r.chip.label }}</span></div>
+<lc-icon name="{{ ic.chev }}" size="22" style="color:{{ c.text2 }}"></lc-icon>
+</button>
+</sc-for>
+<div style="display:flex;gap:10px;padding:14px;border-radius:14px;background:{{ c.surface2 }};font-size:14px;color:{{ c.text2 }}"><lc-icon name="users" size="18"></lc-icon><span>{{ t.pickNote }}</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ homeContent }}">
+<div style="padding:16px 16px 28px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column"><span style="font-size:24px;font-weight:800">{{ t.goodMorning }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ t.today }}</span></div>
+
+<div style="border-radius:18px;background:{{ c.navy }};color:#fff;padding:16px;display:flex;gap:14px;align-items:center">
+<div style="width:72px;height:72px;border-radius:18px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.14) 0 8px,rgba(255,255,255,.06) 8px 16px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:10px;color:rgba(255,255,255,.75);flex-shrink:0">photo</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:20px;font-weight:800">{{ res.name }}</span><span style="font-size:14px;opacity:.85;display:flex;align-items:center;gap:6px"><lc-icon name="bed-double" size="15"></lc-icon>{{ res.place }}</span><span style="font-size:13px;opacity:.75;display:flex;align-items:center;gap:6px"><lc-icon name="building-2" size="15"></lc-icon>{{ t.centerName }}</span></div>
+<button onClick="{{ go.resGeneral }}" style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:56px;min-height:56px;justify-content:center;border:1px solid rgba(255,255,255,.2);border-radius:14px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer"><lc-icon name="{{ ic.chev }}" size="20"></lc-icon><span style="font-size:11px;font-weight:700">{{ t.profile }}</span></button>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="history" size="16"></lc-icon><span style="flex:1;font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.sinceVisit }}</span><span style="font-size:12px;font-weight:800;color:{{ tB.fg }};background:{{ tB.bg }};padding:2px 8px;border-radius:999px">{{ t.fiveNew }}</span></div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};overflow:hidden">
+<sc-for list="{{ since }}" as="it" hint-placeholder-count="5">
+<button onClick="{{ it.onClick }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:12px 14px;border:none;border-bottom:1px solid {{ c.border }};background:none;cursor:pointer;text-align:start;min-height:64px">
+<div style="width:42px;height:42px;border-radius:12px;background:{{ it.tone.bg }};color:{{ it.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ it.icon }}" size="20"></lc-icon></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:1px;min-width:0"><span style="font-size:12px;font-weight:800;color:{{ it.tone.fg }}">{{ it.kind }}</span><span style="font-size:15px;font-weight:700;line-height:1.3">{{ it.title }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ it.meta }}</span></div>
+<lc-icon name="{{ ic.chev }}" size="20" style="color:{{ c.text2 }}"></lc-icon>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="circle-alert" size="16"></lc-icon><span style="flex:1;font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.attention }}</span><span style="font-size:12px;font-weight:800;color:{{ tV.fg }};background:{{ tV.bg }};padding:2px 8px;border-radius:999px">{{ t.fiveTasks }}</span></div>
+<sc-for list="{{ attention }}" as="a" hint-placeholder-count="5">
+<div style="display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};box-shadow:{{ c.shadow }}">
+<div style="display:flex;gap:12px;align-items:flex-start">
+<div style="width:44px;height:44px;border-radius:12px;background:{{ a.tone.bg }};color:{{ a.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ a.icon }}" size="22"></lc-icon></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:16px;font-weight:800;line-height:1.3">{{ a.title }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ a.sub }}</span></div>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+<span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ a.chip.bg }};color:{{ a.chip.fg }};border:1px solid {{ a.chip.bd }};font-size:12px;font-weight:800"><lc-icon name="{{ a.chip.icon }}" size="14"></lc-icon>{{ a.chip.label }}</span>
+<button onClick="{{ a.onClick }}" style="display:flex;align-items:center;gap:6px;height:44px;padding:0 16px;border-radius:12px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:14px;font-weight:800;cursor:pointer"><lc-icon name="{{ a.ctaIcon }}" size="17"></lc-icon><span>{{ a.cta }}</span></button>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="newspaper" size="16"></lc-icon><span style="flex:1;font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.latestUpdate }}</span></div>
+<button onClick="{{ go.resUpdate }}" style="display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};cursor:pointer;text-align:start">
+<div style="display:flex;gap:10px;align-items:center;width:100%"><div style="width:40px;height:40px;border-radius:50%;background:{{ tT.bg }};color:{{ tT.fg }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px">{{ t.rbInit }}</div><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:800">{{ t.ruth }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ t.headNurse }} · 12.10.2026 10:15</span></div></div>
+<span style="font-size:16px;font-weight:800">{{ t.up1Title }}</span>
+<span style="font-size:15px;color:{{ c.text2 }}">{{ t.up1Short }}</span>
+<div style="width:100%;height:150px;border-radius:14px;background:repeating-linear-gradient(135deg,{{ c.stA }} 0 10px,{{ c.stB }} 10px 20px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:{{ c.text2 }}">photo · music group</div>
+<span style="display:flex;align-items:center;gap:6px;font-size:15px;font-weight:800;color:{{ c.link }}"><span>{{ t.readUpdate }}</span><lc-icon name="{{ ic.chev }}" size="18"></lc-icon></span>
+</button>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="calendar-clock" size="16"></lc-icon><span style="flex:1;font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.upcoming }}</span></div>
+<div style="display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<div style="display:flex;gap:14px">
+<div style="width:62px;border-radius:14px;background:{{ tB.bg }};color:{{ tB.fg }};border:1px solid {{ tB.bd }};display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0;flex-shrink:0"><span style="font-size:12px;font-weight:800">{{ t.friShort }}</span><span style="font-size:24px;font-weight:900;line-height:1.1">16</span><span style="font-size:12px;font-weight:800">{{ t.octShort }}</span></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:16px;font-weight:800">{{ t.drVisit }}</span><span style="font-size:14px;color:{{ c.text2 }};display:flex;gap:6px;align-items:center"><lc-icon name="clock" size="15"></lc-icon>16.10.2026 11:00</span><span style="font-size:14px;color:{{ c.text2 }};display:flex;gap:6px;align-items:center"><lc-icon name="map-pin" size="15"></lc-icon>{{ t.clinic }}</span></div>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+<span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ tB.bg }};color:{{ tB.fg }};border:1px solid {{ tB.bd }};font-size:12px;font-weight:800"><lc-icon name="user-round" size="14"></lc-icon>{{ t.personal }}</span>
+<button onClick="{{ navAppt }}" style="display:flex;align-items:center;gap:6px;height:44px;padding:0 16px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface2 }};font-size:14px;font-weight:800;cursor:pointer"><lc-icon name="calendar-check" size="17"></lc-icon><span>{{ t.confirmAtt }}</span></button>
+</div>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="sun" size="16"></lc-icon><span style="flex:1;font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.resDay }}</span></div>
+<div style="padding:6px 14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<sc-for list="{{ dayShort }}" as="d" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;gap:12px;min-height:48px;opacity:{{ d.op }}">
+<span dir="ltr" style="width:46px;font-size:14px;font-weight:800;text-align:start">{{ d.time }}</span>
+<lc-icon name="{{ d.icon }}" size="18" style="color:{{ d.tone.fg }}"></lc-icon>
+<span style="flex:1;font-size:15px;font-weight:{{ d.weight }}">{{ d.title }}</span>
+<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;background:{{ d.chip.bg }};color:{{ d.chip.fg }};font-size:12px;font-weight:800"><lc-icon name="{{ d.chip.icon }}" size="13"></lc-icon>{{ d.chip.label }}</span>
+</div>
+</sc-for>
+<button onClick="{{ go.resDay }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;border:none;border-top:1px solid {{ c.border }};background:none;font-size:15px;font-weight:800;color:{{ c.link }};cursor:pointer"><span>{{ t.fullDay }}</span><lc-icon name="{{ ic.chev }}" size="18"></lc-icon></button>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="layout-grid" size="16"></lc-icon><span style="flex:1;font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.quick }}</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{ quick }}" as="q" hint-placeholder-count="4">
+<button onClick="{{ q.onClick }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:14px;border-radius:18px;border:1px solid {{ c.border }};background:{{ c.surface }};cursor:pointer;text-align:start;min-height:108px">
+<div style="width:44px;height:44px;border-radius:12px;background:{{ q.tone.bg }};color:{{ q.tone.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="{{ q.icon }}" size="22"></lc-icon></div>
+<div style="display:flex;flex-direction:column"><span style="font-size:15px;font-weight:800">{{ q.label }}</span><span style="font-size:12px;color:{{ c.text2 }}">{{ q.sub }}</span></div>
+</button>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasSegs }}">
+<div style="display:flex;gap:8px;padding:14px 16px 6px;overflow-x:auto;scrollbar-width:none">
+<sc-for list="{{ segs }}" as="g" hint-placeholder-count="5">
+<button onClick="{{ g.onClick }}" style="position:relative;display:flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:22px;border:1px solid {{ g.bd }};background:{{ g.bg }};color:{{ g.fg }};font-size:14px;font-weight:800;white-space:nowrap;cursor:pointer;flex-shrink:0"><lc-icon name="{{ g.icon }}" size="17"></lc-icon><span>{{ g.label }}</span><sc-if value="{{ g.hasBadge }}"><span style="min-width:18px;height:18px;border-radius:9px;background:{{ c.danger }};color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;padding:0 4px;box-sizing:border-box">{{ g.badge }}</span></sc-if></button>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.resGeneral }}">
+<div style="padding:10px 16px 28px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 16px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};text-align:center">
+<div style="width:96px;height:96px;border-radius:50%;background:repeating-linear-gradient(135deg,{{ c.stA }} 0 8px,{{ c.stB }} 8px 16px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:{{ c.text2 }}">photo</div>
+<span style="font-size:22px;font-weight:800">{{ res.name }}</span>
+<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ c.surface2 }};font-size:13px;font-weight:700"><lc-icon name="building" size="14"></lc-icon>{{ res.ward }}</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ c.surface2 }};font-size:13px;font-weight:700"><lc-icon name="bed-double" size="14"></lc-icon>{{ res.room }}</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="id-card" size="16"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.details }}</span></div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};overflow:hidden">
+<sc-for list="{{ details }}" as="dt" hint-placeholder-count="6">
+<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid {{ c.border }};min-height:44px"><lc-icon name="{{ dt.icon }}" size="19" style="color:{{ c.text2 }}"></lc-icon><span style="flex:1;font-size:14px;color:{{ c.text2 }}">{{ dt.label }}</span><span style="font-size:15px;font-weight:700;text-align:end">{{ dt.value }}</span></div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="contact-round" size="16"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.staffContacts }}</span></div>
+<sc-for list="{{ staff }}" as="sf" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<div style="width:44px;height:44px;border-radius:50%;background:{{ sf.tone.bg }};color:{{ sf.tone.fg }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0">{{ sf.init }}</div>
+<div style="flex:1;display:flex;flex-direction:column;min-width:0"><span style="font-size:15px;font-weight:800">{{ sf.name }}</span><span style="font-size:13px;color:{{ c.text2 }};display:flex;gap:5px;align-items:center"><lc-icon name="{{ sf.icon }}" size="14"></lc-icon>{{ sf.role }}</span></div>
+<button style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:64px;min-height:50px;justify-content:center;border:1px solid {{ c.border }};border-radius:12px;background:{{ c.surface2 }};cursor:pointer"><lc-icon name="message-square-plus" size="18"></lc-icon><span style="font-size:11px;font-weight:800">{{ t.inquiry }}</span></button>
+</div>
+</sc-for>
+<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<div style="width:44px;height:44px;border-radius:12px;background:{{ tG.bg }};color:{{ tG.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="phone" size="20"></lc-icon></div>
+<div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:800">{{ t.nurseStation }}</span><span dir="ltr" style="font-size:14px;color:{{ c.text2 }};text-align:start;unicode-bidi:isolate">03-555-0142</span></div>
+<button style="display:flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:12px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:14px;font-weight:800;cursor:pointer"><lc-icon name="phone" size="16"></lc-icon><span>{{ t.call }}</span></button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.resUpdates }}">
+<div style="padding:10px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<span style="font-size:14px;color:{{ c.text2 }}">{{ t.updatesIntro }}</span>
+<sc-for list="{{ updates }}" as="u" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="calendar" size="15"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ u.date }}</span></div>
+<button onClick="{{ go.resUpdate }}" style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};cursor:pointer;text-align:start">
+<div style="display:flex;gap:10px;align-items:center;width:100%"><div style="width:40px;height:40px;border-radius:50%;background:{{ u.tone.bg }};color:{{ u.tone.fg }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0">{{ u.init }}</div><div style="flex:1;display:flex;flex-direction:column;min-width:0"><span style="font-size:15px;font-weight:800">{{ u.author }}</span><span style="font-size:13px;color:{{ c.text2 }};display:flex;gap:5px;align-items:center"><lc-icon name="{{ u.roleIcon }}" size="14"></lc-icon>{{ u.role }} · {{ u.time }}</span></div>
+<sc-if value="{{ u.isNew }}"><span style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;background:{{ tB.bg }};color:{{ tB.fg }};border:1px solid {{ tB.bd }};font-size:12px;font-weight:800"><lc-icon name="sparkles" size="13"></lc-icon>{{ t.new }}</span></sc-if></div>
+<span style="font-size:16px;font-weight:800">{{ u.title }}</span>
+<span style="font-size:15px;color:{{ c.text2 }}">{{ u.body }}</span>
+<sc-if value="{{ u.hasPhotos }}"><div style="display:flex;gap:8px;width:100%"><div style="flex:1;height:110px;border-radius:12px;background:repeating-linear-gradient(135deg,{{ c.stA }} 0 10px,{{ c.stB }} 10px 20px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:{{ c.text2 }}">photo</div><div style="flex:1;height:110px;border-radius:12px;background:repeating-linear-gradient(135deg,{{ c.stA }} 0 10px,{{ c.stB }} 10px 20px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:{{ c.text2 }}">photo +1</div></div></sc-if>
+<span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:{{ c.link }}"><span>{{ t.readUpdate }}</span><lc-icon name="{{ ic.chev }}" size="17"></lc-icon></span>
+</button>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.resUpdate }}">
+<div style="padding:16px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:12px;align-items:center"><div style="width:48px;height:48px;border-radius:50%;background:{{ tT.bg }};color:{{ tT.fg }};display:flex;align-items:center;justify-content:center;font-weight:800">{{ t.rbInit }}</div><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:16px;font-weight:800">{{ t.ruth }}</span><span style="font-size:14px;color:{{ c.text2 }};display:flex;gap:5px;align-items:center"><lc-icon name="stethoscope" size="14"></lc-icon>{{ t.headNurse }}</span></div></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ c.surface2 }};font-size:13px;font-weight:700"><lc-icon name="clock" size="14"></lc-icon>12.10.2026 10:15</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ tT.bg }};color:{{ tT.fg }};font-size:13px;font-weight:800"><lc-icon name="music" size="14"></lc-icon>{{ t.activities }}</span></div>
+<span style="font-size:22px;font-weight:800;line-height:1.25">{{ t.up1Title }}</span>
+<span style="font-size:16px;line-height:1.55">{{ t.up1Full }}</span>
+<div style="display:grid;grid-template-columns:2fr 1fr;grid-template-rows:96px 96px;gap:8px">
+<button onClick="{{ go.resPhoto }}" style="grid-row:span 2;border:none;border-radius:14px;background:repeating-linear-gradient(135deg,{{ c.stA }} 0 10px,{{ c.stB }} 10px 20px);font-family:ui-monospace,Menlo,monospace;font-size:11px;color:{{ c.text2 }};cursor:pointer">photo 1</button>
+<button onClick="{{ go.resPhoto }}" style="border:none;border-radius:14px;background:repeating-linear-gradient(135deg,{{ c.stA }} 0 10px,{{ c.stB }} 10px 20px);font-family:ui-monospace,Menlo,monospace;font-size:11px;color:{{ c.text2 }};cursor:pointer">photo 2</button>
+<button onClick="{{ go.resPhoto }}" style="border:none;border-radius:14px;background:repeating-linear-gradient(135deg,{{ c.stA }} 0 10px,{{ c.stB }} 10px 20px);font-family:ui-monospace,Menlo,monospace;font-size:11px;color:{{ c.text2 }};cursor:pointer">photo 3</button>
+</div>
+<span style="display:flex;align-items:center;gap:6px;font-size:13px;color:{{ c.text2 }};margin-top:-6px"><lc-icon name="maximize-2" size="14"></lc-icon>{{ t.tapPhoto }}</span>
+<div style="display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:14px;background:{{ c.surface2 }};font-size:13px;color:{{ c.text2 }}"><lc-icon name="building-2" size="17"></lc-icon><span>{{ t.sharedOn }} 12.10.2026 10:15</span></div>
+<button style="height:54px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="message-square-plus" size="20"></lc-icon><span>{{ t.askAbout }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.resMedical }}">
+<div style="padding:10px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:10px;padding:14px;border-radius:14px;background:{{ tB.bg }};border:1px solid {{ tB.bd }};color:{{ tB.fg }};font-size:14px"><lc-icon name="info" size="19"></lc-icon><span style="color:{{ c.text }}">{{ t.medIntro }}</span></div>
+<sc-for list="{{ medical }}" as="m" hint-placeholder-count="5">
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};overflow:hidden">
+<div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid {{ c.border }}"><div style="width:36px;height:36px;border-radius:10px;background:{{ m.tone.bg }};color:{{ m.tone.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="{{ m.icon }}" size="19"></lc-icon></div><span style="flex:1;font-size:16px;font-weight:800">{{ m.title }}</span><span style="font-size:13px;color:{{ c.text2 }};font-weight:700">{{ m.count }}</span></div>
+<sc-for list="{{ m.items }}" as="mi" hint-placeholder-count="2">
+<div style="display:flex;flex-direction:column;gap:3px;padding:12px 14px;border-bottom:1px solid {{ c.border }}">
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font-size:15px;font-weight:800">{{ mi.name }}</span><sc-if value="{{ mi.hasFlag }}"><span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;background:{{ tR.bg }};color:{{ tR.fg }};border:1px solid {{ tR.bd }};font-size:12px;font-weight:800"><lc-icon name="triangle-alert" size="13"></lc-icon>{{ mi.flag }}</span></sc-if></div>
+<span style="font-size:14px;color:{{ c.text2 }}">{{ mi.detail }}</span>
+<span style="font-size:12px;color:{{ c.label }};display:flex;gap:5px;align-items:center"><lc-icon name="building-2" size="13"></lc-icon>{{ t.sharedOn }} {{ mi.shared }}</span>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.resCare }}">
+<div style="padding:10px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;flex-direction:column;gap:8px;padding:16px;border-radius:18px;background:{{ c.navy }};color:#fff">
+<span style="font-size:18px;font-weight:800">{{ t.carePlanTitle }}</span>
+<span style="font-size:14px;opacity:.85">{{ t.carePlanSub }}</span>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.12);font-size:12px;font-weight:700"><lc-icon name="calendar-check" size="14"></lc-icon>{{ t.reviewed }} 01.09.2026</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.12);font-size:12px;font-weight:700"><lc-icon name="calendar-clock" size="14"></lc-icon>{{ t.nextReview }} 01.12.2026</span></div>
+</div>
+<sc-for list="{{ goals }}" as="gl" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:44px;height:44px;border-radius:12px;background:{{ gl.tone.bg }};color:{{ gl.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ gl.icon }}" size="22"></lc-icon></div><div style="flex:1;display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:800;color:{{ c.label }};letter-spacing:.04em">{{ t.goal }}</span><span style="font-size:16px;font-weight:800;line-height:1.3">{{ gl.title }}</span><span style="align-self:flex-start;display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;background:{{ gl.chip.bg }};color:{{ gl.chip.fg }};border:1px solid {{ gl.chip.bd }};font-size:12px;font-weight:800"><lc-icon name="{{ gl.chip.icon }}" size="13"></lc-icon>{{ gl.chip.label }}</span></div></div>
+<div style="display:flex;gap:10px;font-size:14px"><lc-icon name="users" size="18" style="color:{{ c.text2 }}"></lc-icon><div style="display:flex;flex-direction:column"><span style="font-weight:800">{{ t.teamDoes }}</span><span style="color:{{ c.text2 }}">{{ gl.team }}</span></div></div>
+<div style="display:flex;gap:10px;font-size:14px;padding:10px 12px;border-radius:12px;background:{{ tP.bg }}"><lc-icon name="hand-heart" size="18" style="color:{{ tP.fg }}"></lc-icon><div style="display:flex;flex-direction:column"><span style="font-weight:800;color:{{ tP.fg }}">{{ t.youCan }}</span><span>{{ gl.family }}</span></div></div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.resDay }}">
+<div style="padding:10px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:8px">
+<button style="display:flex;align-items:center;gap:4px;height:44px;padding:0 10px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:13px;font-weight:800;cursor:pointer"><lc-icon name="{{ ic.back2 }}" size="18"></lc-icon><span>{{ t.prevDay }}</span></button>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center"><span style="font-size:16px;font-weight:800">{{ t.todayWord }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ t.wed }} 14.10.2026</span></div>
+<button style="display:flex;align-items:center;gap:4px;height:44px;padding:0 10px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:13px;font-weight:800;cursor:pointer;color:{{ c.disabledText }}"><span>{{ t.nextDay }}</span><lc-icon name="{{ ic.chev }}" size="18"></lc-icon></button>
+</div>
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{ dayFull }}" as="d" hint-placeholder-count="8">
+<div style="display:flex;gap:10px;align-items:stretch">
+<span dir="ltr" style="width:46px;padding-top:14px;font-size:14px;font-weight:800;text-align:start;color:{{ d.timeColor }}">{{ d.time }}</span>
+<div style="width:20px;display:flex;flex-direction:column;align-items:center"><div style="width:2px;height:16px;background:{{ d.lineTop }}"></div><div style="width:14px;height:14px;border-radius:50%;background:{{ d.dot }};border:3px solid {{ d.ring }};box-sizing:border-box;flex-shrink:0"></div><div style="width:2px;flex:1;background:{{ d.lineBot }}"></div></div>
+<div style="flex:1;margin:4px 0;display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:14px;background:{{ c.surface }};border:{{ d.cardBd }};min-height:44px">
+<div style="width:36px;height:36px;border-radius:10px;background:{{ d.tone.bg }};color:{{ d.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ d.icon }}" size="18"></lc-icon></div>
+<div style="flex:1;display:flex;flex-direction:column;min-width:0"><span style="font-size:15px;font-weight:800">{{ d.title }}</span><span style="font-size:12px;color:{{ c.text2 }}">{{ d.place }}</span></div>
+<span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;background:{{ d.chip.bg }};color:{{ d.chip.fg }};border:1px solid {{ d.chip.bd }};font-size:11px;font-weight:800;white-space:nowrap"><lc-icon name="{{ d.chip.icon }}" size="12"></lc-icon>{{ d.chip.label }}</span>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;gap:10px;padding:14px;border-radius:14px;background:{{ c.surface2 }};font-size:13px;color:{{ c.text2 }}"><lc-icon name="info" size="17"></lc-icon><span>{{ t.dayNote }}</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPermState }}">
+<div style="padding:28px 22px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px">
+<div style="width:96px;height:96px;border-radius:28px;background:{{ ps.tone.bg }};color:{{ ps.tone.fg }};border:1px solid {{ ps.tone.bd }};display:flex;align-items:center;justify-content:center"><lc-icon name="{{ ps.icon }}" size="44"></lc-icon></div>
+<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:{{ ps.tone.bg }};color:{{ ps.tone.fg }};border:1px solid {{ ps.tone.bd }};font-size:13px;font-weight:800"><lc-icon name="{{ ps.chipIcon }}" size="14"></lc-icon>{{ ps.chip }}</span>
+<span style="font-size:22px;font-weight:800;line-height:1.25">{{ ps.title }}</span>
+<span style="font-size:15px;color:{{ c.text2 }}">{{ ps.body }}</span>
+<div style="width:100%;display:flex;gap:10px;padding:14px;border-radius:14px;background:{{ c.surface2 }};font-size:14px;color:{{ c.text2 }};text-align:start"><lc-icon name="building-2" size="18"></lc-icon><span>{{ ps.note }}</span></div>
+<div style="width:100%;display:flex;flex-direction:column;gap:10px;margin-top:6px">
+<button style="height:54px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="{{ ps.b1icon }}" size="20"></lc-icon><span>{{ ps.b1 }}</span></button>
+<button style="height:54px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="{{ ps.b2icon }}" size="20"></lc-icon><span>{{ ps.b2 }}</span></button>
+</div>
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ isMain }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;padding:6px 4px 26px;border-top:1px solid {{ c.border }};background:{{ c.surface }}">
+<sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="5">
+<button onClick="{{ tb.onClick }}" style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:54px;padding:4px 0;background:none;border:none;color:{{ tb.color }};cursor:pointer">
+<div style="position:relative;display:flex;align-items:center;justify-content:center;width:52px;height:30px;border-radius:15px;background:{{ tb.pill }}"><lc-icon name="{{ tb.icon }}" size="22"></lc-icon><sc-if value="{{ tb.hasBadge }}"><span style="position:absolute;top:-4px;inset-inline-end:2px;min-width:18px;height:18px;padding:0 4px;box-sizing:border-box;border-radius:9px;background:{{ c.danger }};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid {{ c.surface }}">{{ tb.badge }}</span></sc-if></div>
+<span style="font-size:12px;font-weight:{{ tb.weight }};white-space:nowrap">{{ tb.label }}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
+<sc-if value="{{ s.splash }}">
+<button onClick="{{ go.lang }}" style="position:absolute;inset:0;z-index:20;border:none;background:{{ c.splash }};color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;cursor:pointer">
+<div style="width:104px;height:104px;border-radius:30px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center"><lc-icon name="heart-handshake" size="54" stroke="1.75"></lc-icon></div>
+<span dir="ltr" style="font-family:'Nunito',sans-serif;font-size:38px;font-weight:900;letter-spacing:.18em;margin-inline-start:.18em">CARETEX</span>
+<span style="padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.12);font-size:14px;font-weight:800;letter-spacing:.04em">{{ t.familyApp }}</span>
+<span style="font-size:15px;opacity:.8;max-width:260px;text-align:center">{{ t.splashTag }}</span>
+<div style="position:absolute;bottom:64px;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:.8"><div style="display:flex;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:#fff"></div><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5)"></div><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25)"></div></div><span style="font-size:13px;display:flex;gap:6px;align-items:center"><lc-icon name="shield-check" size="15"></lc-icon>{{ t.connecting }}</span></div>
+</button>
+</sc-if>
+
+<sc-if value="{{ hasSheet }}">
+<div style="position:absolute;inset:0;z-index:25;background:rgba(10,14,22,.45);display:flex;flex-direction:column;justify-content:flex-end">
+<div style="background:{{ c.bg }};border-radius:28px 28px 0 0;padding:10px 20px 34px;display:flex;flex-direction:column;gap:16px">
+<div style="align-self:center;width:44px;height:5px;border-radius:3px;background:{{ c.border }}"></div>
+<sc-if value="{{ s.session }}">
+<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px">
+<div style="width:64px;height:64px;border-radius:20px;background:{{ tV.bg }};color:{{ tV.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="lock-keyhole" size="30"></lc-icon></div>
+<span style="font-size:22px;font-weight:800">{{ t.sessTitle }}</span><span style="font-size:15px;color:{{ c.text2 }}">{{ t.sessSub }}</span>
+</div>
+<div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:{{ c.surface }};border:1px solid {{ c.border }}"><div style="width:40px;height:40px;border-radius:50%;background:{{ tP.bg }};color:{{ tP.fg }};display:flex;align-items:center;justify-content:center;font-weight:800">{{ t.dcInit }}</div><div style="display:flex;flex-direction:column"><span style="font-weight:800">{{ t.dana }}</span><span dir="ltr" style="font-size:13px;color:{{ c.text2 }};text-align:start;unicode-bidi:isolate">050-123-4127</span></div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:700">{{ t.pwLabel }}</span><div style="display:flex;align-items:center;gap:10px;height:54px;padding-inline:14px 6px;border-radius:14px;border:2px solid {{ c.primary }};background:{{ c.surface }}"><lc-icon name="key-round" size="20" style="color:{{ c.text2 }}"></lc-icon><span dir="ltr" style="flex:1;font-size:17px;letter-spacing:3px;unicode-bidi:plaintext;text-align:start">•••••</span><button style="display:flex;align-items:center;gap:6px;height:42px;padding:0 10px;border:none;border-radius:10px;background:{{ c.surface2 }};font-size:13px;font-weight:700;color:{{ c.text2 }}"><lc-icon name="eye" size="18"></lc-icon><span>{{ t.show }}</span></button></div></div>
+<button onClick="{{ go.home }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="lock-open" size="20"></lc-icon><span>{{ t.continue }}</span></button>
+<button onClick="{{ go.login }}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;border:none;background:none;font-size:15px;font-weight:800;color:{{ c.danger }};cursor:pointer"><lc-icon name="log-out" size="18"></lc-icon><span>{{ t.notYou }}</span></button>
+</sc-if>
+<sc-if value="{{ s.pickerSheet }}">
+<div style="display:flex;align-items:center;gap:10px"><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:20px;font-weight:800">{{ t.switchRes }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ t.switchSub }}</span></div><button onClick="{{ go.home }}" style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:56px;min-height:52px;justify-content:center;border:1px solid {{ c.border }};border-radius:14px;background:{{ c.surface }};cursor:pointer"><lc-icon name="x" size="20"></lc-icon><span style="font-size:11px;font-weight:800">{{ t.close }}</span></button></div>
+<sc-for list="{{ residents }}" as="r" hint-placeholder-count="2">
+<button onClick="{{ r.onPick }}" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;border:2px solid {{ r.selBd }};background:{{ c.surface }};cursor:pointer;text-align:start">
+<div style="width:52px;height:52px;border-radius:50%;background:{{ r.av.bg }};color:{{ r.av.fg }};display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0">{{ r.initials }}</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:17px;font-weight:800">{{ r.name }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ r.place }}</span></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:2px;color:{{ r.selFg }}"><lc-icon name="{{ r.selIcon }}" size="22"></lc-icon><span style="font-size:11px;font-weight:800">{{ r.selLabel }}</span></div>
+</button>
+</sc-for>
+<div style="display:flex;gap:10px;font-size:13px;color:{{ c.text2 }}"><lc-icon name="info" size="16"></lc-icon><span>{{ t.pickNote }}</span></div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.resPhoto }}">
+<div style="position:absolute;inset:0;z-index:20;background:#05070B;color:#fff;display:flex;flex-direction:column;padding-top:47px">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 14px">
+<button onClick="{{ go.resUpdate }}" style="display:flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:22px;border:none;background:rgba(255,255,255,.12);color:#fff;font-size:15px;font-weight:800;cursor:pointer"><lc-icon name="x" size="20"></lc-icon><span>{{ t.close }}</span></button>
+<span dir="ltr" style="font-size:15px;font-weight:800;opacity:.9">1 / 3</span>
+<button style="display:flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:22px;border:none;background:rgba(255,255,255,.12);color:#fff;font-size:15px;font-weight:800;cursor:pointer"><lc-icon name="download" size="18"></lc-icon><span>{{ t.save }}</span></button>
+</div>
+<div style="flex:1;margin:16px 0;background:repeating-linear-gradient(135deg,#1A1F29 0 12px,#141821 12px 24px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:#8A93A3">full-screen photo · music group</div>
+<div style="padding:0 20px 14px;display:flex;flex-direction:column;gap:4px"><span style="font-size:16px;font-weight:700">{{ t.photoCap }}</span><span style="font-size:13px;opacity:.7">{{ t.ruth }} · 12.10.2026 10:15</span></div>
+<div style="display:flex;gap:10px;padding:6px 20px 34px">
+<button style="flex:1;height:52px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:none;color:rgba(255,255,255,.4);font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px"><lc-icon name="{{ ic.back2 }}" size="20"></lc-icon><span>{{ t.prev }}</span></button>
+<button style="flex:1;height:52px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.1);color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><span>{{ t.next }}</span><lc-icon name="{{ ic.chev }}" size="20"></lc-icon></button>
+</div>
+</div>
+</sc-if>
+
+<div style="position:absolute;bottom:8px;left:50%;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:{{ homeBar }};z-index:45;pointer-events:none"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:410,&quot;height&quot;:864},&quot;screen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;splash&quot;,&quot;lang&quot;,&quot;login&quot;,&quot;loginError&quot;,&quot;firstPw&quot;,&quot;forgot1&quot;,&quot;forgot2&quot;,&quot;forgot3&quot;,&quot;forgot4&quot;,&quot;locked&quot;,&quot;blocked&quot;,&quot;session&quot;,&quot;picker&quot;,&quot;home&quot;,&quot;pickerSheet&quot;,&quot;resGeneral&quot;,&quot;resUpdates&quot;,&quot;resUpdate&quot;,&quot;resPhoto&quot;,&quot;resMedical&quot;,&quot;resCare&quot;,&quot;resDay&quot;,&quot;resNoPerm&quot;,&quot;resNotShared&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;he&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;interactive&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;scroll&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  state = { cur: null, lang: null, theme: null, showPw: false, res: null };
+  scrollRef = React.createRef();
+  componentDidMount() { this.applyScroll(); setTimeout(() => this.applyScroll(), 900); }
+  componentDidUpdate(pp, ps) {
+    if (pp.screen !== this.props.screen && this.state.cur) { this.setState({ cur: null }); return; }
+    const el = this.scrollRef.current;
+    if (ps.cur !== this.state.cur && el) el.scrollTop = 0;
+    else if (pp.scroll !== this.props.scroll) this.applyScroll();
+  }
+  applyScroll() { const el = this.scrollRef.current; if (el && !this.state.cur) el.scrollTop = this.props.scroll || 0; }
+  renderVals() {
+    const P = this.props, S = this.state, I = !!P.interactive;
+    const lang = S.lang || P.lang || 'en', theme = S.theme || P.theme || 'light';
+    const he = lang === 'he', dark = theme === 'dark';
+    const L = (e, h) => he ? h : e;
+    let scr = S.cur || P.screen || 'home';
+    const resId = S.res || ((scr === 'resNoPerm' || scr === 'resNotShared') ? 'avraham' : 'miriam');
+    if (resId === 'avraham' && scr === 'resMedical') scr = 'resNotShared';
+    if (resId === 'avraham' && scr === 'resCare') scr = 'resNoPerm';
+
+    const c = dark ? {
+      bg: '#10141C', surface: '#1A202B', surface2: '#242B38', border: '#2D3544', text: '#ECEEF2', text2: '#A9B0BC', label: '#929AA8',
+      navy: '#26314D', splash: '#141B2B', primary: '#B9C7F2', onPrimary: '#10141C', link: '#9DB4FF', danger: '#FF6B71',
+      tabActive: '#E4E9F7', tabIdle: '#8E95A3', pill: '#2B3550', disabled: '#262D3A', disabledText: '#6B7383',
+      stA: '#232A36', stB: '#1D232E', shadow: 'none'
+    } : {
+      bg: '#FCF8F1', surface: '#FFFFFF', surface2: '#F4EFE6', border: '#E6E1D7', text: '#1A2233', text2: '#5C6474', label: '#6B7180',
+      navy: '#1F2A44', splash: '#1F2A44', primary: '#1F2A44', onPrimary: '#FFFFFF', link: '#2A4FB8', danger: '#D63A40',
+      tabActive: '#1F2A44', tabIdle: '#737985', pill: '#E9EDF6', disabled: '#ECE8E0', disabledText: '#A3A8B2',
+      stA: '#EFEAE1', stB: '#F7F3EC', shadow: '0 1px 2px rgba(26,34,51,.05)'
+    };
+    const TONES = {
+      blue: [['#1F5FD1', '#EAF1FE', '#C5D8FB'], ['#8DB4FF', '#1A2742', '#2C4370']],
+      amber: [['#935800', '#FFF4E0', '#F3D296'], ['#F5C46B', '#33280F', '#5A4518']],
+      violet: [['#6B3FC9', '#F2ECFE', '#D9CBFA'], ['#C3A8FF', '#2A2142', '#45366B']],
+      green: [['#157347', '#E7F6EE', '#BCE5CF'], ['#6FD6A0', '#15291F', '#24503A']],
+      red: [['#C42B32', '#FDECEC', '#F6C3C5'], ['#FF8E92', '#3A1A1C', '#64292D']],
+      slate: [['#4B5563', '#F0F1F4', '#D6D9E0'], ['#B4BAC6', '#252A33', '#3B424F']],
+      teal: [['#0F766E', '#E3F5F2', '#B5E3DB'], ['#5ED3C2', '#11302C', '#1F514A']],
+      pink: [['#B8195A', '#FDEBF2', '#F6C4D7'], ['#FF8FB8', '#3A1926', '#62293F']],
+    };
+    const tn = k => { const [fg, bg, bd] = TONES[k][dark ? 1 : 0]; return { fg, bg, bd }; };
+    const ST = {
+      new: ['blue', 'sparkles', L('New', 'חדש')], progress: ['amber', 'loader', L('In progress', 'בטיפול')],
+      action: ['violet', 'circle-alert', L('Needs action', 'נדרשת פעולה')], done: ['green', 'circle-check', L('Completed', 'הושלם')],
+      overdue: ['red', 'clock-alert', L('Overdue', 'באיחור')], blocked: ['slate', 'ban', L('Blocked', 'חסום')]
+    };
+    const chip = (k, label, icon) => { const d = ST[k] || [k]; return { ...tn(d[0]), icon: icon || d[1], label: label || d[2] }; };
+
+    const KEYS = ['splash', 'lang', 'login', 'loginError', 'firstPw', 'forgot1', 'forgot2', 'forgot3', 'forgot4', 'locked', 'blocked', 'session', 'picker', 'home', 'pickerSheet', 'resGeneral', 'resUpdates', 'resUpdate', 'resPhoto', 'resMedical', 'resCare', 'resDay', 'resNoPerm', 'resNotShared'];
+    const go = {}, s = {};
+    KEYS.forEach(k => { go[k] = I ? () => this.setState({ cur: k }) : undefined; s[k] = scr === k; });
+    const nav = k => I && P.onNav ? () => P.onNav(k) : undefined;
+    const pref = o => { if (P.onPref) P.onPref(o); this.setState(o); };
+    const resTab = ['resGeneral', 'resUpdates', 'resMedical', 'resCare', 'resDay', 'resNoPerm', 'resNotShared'].includes(scr);
+    const homeContent = s.home || s.session || s.pickerSheet;
+    const isMain = homeContent || resTab;
+    const ic = { chev: he ? 'chevron-left' : 'chevron-right', back: he ? 'arrow-right' : 'arrow-left', back2: he ? 'chevron-right' : 'chevron-left', fwd: he ? 'arrow-left' : 'arrow-right' };
+
+    const t = {
+      switch: L('Switch', 'החלפה'), alerts: L('Alerts', 'התראות'), continue: L('Continue', 'המשך'), back: L('Back', 'חזרה'),
+      langSub: L('Select the language for the app. The whole layout will follow your choice.', 'בחרו את שפת האפליקציה. כל המסכים יותאמו לבחירה שלכם.'),
+      langLater: L('You can change the language at any time in More → Settings → Language.', 'אפשר לשנות את השפה בכל עת דרך עוד ← הגדרות ← שפה.'),
+      otherLang: L('עברית', 'English'), familyApp: L('Family App', 'אפליקציית משפחה'),
+      loginTitle: L('Sign in to stay connected', 'התחברו כדי להישאר מעודכנים'),
+      loginSub: L('See updates, documents and messages about your loved one from the care center.', 'עדכונים, מסמכים והודעות על יקירכם, ישירות מהמרכז הסיעודי.'),
+      errTitle: L("We couldn't sign you in", 'לא הצלחנו להתחבר'),
+      errBody: L('The phone number or password is incorrect. You have 2 attempts left before your account is temporarily locked.', 'מספר הטלפון או הסיסמה שגויים. נותרו 2 ניסיונות לפני שהחשבון יינעל זמנית.'),
+      errField: L('Check your password and try again', 'בדקו את הסיסמה ונסו שוב'),
+      idLabel: L('Phone number or username', 'מספר טלפון או שם משתמש'),
+      idHelp: L('Use the phone number the care center registered for you.', 'השתמשו במספר הטלפון שהמרכז הסיעודי רשם עבורכם.'),
+      pwLabel: L('Password', 'סיסמה'), show: L('Show', 'הצגה'), hide: L('Hide', 'הסתרה'),
+      forgot: L('Forgot password?', 'שכחתי סיסמה'), signIn: L('Sign in', 'כניסה'),
+      acctTitle: L('Your account is created by the care center', 'החשבון נפתח על ידי המרכז הסיעודי'),
+      acctBody: L("You can't register on your own. If you don't have login details, contact the social worker at", 'אין אפשרות להירשם באופן עצמאי. אם אין לכם פרטי כניסה, פנו לעובדת הסוציאלית בטלפון'),
+      secure: L('Secure, encrypted connection to CARETEX', 'חיבור מאובטח ומוצפן ל-CARETEX'),
+      fpTitle: L('Create your personal password', 'צרו סיסמה אישית'),
+      fpSub: L('You signed in with a temporary password from the care center. For your security, choose a personal password before you continue.', 'נכנסתם עם סיסמה זמנית מהמרכז הסיעודי. לביטחונכם, בחרו סיסמה אישית לפני שתמשיכו.'),
+      newPw: L('New password', 'סיסמה חדשה'), confirmPw: L('Confirm new password', 'אימות הסיסמה החדשה'),
+      strength: L('Password strength', 'חוזק הסיסמה'), medium: L('Medium', 'בינונית'), pwRules: L('PASSWORD RULES', 'כללי סיסמה'),
+      saveCont: L('Save and continue', 'שמירה והמשך'), saveHint: L('Meet all the rules to continue', 'יש לעמוד בכל הכללים כדי להמשיך'),
+      f1Title: L('Enter your registered phone number', 'הזינו את מספר הטלפון הרשום'),
+      f1Sub: L("We'll send a 6-digit code by SMS to the phone number the care center registered for you.", 'נשלח קוד בן 6 ספרות ב-SMS למספר הטלפון שהמרכז הסיעודי רשם עבורכם.'),
+      phone: L('Phone number', 'מספר טלפון'), f1Help: L('Mobile number without the leading 0', 'מספר נייד ללא הספרה 0 בהתחלה'),
+      sendCode: L('Send code', 'שליחת קוד'),
+      f1Note: L('No longer using this number? Contact the care center to update your details.', 'המספר כבר לא בשימוש? פנו למרכז הסיעודי לעדכון הפרטים.'),
+      f2Title: L('Enter the 6-digit code', 'הזינו את הקוד בן 6 הספרות'), f2Sub: L('We sent a code by SMS to', 'שלחנו קוד ב-SMS למספר'),
+      resendIn: L('Resend code in', 'שליחה חוזרת בעוד'), resend: L('Resend code', 'שליחה חוזרת'), verify: L('Verify code', 'אימות הקוד'),
+      wrongNum: L('Wrong number? Change it', 'מספר שגוי? שינוי המספר'),
+      f2Note: L('The code is valid for 10 minutes. Never share it with anyone, including care center staff.', 'הקוד תקף ל-10 דקות. אין למסור אותו לאף אחד, גם לא לצוות המרכז.'),
+      f3Title: L('Set a new password', 'הגדרת סיסמה חדשה'), f3Sub: L('Choose a password you have not used before in this app.', 'בחרו סיסמה שלא השתמשתם בה בעבר באפליקציה.'),
+      match: L('Passwords match', 'הסיסמאות תואמות'), saveNew: L('Save new password', 'שמירת הסיסמה החדשה'),
+      nextSteps: L('WHAT YOU CAN DO NOW', 'מה אפשר לעשות עכשיו'), backToSignIn: L('Back to sign in', 'חזרה למסך הכניסה'),
+      centerName: L('Beit Hadar Care Center', 'מרכז סיעודי בית הדר'), familyOffice: L('Family relations office', 'מחלקת קשרי משפחות'),
+      hiDana: L('Hello, Dana', 'שלום, דנה'), pickTitle: L('Who would you like to view?', 'את מי תרצו לראות?'),
+      pickSub: L('Your account is linked to 2 residents at Beit Hadar. Choose one to see their updates.', 'החשבון שלכם מקושר ל-2 דיירים בבית הדר. בחרו דייר כדי לראות את העדכונים שלו.'),
+      pickNote: L('You can switch at any time from the top of the screen. Linked residents are managed by the care center.', 'אפשר להחליף בכל עת מראש המסך. הקישור לדיירים מנוהל על ידי המרכז הסיעודי.'),
+      goodMorning: L('Good morning, Dana', 'בוקר טוב, דנה'), today: L('Wednesday, 14.10.2026', 'יום רביעי, 14.10.2026'),
+      profile: L('Profile', 'פרופיל'), sinceVisit: L('SINCE YOUR LAST VISIT · 08.10.2026', 'מאז הביקור האחרון · 08.10.2026'), fiveNew: L('5 new', '5 חדשים'),
+      attention: L('NEEDS YOUR ATTENTION', 'דורש את תשומת לבכם'), fiveTasks: L('5 to do', '5 לביצוע'),
+      latestUpdate: L('LATEST UPDATE', 'העדכון האחרון'), upcoming: L('UPCOMING APPOINTMENT', 'התור הקרוב'),
+      resDay: L("MIRIAM'S DAY · TODAY", 'היום של מרים · היום'), fullDay: L('See the full day', 'לכל היום'), quick: L('QUICK ACTIONS', 'פעולות מהירות'),
+      rbInit: L('RB', 'רב'), ruth: L('Ruth Ben-David', 'רות בן דוד'), headNurse: L('Head nurse, Ward B', 'אחות אחראית, מחלקה ב׳'),
+      up1Title: L('Miriam joined the morning music group', 'מרים הצטרפה לקבוצת המוזיקה של הבוקר'),
+      up1Short: L('She sang along to two songs and asked to join again next week. She also ate a full breakfast.', 'היא שרה איתנו שני שירים וביקשה להצטרף שוב בשבוע הבא. היא גם אכלה ארוחת בוקר מלאה.'),
+      up1Full: L('This morning Miriam joined the music group in the activity room for the first time. She sang along to "Yerushalayim Shel Zahav" and one more song, and asked our activities coordinator to save her a seat next week. She ate a full breakfast beforehand and was in good spirits all morning.', 'הבוקר מרים הצטרפה לראשונה לקבוצת המוזיקה בחדר הפעילות. היא שרה איתנו את "ירושלים של זהב" ושיר נוסף, וביקשה מרכזת הפעילות לשמור לה מקום בשבוע הבא. לפני כן אכלה ארוחת בוקר מלאה, והייתה במצב רוח טוב לאורך כל הבוקר.'),
+      readUpdate: L('Read the full update', 'לקריאת העדכון המלא'),
+      friShort: L('FRI', 'שישי'), octShort: L('OCT', 'אוק׳'), drVisit: L('Doctor visit · Dr. Avi Shapiro', 'ביקור רופא · ד״ר אבי שפירא'),
+      clinic: L('Ward B clinic, 1st floor', 'מרפאת מחלקה ב׳, קומה 1'), personal: L('Personal · Miriam', 'אישי · מרים'), confirmAtt: L('Confirm', 'אישור'),
+      details: L('DETAILS', 'פרטים'), staffContacts: L('STAFF CONTACTS', 'אנשי צוות'), inquiry: L('Inquiry', 'פנייה'),
+      nurseStation: L("Ward B nurses' station", 'עמדת אחיות מחלקה ב׳'), call: L('Call', 'חיוג'),
+      updatesIntro: L('Personal updates from the staff about Miriam, newest first.', 'עדכונים אישיים מהצוות על מרים, מהחדש לישן.'), new: L('New', 'חדש'),
+      activities: L('Activities', 'פעילויות'), tapPhoto: L('Tap a photo to open it full screen', 'הקישו על תמונה כדי לפתוח במסך מלא'),
+      sharedOn: L('Shared by the care center on', 'שותף על ידי המרכז הסיעודי ב-'),
+      askAbout: L('Ask the staff about this update', 'שאלה לצוות על העדכון'),
+      medIntro: L('This information is shared by the care center for your awareness. For any question, contact the medical staff through Contact Staff.', 'המידע משותף על ידי המרכז הסיעודי לידיעתכם. לכל שאלה, פנו לצוות הרפואי דרך "פנייה לצוות".'),
+      carePlanTitle: L("Miriam's care plan, in brief", 'תוכנית הטיפול של מרים, בקצרה'),
+      carePlanSub: L('A family-friendly summary of the goals the multidisciplinary team set together with Miriam.', 'סיכום ידידותי של היעדים שהצוות הרב-מקצועי קבע יחד עם מרים.'),
+      reviewed: L('Reviewed', 'נבדקה'), nextReview: L('Next review', 'בדיקה הבאה'), goal: L('GOAL', 'יעד'),
+      teamDoes: L('What the team does', 'מה הצוות עושה'), youCan: L('How you can help', 'איך אתם יכולים לעזור'),
+      prevDay: L('Yesterday', 'אתמול'), nextDay: L('Tomorrow', 'מחר'), todayWord: L('Today', 'היום'), wed: L('Wednesday', 'יום רביעי'),
+      dayNote: L("Times may change according to Miriam's needs. Last updated by Ward B staff at 09:30.", 'השעות עשויות להשתנות לפי הצרכים של מרים. עודכן לאחרונה על ידי צוות מחלקה ב׳ ב-09:30.'),
+      splashTag: L('Stay close to the people you love', 'קרובים לאנשים שאתם אוהבים'), connecting: L('Connecting securely…', 'מתחבר באופן מאובטח…'),
+      sessTitle: L('Enter your password to continue', 'הזינו סיסמה כדי להמשיך'),
+      sessSub: L('For your privacy, we hid the content after 10 minutes without activity.', 'לשמירה על פרטיותכם, הסתרנו את התוכן לאחר 10 דקות ללא פעילות.'),
+      dcInit: L('DC', 'דכ'), dana: L('Dana Cohen', 'דנה כהן'), notYou: L('Not Dana? Sign out', 'לא דנה? יציאה מהחשבון'),
+      switchRes: L('Switch resident', 'החלפת דייר'), switchSub: L('Choose whose information to view', 'בחרו את מי להציג'), close: L('Close', 'סגירה'),
+      save: L('Save', 'שמירה'), prev: L('Previous', 'הקודמת'), next: L('Next', 'הבאה'),
+      photoCap: L('Miriam singing with the music group in the activity room', 'מרים שרה עם קבוצת המוזיקה בחדר הפעילות'),
+    };
+
+    const RES = {
+      miriam: { name: L('Miriam Levi', 'מרים לוי'), initials: L('ML', 'מל'), ward: L('Ward B', 'מחלקה ב׳'), room: L('Room 12', 'חדר 12'), av: tn('pink'), rel: L('Your relation: Daughter', 'הקשר שלכם: בת'), badge: chip('new', L('3 new', '3 חדשים')) },
+      avraham: { name: L('Avraham Cohen', 'אברהם כהן'), initials: L('AC', 'אכ'), ward: L('Ward D', 'מחלקה ד׳'), room: L('Room 4', 'חדר 4'), av: tn('teal'), rel: L('Your relation: Daughter', 'הקשר שלכם: בת'), badge: chip('done', L('No new items', 'אין חדש'), 'check') },
+    };
+    Object.values(RES).forEach(r => r.place = r.ward + ' · ' + r.room);
+    const res = RES[resId];
+    const pick = id => I ? () => this.setState({ res: id, cur: 'home' }) : undefined;
+    const residents = ['miriam', 'avraham'].map(id => {
+      const r = RES[id], sel = id === resId;
+      return { ...r, relation: r.rel, chip: r.badge, onPick: pick(id), selBd: sel ? c.primary : c.border, selFg: sel ? tn('green').fg : c.text2, selIcon: sel ? 'circle-check' : (he ? 'chevron-left' : 'chevron-right'), selLabel: sel ? L('Viewing', 'מוצג') : L('View', 'הצגה') };
+    });
+
+    const langOpts = [['en', 'English', 'Left to right', 'ltr', "'Nunito',sans-serif", 'EN'], ['he', 'עברית', 'מימין לשמאל', 'rtl', "'Rubik',sans-serif", 'עב']].map(([k, label, sub, dir, font, code]) => {
+      const sel = k === lang;
+      return { label, sub, dir, font, code, bd: sel ? c.primary : c.border, bg: sel ? c.pill : c.surface, icon: sel ? 'circle-check' : 'circle', mark: sel ? c.primary : c.text2, state: sel ? L('Selected', 'נבחר') : L('Select', 'בחירה'), onClick: I ? () => pref({ lang: k }) : undefined };
+    });
+
+    const stepLabels = [L('Phone', 'טלפון'), L('Code', 'קוד'), L('New password', 'סיסמה חדשה')];
+    const stepIdx = { forgot1: 0, forgot2: 1, forgot3: 2 }[scr];
+    const steps = stepLabels.map((label, i) => {
+      const done = i < stepIdx, act = i === stepIdx, g = tn('green');
+      return { label, icon: done ? 'check' : (['smartphone', 'message-square-text', 'key-round'][i]), bg: done ? g.fg : act ? c.primary : c.surface, fg: done || act ? (done ? '#fff' : c.onPrimary) : c.text2, bd: done ? g.fg : act ? c.primary : c.border, lbl: act || done ? c.text : c.text2, weight: act ? 800 : 600, line: i < stepIdx ? g.fg : c.border, lineDisp: i < 2 ? 'block' : 'none' };
+    });
+
+    const ruleNames = [L('At least 8 characters', 'לפחות 8 תווים'), L('One uppercase letter (A–Z)', 'אות גדולה אחת באנגלית (A–Z)'), L('One number (0–9)', 'ספרה אחת (0–9)'), L('One special character (!@#$)', 'תו מיוחד אחד (!@#$)'), L('Both passwords match', 'שתי הסיסמאות תואמות')];
+    const rule = ok => ({ icon: ok ? 'circle-check' : 'circle-x', fg: ok ? tn('green').fg : tn('red').fg, state: ok ? L('Met', 'תקין') : L('Not yet', 'עדיין לא') });
+    const rulesFp = ruleNames.map((label, i) => ({ label, ...rule(i < 3) }));
+    const rulesOk = ruleNames.map(label => ({ label, ...rule(true) }));
+    const otp = ['4', '8', '1', '9', '', ''].map((v, i) => ({ v, bd: i === 4 ? c.primary : v ? c.text2 : c.border }));
+
+    const RS = {
+      forgot4: { tone: tn('green'), icon: 'circle-check', chip: L('Changed on 14.10.2026 09:41', 'שונתה ב-14.10.2026 09:41'), chipIcon: 'clock', title: L('Your password was changed', 'הסיסמה שונתה בהצלחה'), body: L('You can now sign in with your new password. For your security, we signed you out on all other devices.', 'אפשר להתחבר עכשיו עם הסיסמה החדשה. לביטחונכם, ניתקנו את החשבון בכל שאר המכשירים.'), b1: L('Back to sign in', 'חזרה למסך הכניסה'), b1icon: 'log-in', go1: go.login },
+      locked: { tone: tn('red'), icon: 'lock', chip: L('Locked until 09:53', 'נעול עד 09:53'), chipIcon: 'clock', title: L('Account temporarily locked', 'החשבון ננעל זמנית'), body: L('After 5 incorrect sign-in attempts, we locked your account for 15 minutes to protect your family member\'s information.', 'לאחר 5 ניסיונות כניסה שגויים, נעלנו את החשבון ל-15 דקות כדי להגן על המידע של בן המשפחה שלכם.'), b1: L('Reset my password', 'איפוס הסיסמה'), b1icon: 'key-round', go1: go.forgot1, hasB2: true, b2: L('Call the care center', 'חיוג למרכז הסיעודי'), b2icon: 'phone', hasB3: true },
+      blocked: { tone: tn('slate'), icon: 'shield-off', chip: L('Account inactive', 'החשבון לא פעיל'), chipIcon: 'ban', title: L('Access to your account is blocked', 'הגישה לחשבון חסומה'), body: L('The care center has deactivated access for this account. This can happen when family contact details change or at the request of the resident\'s guardian. Your information is safe.', 'המרכז הסיעודי השבית את הגישה לחשבון זה. זה יכול לקרות כשפרטי הקשר של המשפחה משתנים או לבקשת האפוטרופוס של הדייר. המידע שלכם שמור.'), b1: L('Call the care center', 'חיוג למרכז הסיעודי'), b1icon: 'phone', hasB2: true, b2: L('Send an email', 'שליחת דוא״ל'), b2icon: 'mail', hasB3: true },
+    };
+    const rs = RS[scr] || RS.forgot4;
+    const lockSteps = [
+      { icon: 'timer', title: L('Wait 15 minutes', 'המתינו 15 דקות'), body: L('You can try again at 09:53. Check that the phone number is the one registered with the center.', 'אפשר לנסות שוב ב-09:53. ודאו שמספר הטלפון הוא המספר הרשום במרכז.') },
+      { icon: 'key-round', title: L('Reset your password', 'אפסו את הסיסמה'), body: L('We will send a 6-digit code to your registered phone.', 'נשלח קוד בן 6 ספרות לטלפון הרשום.') },
+      { icon: 'phone', title: L('Still stuck? Call us', 'עדיין לא מצליחים? התקשרו'), body: L('Family relations office, Sun–Thu 08:00–16:00, 03-555-0100.', 'מחלקת קשרי משפחות, א׳–ה׳ 08:00–16:00, 03-555-0100.') },
+    ];
+    const centerRows = [
+      { icon: 'phone', label: L('Phone', 'טלפון'), value: '03-555-0100', dir: 'ltr' },
+      { icon: 'mail', label: L('Email', 'דוא״ל'), value: 'family@beithadar.co.il', dir: 'ltr' },
+      { icon: 'map-pin', label: L('Address', 'כתובת'), value: L('12 HaRimon St., Ramat Gan', 'רחוב הרימון 12, רמת גן'), dir: he ? 'rtl' : 'ltr' },
+      { icon: 'clock', label: L('Office hours', 'שעות פעילות'), value: L('Sun–Thu 08:00–16:00', 'א׳–ה׳ 08:00–16:00'), dir: he ? 'rtl' : 'ltr' },
+    ];
+
+    const since = [
+      { icon: 'newspaper', tone: tn('teal'), kind: L('New update', 'עדכון חדש'), title: t.up1Title, meta: t.ruth + ' · 12.10.2026 10:15', onClick: go.resUpdate },
+      { icon: 'message-square-reply', tone: tn('blue'), kind: L('New reply', 'תשובה חדשה'), title: L('Nursing replied to "Evening medication time"', 'הסיעוד השיב לפנייה "שעת התרופות בערב"'), meta: '13.10.2026 16:20' },
+      { icon: 'file-text', tone: tn('violet'), kind: L('New document', 'מסמך חדש'), title: L('Flu vaccine consent form 2026', 'טופס הסכמה לחיסון שפעת 2026'), meta: '13.10.2026 09:05' },
+      { icon: 'calendar-clock', tone: tn('amber'), kind: L('Calendar change', 'שינוי ביומן'), title: L("Dr. Shapiro's visit moved to 16.10.2026 11:00", 'ביקור ד״ר שפירא הוזז ל-16.10.2026 11:00'), meta: '11.10.2026 14:40' },
+      { icon: 'circle-check', tone: tn('green'), kind: L('Request handled', 'בקשה טופלה'), title: L('Wardrobe door in Room 12 was repaired', 'דלת הארון בחדר 12 תוקנה'), meta: '10.10.2026 12:10' },
+    ];
+    const attention = [
+      { icon: 'signature', tone: tn('violet'), title: L('Sign: Flu vaccine consent form', 'חתימה: טופס הסכמה לחיסון שפעת'), sub: L('From the nursing team · Due by 15.10.2026', 'מצוות הסיעוד · עד 15.10.2026'), chip: chip('action', L('To sign', 'לחתימה'), 'pen-line'), cta: L('Sign', 'לחתימה'), ctaIcon: 'pen-line' },
+      { icon: 'file-check', tone: tn('blue'), title: L('Confirm you read: October family newsletter', 'אישור קריאה: עלון המשפחות לאוקטובר'), sub: L('Management · Published 12.10.2026', 'הנהלה · פורסם 12.10.2026'), chip: chip('action', L('To confirm', 'לאישור'), 'eye'), cta: L('Read', 'לקריאה'), ctaIcon: 'book-open' },
+      { icon: 'clipboard-list', tone: tn('teal'), title: L('Fill out: Family satisfaction survey 2026', 'מילוי: סקר שביעות רצון משפחות 2026'), sub: L('About 5 minutes · Closes 31.10.2026', 'כ-5 דקות · נסגר ב-31.10.2026'), chip: chip('new', L('Not started', 'טרם התחיל'), 'circle-dashed'), cta: L('Start', 'התחלה'), ctaIcon: 'play' },
+      { icon: 'party-popper', tone: tn('pink'), title: L('RSVP: Hanukkah family evening', 'אישור הגעה: ערב חנוכה למשפחות'), sub: L('Thu 10.12.2026 17:00 · Center courtyard', 'יום ה׳ 10.12.2026 17:00 · חצר המרכז'), chip: chip('progress', L('Awaiting RSVP', 'ממתין לאישור הגעה'), 'hourglass'), cta: 'RSVP', ctaIcon: 'calendar-check' },
+      { icon: 'message-square-reply', tone: tn('amber'), title: L('Reply needed: Winter clothing for Miriam', 'נדרשת תשובה: בגדי חורף למרים'), sub: L('Yael Mizrahi, Social work · 13.10.2026', 'יעל מזרחי, עבודה סוציאלית · 13.10.2026'), chip: chip('action', L('Waiting for you', 'ממתין לכם'), 'reply'), cta: L('Reply', 'מענה'), ctaIcon: 'reply' },
+    ];
+    if (he) attention[3].cta = 'אישור הגעה';
+    ['docView', 'newsletter', 'surveyIntro', 'eventInvite', 'inqThread'].forEach((k, i) => attention[i].onClick = nav(k));
+    const dayDefs = [
+      ['07:30', 'sunrise', L('Wake up and morning care', 'השכמה וטיפול בוקר'), L('Room 12', 'חדר 12'), 'done', 'slate'],
+      ['08:30', 'utensils', L('Breakfast', 'ארוחת בוקר'), L('Ward B dining room', 'חדר האוכל, מחלקה ב׳'), 'done', 'amber'],
+      ['10:00', 'music', L('Activity: Music group', 'פעילות: קבוצת מוזיקה'), L('Activity room', 'חדר הפעילות'), 'now', 'teal'],
+      ['11:30', 'footprints', L('Physiotherapy', 'פיזיותרפיה'), L('Physiotherapy room', 'חדר פיזיותרפיה'), 'next', 'blue'],
+      ['13:00', 'soup', L('Lunch', 'ארוחת צהריים'), L('Ward B dining room', 'חדר האוכל, מחלקה ב׳'), 'next', 'amber'],
+      ['14:00', 'bed', L('Afternoon rest', 'מנוחת צהריים'), L('Room 12', 'חדר 12'), 'next', 'slate'],
+      ['16:00', 'coffee', L('Social activity: Tea and cards', 'פעילות חברתית: תה ומשחק קלפים'), L('Garden lounge', 'פינת הגן'), 'next', 'pink'],
+      ['18:00', 'utensils-crossed', L('Dinner', 'ארוחת ערב'), L('Ward B dining room', 'חדר האוכל, מחלקה ב׳'), 'next', 'amber'],
+    ];
+    const dchip = st => st === 'done' ? chip('done', L('Done', 'בוצע')) : st === 'now' ? chip('progress', L('Now', 'עכשיו'), 'circle-play') : chip('slate', L('Upcoming', 'בהמשך'), 'clock');
+    const dayFull = dayDefs.map(([time, icon, title, place, st, tk], i) => ({
+      time, icon, title, place, tone: tn(tk), chip: dchip(st),
+      dot: st === 'done' ? tn('green').fg : st === 'now' ? tn('amber').fg : c.surface, ring: st === 'done' ? tn('green').fg : st === 'now' ? tn('amber').bd : c.border,
+      lineTop: i === 0 ? 'transparent' : (st === 'next' && dayDefs[i - 1][4] === 'next') || (st === 'next') ? c.border : tn('green').fg,
+      lineBot: i === dayDefs.length - 1 ? 'transparent' : st === 'done' ? tn('green').fg : c.border,
+      cardBd: st === 'now' ? '2px solid ' + tn('amber').fg : '1px solid ' + c.border, timeColor: st === 'next' ? c.text2 : c.text
+    }));
+    const dayShort = [1, 2, 3, 4, 6].map(i => { const [time, icon, title, , st, tk] = dayDefs[i]; return { time, icon, title: i === 2 ? L('Music group', 'קבוצת מוזיקה') : i === 6 ? L('Social activity', 'פעילות חברתית') : title, tone: tn(tk), chip: dchip(st), weight: st === 'now' ? 800 : 600, op: st === 'done' ? 0.75 : 1 }; });
+    const quick = [
+      { icon: 'message-square-plus', tone: tn('blue'), label: L('New inquiry', 'פנייה חדשה'), sub: L('Write to a department', 'כתיבה למחלקה'), onClick: nav('inqNew1') },
+      { icon: 'wrench', tone: tn('amber'), label: L('Service request', 'בקשת שירות'), sub: L('Laundry, repairs and more', 'כביסה, תיקונים ועוד'), onClick: nav('serviceNew') },
+      { icon: 'folder-open', tone: tn('violet'), label: L('Documents', 'מסמכים'), sub: L('2 waiting for you', '2 ממתינים לכם'), onClick: nav('docsList') },
+      { icon: 'party-popper', tone: tn('pink'), label: L('Events', 'אירועים'), sub: L('1 invitation', 'הזמנה אחת'), onClick: nav('feed') },
+    ];
+    const details = [
+      { icon: 'cake', label: L('Date of birth', 'תאריך לידה'), value: L('03.05.1939 (age 87)', '03.05.1939 (בת 87)') },
+      { icon: 'building', label: L('Ward', 'מחלקה'), value: res.ward },
+      { icon: 'bed-double', label: L('Room', 'חדר'), value: res.room },
+      { icon: 'calendar-plus', label: L('Admitted', 'תאריך קבלה'), value: '21.06.2023' },
+      { icon: 'languages', label: L('Languages', 'שפות'), value: L('Hebrew, Romanian', 'עברית, רומנית') },
+      { icon: 'user-round-check', label: L('Primary family contact', 'איש קשר עיקרי'), value: L('Dana Cohen (you)', 'דנה כהן (אתם)') },
+    ];
+    const staff = [
+      { init: t.rbInit, tone: tn('teal'), name: t.ruth, role: t.headNurse, icon: 'stethoscope' },
+      { init: L('YM', 'ימ'), tone: tn('violet'), name: L('Yael Mizrahi', 'יעל מזרחי'), role: L('Social worker', 'עובדת סוציאלית'), icon: 'hand-heart' },
+      { init: L('AS', 'אש'), tone: tn('blue'), name: L('Dr. Avi Shapiro', 'ד״ר אבי שפירא'), role: L('Family physician', 'רופא משפחה'), icon: 'heart-pulse' },
+    ];
+    const updates = [
+      { date: L('MONDAY · 12.10.2026', 'יום שני · 12.10.2026'), init: t.rbInit, tone: tn('teal'), author: t.ruth, role: t.headNurse, roleIcon: 'stethoscope', time: '10:15', isNew: true, title: t.up1Title, body: t.up1Short, hasPhotos: true },
+      { date: L('FRIDAY · 09.10.2026', 'יום שישי · 09.10.2026'), init: L('NP', 'נפ'), tone: tn('blue'), author: L('Noa Peretz', 'נועה פרץ'), role: L('Physiotherapist', 'פיזיותרפיסטית'), roleIcon: 'footprints', time: '12:40', isNew: true, title: L('A new walking record with the walker', 'שיא חדש בהליכה עם ההליכון'), body: L('Miriam walked 40 meters in the corridor with her walker and only one short rest. We will keep practicing twice a week.', 'מרים הלכה 40 מטר במסדרון עם ההליכון, עם מנוחה קצרה אחת בלבד. נמשיך לתרגל פעמיים בשבוע.'), hasPhotos: false },
+      { date: L('WEDNESDAY · 07.10.2026', 'יום רביעי · 07.10.2026'), init: L('YM', 'ימ'), tone: tn('violet'), author: L('Yael Mizrahi', 'יעל מזרחי'), role: L('Social worker', 'עובדת סוציאלית'), roleIcon: 'hand-heart', time: '15:05', isNew: false, title: L('Video call with her granddaughter', 'שיחת וידאו עם הנכדה'), body: L('We helped Miriam make a video call to Noam in Haifa. She was very happy and asked to do it every Wednesday.', 'עזרנו למרים לקיים שיחת וידאו עם נועם בחיפה. היא שמחה מאוד וביקשה לקבוע שיחה כזו בכל יום רביעי.'), hasPhotos: true },
+    ];
+    const mi = (name, detail, shared, flag) => ({ name, detail, shared, hasFlag: !!flag, flag });
+    const allergy = L('Allergy', 'אלרגיה');
+    const medical = [
+      { icon: 'pill', tone: tn('blue'), title: L('Medications', 'תרופות'), count: L('3 active', '3 פעילות'), items: [
+        mi(L('Eltroxin 50 mcg', 'אלטרוקסין 50 מק״ג'), L('Once a day, 07:00, before breakfast', 'פעם ביום, 07:00, לפני ארוחת הבוקר'), '05.10.2026'),
+        mi(L('Amlodipine 5 mg', 'אמלודיפין 5 מ״ג'), L('Once a day, 08:30, with breakfast', 'פעם ביום, 08:30, עם ארוחת הבוקר'), '05.10.2026'),
+        mi(L('Vitamin D 1,000 IU', 'ויטמין D 1,000 יחב״ל'), L('Once a day, with lunch', 'פעם ביום, עם ארוחת הצהריים'), '05.10.2026')] },
+      { icon: 'clipboard-plus', tone: tn('violet'), title: L('Diagnoses', 'אבחנות'), count: '3', items: [
+        mi(L('Hypertension', 'יתר לחץ דם'), L('Stable with medication', 'מאוזן בטיפול תרופתי'), '21.06.2023'),
+        mi(L('Hypothyroidism', 'תת-פעילות של בלוטת התריס'), L('Balanced, checked every 6 months', 'מאוזנת, נבדקת כל 6 חודשים'), '21.06.2023'),
+        mi(L('Mild knee osteoarthritis', 'שחיקת סחוס קלה בברכיים'), L('Managed with physiotherapy', 'מטופלת בפיזיותרפיה'), '14.02.2025')] },
+      { icon: 'shield-alert', tone: tn('red'), title: L('Allergies and sensitivities', 'אלרגיות ורגישויות'), count: '2', items: [
+        mi(L('Penicillin', 'פניצילין'), L('Skin rash. Staff are aware and it is marked in her file.', 'פריחה בעור. הצוות מודע והדבר מסומן בתיק.'), '21.06.2023', allergy),
+        mi(L('Lactose sensitivity', 'רגישות ללקטוז'), L('Gets lactose-free dairy at all meals', 'מקבלת מוצרי חלב ללא לקטוז בכל הארוחות'), '21.06.2023')] },
+      { icon: 'stethoscope', tone: tn('teal'), title: L('Doctor visits', 'ביקורי רופא'), count: L('Last: 05.10.2026', 'אחרון: 05.10.2026'), items: [
+        mi(L('Routine check · Dr. Avi Shapiro', 'בדיקה שגרתית · ד״ר אבי שפירא'), L('Blood pressure normal. No changes to treatment. Next visit 16.10.2026.', 'לחץ הדם תקין. אין שינוי בטיפול. ביקור הבא 16.10.2026.'), '05.10.2026')] },
+      { icon: 'test-tube', tone: tn('amber'), title: L('Test results', 'תוצאות בדיקות'), count: '1', items: [
+        mi(L('Complete blood count · 01.10.2026', 'ספירת דם מלאה · 01.10.2026'), L('All values within the normal range', 'כל הערכים בטווח התקין'), '03.10.2026')] },
+      { icon: 'salad', tone: tn('green'), title: L('Nutrition', 'תזונה'), count: '', items: [
+        mi(L('Soft diet, lactose-free', 'תזונה רכה, ללא לקטוז'), L('1.5 liters of fluids a day. Weight stable at 61 kg.', '1.5 ליטר נוזלים ביום. המשקל יציב, 61 ק״ג.'), '01.10.2026')] },
+      { icon: 'footprints', tone: tn('pink'), title: L('Physiotherapy', 'פיזיותרפיה'), count: '', items: [
+        mi(L('Walker training, twice a week', 'אימון הליכה עם הליכון, פעמיים בשבוע'), L('Goal: walk to the dining room on her own', 'יעד: להגיע לחדר האוכל באופן עצמאי'), '09.10.2026')] },
+    ];
+    const goals = [
+      { icon: 'footprints', tone: tn('blue'), title: L('Keep walking on her own with a walker', 'להמשיך ללכת באופן עצמאי עם הליכון'), chip: chip('progress', L('On track', 'בהתקדמות טובה'), 'trending-up'), team: L('Physiotherapy twice a week and a daily walk with a caregiver.', 'פיזיותרפיה פעמיים בשבוע והליכה יומית עם מטפלת.'), family: L('Walk with her in the corridor during visits and bring comfortable, closed shoes.', 'צאו איתה להליכה במסדרון בזמן הביקור והביאו נעליים סגורות ונוחות.') },
+      { icon: 'users', tone: tn('teal'), title: L('Stay socially active', 'לשמור על פעילות חברתית'), chip: chip('done', L('Achieved', 'הושג')), team: L('Daily group activities and seating next to friends at meals.', 'פעילות קבוצתית יומית וישיבה ליד חברות בארוחות.'), family: L('Join a Wednesday video call and share family photos.', 'הצטרפו לשיחת וידאו ביום רביעי ושתפו תמונות משפחתיות.') },
+      { icon: 'scale', tone: tn('amber'), title: L('Maintain a healthy weight', 'לשמור על משקל תקין'), chip: chip('progress', L('Monitoring', 'במעקב'), 'activity'), team: L('Weekly weigh-in and a menu adjusted by the dietitian.', 'שקילה שבועית ותפריט מותאם על ידי הדיאטנית.'), family: L('Check with the nurses before bringing food from home.', 'התייעצו עם האחיות לפני שאתם מביאים אוכל מהבית.') },
+    ];
+
+    const segBase = [['resGeneral', 'info', L('General', 'כללי')], ['resUpdates', 'newspaper', L('Updates', 'עדכונים')], ['resMedical', 'heart-pulse', L('Medical', 'רפואי')], ['resCare', 'clipboard-list', L('Care plan', 'תוכנית טיפול')], ['resDay', 'sun', L('Day', 'היום שלו')]];
+    if (resId === 'miriam') segBase[4][2] = L("Miriam's day", 'היום של מרים');
+    else segBase[4][2] = L("Avraham's day", 'היום של אברהם');
+    const segActive = scr === 'resNotShared' ? 'resMedical' : scr === 'resNoPerm' ? 'resCare' : scr;
+    const segs = segBase.map(([k, icon, label]) => {
+      const a = k === segActive;
+      let ico = icon;
+      if (resId === 'avraham' && k === 'resCare') ico = 'lock';
+      if (resId === 'avraham' && k === 'resMedical') ico = 'hourglass';
+      const badge = resId === 'miriam' && k === 'resUpdates' ? 2 : 0;
+      return { icon: ico, label, bg: a ? c.primary : c.surface, fg: a ? c.onPrimary : c.text, bd: a ? c.primary : c.border, hasBadge: !!badge, badge, onClick: go[k] };
+    });
+    const PS = {
+      resNoPerm: { tone: tn('slate'), icon: 'lock', chip: L('No permission', 'אין הרשאה'), chipIcon: 'ban', title: L("You don't have permission to view this section", 'אין לכם הרשאה לצפות באזור זה'), body: L("The care center decides which information each family member can see. Avraham's care plan is shared only with his legal guardian.", 'המרכז הסיעודי קובע איזה מידע כל בן משפחה יכול לראות. תוכנית הטיפול של אברהם משותפת רק עם האפוטרופוס החוקי שלו.'), note: L('Permissions are managed by the care center. You can ask the social worker to review them.', 'ההרשאות מנוהלות על ידי המרכז הסיעודי. אפשר לבקש מהעובדת הסוציאלית לבדוק אותן.'), b1: L('View my permissions', 'צפייה בהרשאות שלי'), b1icon: 'shield-check', b2: L('Ask the social worker', 'פנייה לעובדת הסוציאלית'), b2icon: 'message-square-plus' },
+      resNotShared: { tone: tn('amber'), icon: 'hourglass', chip: L('Waiting for the care center', 'ממתין למרכז הסיעודי'), chipIcon: 'clock', title: L('Not yet shared by the care center', 'המידע עדיין לא שותף על ידי המרכז'), body: L("The medical team hasn't shared Avraham's medical information in the app yet. We'll send you a notification as soon as it's available.", 'הצוות הרפואי עדיין לא שיתף את המידע הרפואי של אברהם באפליקציה. נשלח לכם התראה ברגע שהמידע יהיה זמין.'), note: L('You have permission to see this section once it is shared.', 'יש לכם הרשאה לצפות באזור זה ברגע שישותף.'), b1: L('Ask the medical staff', 'פנייה לצוות הרפואי'), b1icon: 'message-square-plus', b2: L('Back to general info', 'חזרה למידע הכללי'), b2icon: 'info' },
+    };
+    const ps = PS[scr] || PS.resNoPerm;
+
+    const tabDefs = [['home', 'house', L('Home', 'בית'), 0, go.home], ['res', 'user-round', L('Resident', 'הדייר'), 2, go.resGeneral], ['staff', 'messages-square', L('Contact Staff', 'פנייה לצוות'), 2, nav('inqList')], ['cal', 'calendar-days', L('Calendar', 'יומן'), 1, nav('calMonth')], ['more', 'layout-grid', L('More', 'עוד'), 3, nav('moreMenu')]];
+    const activeTab = resTab ? 'res' : 'home';
+    const tabs = tabDefs.map(([k, icon, label, badge, onClick]) => {
+      const a = k === activeTab;
+      return { icon, label, hasBadge: !!badge, badge, onClick, color: a ? c.tabActive : c.tabIdle, pill: a ? c.pill : 'transparent', weight: a ? 800 : 600 };
+    });
+
+    const hasTopBar = ['firstPw', 'forgot1', 'forgot2', 'forgot3', 'resUpdate'].includes(scr);
+    const topTitle = { firstPw: L('Personal password', 'סיסמה אישית'), forgot1: L('Reset password', 'איפוס סיסמה'), forgot2: L('Reset password', 'איפוס סיסמה'), forgot3: L('Reset password', 'איפוס סיסמה'), resUpdate: L('Update', 'עדכון') }[scr] || '';
+    const backGo = { firstPw: go.login, forgot1: go.login, forgot2: go.forgot1, forgot3: go.forgot2, resUpdate: go.resUpdates }[scr];
+    const showPw = S.showPw;
+
+    return {
+      c, t, s, go, ic, res, residents, langOpts, steps, rulesFp, rulesOk, otp, rs, lockSteps, centerRows,
+      since, attention, dayFull, dayShort, quick, details, staff, updates, medical, goals, segs, ps, tabs,
+      dir: he ? 'rtl' : 'ltr', font: he ? "'Rubik',system-ui,sans-serif" : "'Nunito',system-ui,sans-serif",
+      sbColor: s.splash || s.resPhoto ? '#fff' : c.text, homeBar: s.splash || s.resPhoto ? '#fff' : c.text,
+      blur: s.session ? 'blur(9px)' : 'none',
+      isMain, homeContent, hasSegs: resTab, isLogin: s.login || s.loginError, isResult: s.forgot4 || s.locked || s.blocked,
+      isPermState: s.resNoPerm || s.resNotShared, hasSheet: s.session || s.pickerSheet,
+      hasTopBar, topTitle, backGo, hasStepper: stepIdx !== undefined,
+      tR: tn('red'), tB: tn('blue'), tV: tn('violet'), tG: tn('green'), tA: tn('amber'), tT: tn('teal'), tP: tn('pink'),
+      fieldBd: s.loginError ? c.danger : c.border,
+      pwText: showPw ? 'Dana!2026' : '••••••••', pwSpacing: showPw ? 'normal' : '3px', pwIcon: showPw ? 'eye-off' : 'eye', pwToggle: showPw ? t.hide : t.show,
+      togglePw: () => this.setState({ showPw: !S.showPw }),
+      toggleLang: I ? () => pref({ lang: he ? 'en' : 'he' }) : undefined,
+      toggleTheme: I ? () => pref({ theme: dark ? 'light' : 'dark' }) : undefined, navNotif: nav('notifCenter'), navAppt: nav('calAppt'),
+      themeIcon: dark ? 'sun' : 'moon', themeLabel: dark ? L('Light', 'בהיר') : L('Dark', 'כהה'),
+      loginNext: I ? () => this.setState({ cur: 'firstPw' }) : undefined,
+      scrollRef: this.scrollRef,
+    };
+  }
+}
+</script>
+</body>
+</html>

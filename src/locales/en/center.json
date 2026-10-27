@@ -1,0 +1,30 @@
+{
+  "phone": "Phone",
+  "email": "Email",
+  "address": "Address",
+  "officeHours": "Office hours",
+  "days": {
+    "sun": "Sun",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat"
+  },
+  "hours": "{{days}} {{range}}",
+  "info": {
+    "title": "Center information",
+    "call": "Call",
+    "email": "Email",
+    "directions": "Directions",
+    "callLabel": "Call {{name}}",
+    "visitingHours": "Visiting hours",
+    "contacts": "Staff contacts by role",
+    "guideTitle": "Procedures and visit guide",
+    "guideSub": "What to bring, response hours, services and phone numbers"
+  },
+  "guide": {
+    "title": "Visit guide"
+  }
+}

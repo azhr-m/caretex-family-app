@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;family=Rubik:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+<script src="./icons.js"></script>
+<style>button{font:inherit;color:inherit}</style>
+</helmet>
+<div dir="{{ dir }}" style="width:410px;height:864px;padding:10px;box-sizing:border-box;background:#0D1017;border-radius:58px;box-shadow:0 30px 60px -24px rgba(20,25,35,.45)">
+<div style="position:relative;width:390px;height:844px;border-radius:48px;overflow:hidden;background:{{ c.bg }};color:{{ c.text }};font-family:{{ font }};font-size:16px;line-height:1.4">
+
+<div dir="ltr" style="position:absolute;top:0;left:0;right:0;height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 36px;z-index:40;color:{{ c.text }};font-family:-apple-system,system-ui,sans-serif;font-weight:600;font-size:16px;pointer-events:none">
+<span>09:41</span>
+<div style="position:absolute;left:50%;top:11px;width:122px;height:35px;margin-left:-61px;border-radius:20px;background:#000"></div>
+<div style="display:flex;gap:6px;align-items:center"><lc-icon name="signal" size="17"></lc-icon><lc-icon name="wifi" size="17"></lc-icon><lc-icon name="battery-full" size="22"></lc-icon></div>
+</div>
+
+<div style="position:absolute;top:47px;left:0;right:0;bottom:0;display:flex;flex-direction:column">
+
+<sc-if value="{{ isMain }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:center;gap:10px;padding:6px 14px 12px;border-bottom:1px solid {{ c.border }};background:{{ c.bg }}">
+<button onClick="{{ go.pickerSheet }}" style="flex:1;min-width:0;display:flex;align-items:center;gap:10px;padding:6px 10px;border:1px solid {{ c.border }};border-radius:16px;background:{{ c.surface }};cursor:pointer;text-align:start;min-height:56px">
+<div style="width:42px;height:42px;border-radius:50%;background:{{ av.bg }};color:{{ av.fg }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex-shrink:0">{{ t.resInit }}</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.resName }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ t.resPlace }}</span></div>
+<div style="display:flex;flex-direction:column;align-items:center;color:{{ c.text2 }}"><lc-icon name="chevrons-up-down" size="18"></lc-icon><span style="font-size:11px;font-weight:700">{{ t.switch }}</span></div>
+</button>
+<button onClick="{{ go.notifCenter }}" style="position:relative;width:62px;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid {{ c.border }};border-radius:16px;background:{{ c.surface }};cursor:pointer">
+<div style="position:relative;display:flex"><lc-icon name="bell" size="22"></lc-icon><span style="position:absolute;top:-6px;inset-inline-end:-10px;min-width:19px;height:19px;padding:0 5px;box-sizing:border-box;border-radius:10px;background:{{ c.danger }};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid {{ c.surface }}">5</span></div>
+<span style="font-size:11px;font-weight:700;color:{{ c.text2 }}">{{ t.alerts }}</span>
+</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasTopBar }}">
+<div style="display:flex;align-items:center;gap:8px;padding:4px 12px 10px;border-bottom:1px solid {{ c.border }}">
+<button onClick="{{ backGo }}" style="display:flex;align-items:center;gap:4px;min-height:44px;min-width:92px;padding:0 8px;border:none;background:none;cursor:pointer;font-size:15px;font-weight:700;color:{{ c.link }}"><lc-icon name="{{ ic.back }}" size="20"></lc-icon><span>{{ backLabel }}</span></button>
+<span style="flex:1;text-align:center;font-size:17px;font-weight:800">{{ topTitle }}</span>
+<div style="min-width:92px"></div>
+</div>
+</sc-if>
+
+<div style="flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none">
+
+<sc-if value="{{ isInqList }}">
+<div style="padding:16px 16px 100px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:24px;font-weight:800">{{ t.inqTitle }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ t.inqSub }}</span></div>
+<div style="display:flex;align-items:center;gap:10px;height:52px;padding:0 14px;border-radius:14px;border:1.5px solid {{ searchBd }};background:{{ c.surface }}"><lc-icon name="search" size="20" style="color:{{ c.text2 }}"></lc-icon><span style="flex:1;font-size:16px;color:{{ searchColor }}">{{ searchText }}</span><sc-if value="{{ s.inqNoResults }}"><span style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:800;color:{{ c.text2 }}"><lc-icon name="x" size="16"></lc-icon>{{ t.clear }}</span></sc-if></div>
+<div style="display:flex;gap:8px">
+<button style="display:flex;align-items:center;gap:6px;height:44px;padding:0 12px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:14px;font-weight:800;cursor:pointer;flex-shrink:0"><lc-icon name="building-2" size="17"></lc-icon><span>{{ t.allDepts }}</span><lc-icon name="chevron-down" size="16"></lc-icon></button>
+<button style="display:flex;align-items:center;gap:6px;height:44px;padding:0 12px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:14px;font-weight:800;cursor:pointer;flex-shrink:0"><lc-icon name="arrow-down-up" size="17"></lc-icon><span>{{ t.newest }}</span></button>
+</div>
+<div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px">
+<sc-for list="{{ statusFilters }}" as="f" hint-placeholder-count="5">
+<button onClick="{{ f.onClick }}" style="display:flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:20px;border:1px solid {{ f.bd }};background:{{ f.bg }};color:{{ f.fg }};font-size:13px;font-weight:800;white-space:nowrap;cursor:pointer;flex-shrink:0"><lc-icon name="{{ f.icon }}" size="15"></lc-icon><span>{{ f.label }}</span><span style="opacity:.75">{{ f.count }}</span></button>
+</sc-for>
+</div>
+<sc-if value="{{ s.inqList }}">
+<div style="display:flex;flex-direction:column;gap:14px">
+<sc-for list="{{ inqs }}" as="q" hint-placeholder-count="4">
+<button onClick="{{ q.onClick }}" style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ q.bd }};cursor:pointer;text-align:start;box-shadow:{{ c.shadow }}">
+<div style="display:flex;gap:12px;align-items:flex-start;width:100%">
+<div style="width:44px;height:44px;border-radius:12px;background:{{ q.dept.tone.bg }};color:{{ q.dept.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ q.dept.icon }}" size="22"></lc-icon></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:800;line-height:1.3">{{ q.subject }}</span><span style="font-size:13px;color:{{ c.text2 }};display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span>{{ q.dept.label }}</span><span>·</span><span dir="ltr">{{ q.date }}</span></span></div>
+<sc-if value="{{ q.isNew }}"><span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;background:{{ c.danger }};color:#fff;font-size:11px;font-weight:800;white-space:nowrap"><lc-icon name="message-square-dot" size="13"></lc-icon>{{ t.newReply }}</span></sc-if>
+</div>
+<span style="font-size:14px;color:{{ c.text2 }};line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;width:100%">{{ q.preview }}</span>
+<div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+<span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ q.chip.bg }};color:{{ q.chip.fg }};border:1px solid {{ q.chip.bd }};font-size:12px;font-weight:800"><lc-icon name="{{ q.chip.icon }}" size="14"></lc-icon>{{ q.chip.label }}</span>
+<span style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:800;color:{{ c.link }}"><span dir="ltr">{{ q.ref }}</span><lc-icon name="{{ ic.chev }}" size="17"></lc-icon></span>
+</div>
+</button>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ s.inqNoResults }}">
+<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:28px 8px">
+<div style="width:88px;height:88px;border-radius:26px;background:{{ c.surface2 }};color:{{ c.text2 }};display:flex;align-items:center;justify-content:center"><lc-icon name="search-x" size="42"></lc-icon></div>
+<span style="font-size:20px;font-weight:800">{{ t.noResTitle }}</span>
+<span style="font-size:15px;color:{{ c.text2 }}">{{ t.noResBody }}</span>
+<div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:6px">
+<button style="height:52px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><lc-icon name="filter-x" size="19"></lc-icon><span>{{ t.clearFilters }}</span></button>
+<button onClick="{{ go.inqNew1 }}" style="height:52px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><lc-icon name="message-square-plus" size="19"></lc-icon><span>{{ t.newInq }}</span></button>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasStepper }}">
+<div style="display:flex;align-items:flex-start;padding:16px 16px 4px">
+<sc-for list="{{ steps }}" as="st" hint-placeholder-count="2">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative">
+<div style="position:absolute;top:14px;inset-inline-start:50%;width:100%;height:2px;background:{{ st.line }};display:{{ st.lineDisp }}"></div>
+<div style="position:relative;width:30px;height:30px;border-radius:50%;background:{{ st.bg }};color:{{ st.fg }};border:2px solid {{ st.bd }};box-sizing:border-box;display:flex;align-items:center;justify-content:center"><lc-icon name="{{ st.icon }}" size="15"></lc-icon></div>
+<span style="font-size:11px;font-weight:{{ st.weight }};color:{{ st.lbl }};text-align:center;line-height:1.2">{{ st.label }}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.inqNew1 }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:22px;font-weight:800">{{ t.whoTitle }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ t.whoSub }}</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{ depts }}" as="d" hint-placeholder-count="10">
+<button onClick="{{ d.onClick }}" style="position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;border-radius:16px;border:2px solid {{ d.bd }};background:{{ d.bg }};cursor:pointer;text-align:start;min-height:104px">
+<div style="width:40px;height:40px;border-radius:12px;background:{{ d.tone.bg }};color:{{ d.tone.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="{{ d.icon }}" size="20"></lc-icon></div>
+<div style="display:flex;flex-direction:column"><span style="font-size:15px;font-weight:800">{{ d.label }}</span><span style="font-size:12px;color:{{ c.text2 }};line-height:1.3">{{ d.hint }}</span></div>
+<sc-if value="{{ d.sel }}"><span style="position:absolute;top:10px;inset-inline-end:10px;display:flex;align-items:center;gap:3px;font-size:11px;font-weight:800;color:{{ c.primary }}"><lc-icon name="circle-check" size="18"></lc-icon>{{ t.selected }}</span></sc-if>
+</button>
+</sc-for>
+</div>
+<button onClick="{{ go.inqNew2 }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><span>{{ t.continue }}</span><lc-icon name="{{ ic.fwd }}" size="20"></lc-icon></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.inqNew2 }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<div style="width:40px;height:40px;border-radius:12px;background:{{ selDept.tone.bg }};color:{{ selDept.tone.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="{{ selDept.icon }}" size="20"></lc-icon></div>
+<div style="flex:1;display:flex;flex-direction:column"><span style="font-size:12px;font-weight:700;color:{{ c.text2 }}">{{ t.sendingTo }}</span><span style="font-size:16px;font-weight:800">{{ selDept.label }} · {{ t.wardB }}</span></div>
+<button onClick="{{ go.inqNew1 }}" style="display:flex;align-items:center;gap:5px;height:44px;padding:0 12px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface2 }};font-size:13px;font-weight:800;cursor:pointer"><lc-icon name="pencil" size="15"></lc-icon><span>{{ t.change }}</span></button>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:700">{{ t.subject }}</span><div style="display:flex;align-items:center;height:54px;padding:0 14px;border-radius:14px;border:1.5px solid {{ c.border }};background:{{ c.surface }};font-size:16px">{{ t.subjVal }}</div><span style="font-size:13px;color:{{ c.text2 }}">{{ t.subjHelp }}</span></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:700">{{ t.message }}</span><div style="min-height:132px;padding:12px 14px;border-radius:14px;border:2px solid {{ c.primary }};background:{{ c.surface }};font-size:16px;line-height:1.5;box-sizing:border-box">{{ t.msgVal }}</div><div style="display:flex;justify-content:space-between;font-size:13px;color:{{ c.text2 }}"><span>{{ t.msgHelp }}</span><span dir="ltr">168 / 1000</span></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:14px;font-weight:700">{{ t.attachments }}</span>
+<div style="display:flex;gap:10px">
+<div style="position:relative;width:84px;height:84px;border-radius:14px;background:repeating-linear-gradient(135deg,{{ c.stA }} 0 8px,{{ c.stB }} 8px 16px);border:1px solid {{ c.border }};display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:10px;color:{{ c.text2 }}">photo</div>
+<div style="flex:1;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;border:1px solid {{ c.border }};background:{{ c.surface }}"><div style="width:40px;height:40px;border-radius:10px;background:{{ tR.bg }};color:{{ tR.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="file-text" size="20"></lc-icon></div><div style="flex:1;min-width:0;display:flex;flex-direction:column"><span dir="ltr" style="font-size:14px;font-weight:800;text-align:start;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">walking-plan.pdf</span><span dir="ltr" style="font-size:12px;color:{{ c.text2 }};text-align:start">PDF · 320 KB</span></div><button style="display:flex;flex-direction:column;align-items:center;min-width:44px;min-height:44px;justify-content:center;border:none;background:none;color:{{ c.danger }};cursor:pointer"><lc-icon name="trash-2" size="18"></lc-icon><span style="font-size:10px;font-weight:800">{{ t.remove }}</span></button></div>
+</div>
+<div style="display:flex;gap:10px">
+<button style="flex:1;height:48px;border-radius:14px;border:1.5px dashed {{ c.border }};background:none;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><lc-icon name="camera" size="18"></lc-icon><span>{{ t.addPhoto }}</span></button>
+<button style="flex:1;height:48px;border-radius:14px;border:1.5px dashed {{ c.border }};background:none;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><lc-icon name="paperclip" size="18"></lc-icon><span>{{ t.addFile }}</span></button>
+</div>
+<span style="font-size:13px;color:{{ c.text2 }}">{{ t.attHelp }}</span></div>
+<div style="display:flex;gap:10px;padding:14px;border-radius:14px;background:{{ tA.bg }};border:1px solid {{ tA.bd }};font-size:14px"><lc-icon name="siren" size="19" style="color:{{ tA.fg }}"></lc-icon><span>{{ t.urgentNote }} <span dir="ltr" style="unicode-bidi:isolate;font-weight:800">03-555-0142</span></span></div>
+<button onClick="{{ go.inqSent }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="send" size="20"></lc-icon><span>{{ t.sendInq }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.inqSent }}">
+<div style="min-height:100%;box-sizing:border-box;padding:44px 22px 32px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px">
+<div style="width:96px;height:96px;border-radius:28px;background:{{ tG.bg }};color:{{ tG.fg }};border:1px solid {{ tG.bd }};display:flex;align-items:center;justify-content:center"><lc-icon name="send" size="44"></lc-icon></div>
+<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:{{ tG.bg }};color:{{ tG.fg }};border:1px solid {{ tG.bd }};font-size:13px;font-weight:800"><lc-icon name="circle-check" size="15"></lc-icon>{{ t.sentAt }}</span>
+<span style="font-size:26px;font-weight:800;line-height:1.2">{{ t.sentTitle }}</span>
+<span style="font-size:16px;color:{{ c.text2 }}">{{ t.sentBody }}</span>
+</div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<sc-for list="{{ sentRows }}" as="r" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid {{ c.border }};min-height:44px"><lc-icon name="{{ r.icon }}" size="19" style="color:{{ c.text2 }}"></lc-icon><span style="flex:1;font-size:14px;color:{{ c.text2 }}">{{ r.label }}</span><span dir="{{ r.dir }}" style="font-size:15px;font-weight:800">{{ r.value }}</span></div>
+</sc-for>
+</div>
+<div style="flex:1"></div>
+<button onClick="{{ go.inqThreadNew }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="eye" size="20"></lc-icon><span>{{ t.viewInq }}</span></button>
+<button onClick="{{ go.inqList }}" style="height:56px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;margin-top:-8px"><lc-icon name="list" size="20"></lc-icon><span>{{ t.backToInqs }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isThread }}">
+<div style="padding:4px 16px 24px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:44px;height:44px;border-radius:12px;background:{{ th.dept.tone.bg }};color:{{ th.dept.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ th.dept.icon }}" size="22"></lc-icon></div><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:18px;font-weight:800;line-height:1.3">{{ th.subject }}</span><span style="font-size:13px;color:{{ c.text2 }};display:flex;gap:6px;flex-wrap:wrap"><span>{{ th.dept.label }}</span><span>·</span><span dir="ltr">{{ th.ref }}</span><span>·</span><span>{{ t.opened }} <span dir="ltr">{{ th.date }}</span></span></span></div></div>
+<span style="align-self:flex-start;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ th.chip.bg }};color:{{ th.chip.fg }};border:1px solid {{ th.chip.bd }};font-size:12px;font-weight:800"><lc-icon name="{{ th.chip.icon }}" size="14"></lc-icon>{{ th.chip.label }}</span>
+<span style="font-size:13px;color:{{ c.text2 }}">{{ th.statusDesc }}</span>
+</div>
+<div style="display:flex;align-items:flex-start;padding:6px 0">
+<sc-for list="{{ thSteps }}" as="st" hint-placeholder-count="6">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative">
+<div style="position:absolute;top:13px;inset-inline-start:50%;width:100%;height:2px;background:{{ st.line }};display:{{ st.lineDisp }}"></div>
+<div style="position:relative;width:28px;height:28px;border-radius:50%;background:{{ st.bg }};color:{{ st.fg }};border:2px solid {{ st.bd }};box-sizing:border-box;display:flex;align-items:center;justify-content:center"><lc-icon name="{{ st.icon }}" size="14"></lc-icon></div>
+<span style="font-size:11px;font-weight:{{ st.weight }};color:{{ st.lbl }};text-align:center;line-height:1.2">{{ st.label }}</span>
+</div>
+</sc-for>
+</div>
+<sc-for list="{{ msgs }}" as="m" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column">
+<sc-if value="{{ m.isEvent }}"><div style="display:flex;align-items:center;gap:8px;justify-content:center;font-size:12px;font-weight:700;color:{{ c.text2 }}"><div style="flex:1;height:1px;background:{{ c.border }}"></div><lc-icon name="{{ m.icon }}" size="14"></lc-icon><span>{{ m.text }}</span><span dir="ltr">{{ m.time }}</span><div style="flex:1;height:1px;background:{{ c.border }}"></div></div></sc-if>
+<sc-if value="{{ m.isMsg }}">
+<div style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:18px;background:{{ m.bg }};border:1px solid {{ c.border }}">
+<div style="display:flex;gap:10px;align-items:center"><div style="width:38px;height:38px;border-radius:50%;background:{{ m.tone.bg }};color:{{ m.tone.fg }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0">{{ m.init }}</div><div style="flex:1;display:flex;flex-direction:column;min-width:0"><span style="font-size:15px;font-weight:800">{{ m.name }}</span><span style="font-size:12px;color:{{ c.text2 }};display:flex;gap:4px;align-items:center"><lc-icon name="{{ m.roleIcon }}" size="13"></lc-icon>{{ m.role }}</span></div><span dir="ltr" style="font-size:12px;color:{{ c.text2 }};font-weight:700">{{ m.time }}</span></div>
+<span style="font-size:15px;line-height:1.5">{{ m.text }}</span>
+<sc-if value="{{ m.hasAtt }}"><div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:{{ c.surface2 }}"><lc-icon name="{{ m.attIcon }}" size="20" style="color:{{ tR.fg }}"></lc-icon><div style="flex:1;min-width:0;display:flex;flex-direction:column"><span dir="ltr" style="font-size:14px;font-weight:800;text-align:start">{{ m.attName }}</span><span dir="ltr" style="font-size:12px;color:{{ c.text2 }};text-align:start">{{ m.attSize }}</span></div><span style="display:flex;align-items:center;gap:4px;font-size:13px;font-weight:800;color:{{ c.link }}"><lc-icon name="download" size="16"></lc-icon>{{ t.open }}</span></div></sc-if>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<sc-if value="{{ s.inqClosed }}">
+<div style="display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:18px;background:{{ c.surface2 }};border:1px solid {{ c.border }}">
+<div style="display:flex;gap:10px;align-items:flex-start"><lc-icon name="archive" size="22" style="color:{{ c.text2 }}"></lc-icon><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:800">{{ t.closedTitle }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ t.closedBody }}</span></div></div>
+<button onClick="{{ go.inqNew1 }}" style="height:52px;border-radius:14px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><lc-icon name="message-square-plus" size="19"></lc-icon><span>{{ t.newOnTopic }}</span></button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCal }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;padding:4px;border-radius:16px;background:{{ c.surface2 }};gap:4px">
+<sc-for list="{{ calViews }}" as="v" hint-placeholder-count="3">
+<button onClick="{{ v.onClick }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:44px;border-radius:12px;border:none;background:{{ v.bg }};color:{{ v.fg }};font-size:14px;font-weight:800;cursor:pointer;box-shadow:{{ v.sh }}"><lc-icon name="{{ v.icon }}" size="17"></lc-icon><span>{{ v.label }}</span></button>
+</sc-for>
+</div>
+<div style="display:flex;gap:14px;flex-wrap:wrap;font-size:13px;font-weight:800">
+<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:{{ tB.bg }};color:{{ tB.fg }};border:1px solid {{ tB.bd }}"><div style="width:9px;height:9px;border-radius:50%;background:{{ tB.fg }}"></div><lc-icon name="user-round" size="14"></lc-icon>{{ t.personalLeg }}</span>
+<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:{{ tP.bg }};color:{{ tP.fg }};border:1px solid {{ tP.bd }}"><div style="width:8px;height:8px;background:{{ tP.fg }};transform:rotate(45deg)"></div><lc-icon name="building-2" size="14"></lc-icon>{{ t.centerLeg }}</span>
+</div>
+
+<sc-if value="{{ s.calMonth }}">
+<div style="display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<div style="display:flex;align-items:center;gap:8px"><button style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface2 }};cursor:pointer"><lc-icon name="{{ ic.back2 }}" size="20"></lc-icon></button><span style="flex:1;text-align:center;font-size:18px;font-weight:800">{{ t.monthName }}</span><button style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface2 }};cursor:pointer"><lc-icon name="{{ ic.chev }}" size="20"></lc-icon></button></div>
+<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px">
+<sc-for list="{{ wdays }}" as="w" hint-placeholder-count="7"><span style="text-align:center;font-size:12px;font-weight:800;color:{{ c.label }};padding:4px 0">{{ w }}</span></sc-for>
+<sc-for list="{{ cells }}" as="d" hint-placeholder-count="35">
+<button onClick="{{ d.onClick }}" style="height:48px;border-radius:12px;border:{{ d.bd }};background:{{ d.bg }};color:{{ d.fg }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;padding:0"><span style="font-size:15px;font-weight:{{ d.weight }};line-height:1">{{ d.n }}</span><div style="display:flex;gap:3px;height:8px;align-items:center"><div style="width:7px;height:7px;border-radius:50%;background:{{ tB.fg }};display:{{ d.pDisp }}"></div><div style="width:6px;height:6px;background:{{ tP.fg }};transform:rotate(45deg);display:{{ d.cDisp }}"></div></div></button>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="calendar-check" size="16"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ selDayLabel }}</span></div>
+<sc-for list="{{ selItems }}" as="e" hint-placeholder-count="1">
+<button onClick="{{ e.onClick }}" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }};border-inline-start:4px solid {{ e.tone.fg }};cursor:pointer;text-align:start;min-height:64px">
+<div style="width:42px;height:42px;border-radius:12px;background:{{ e.tone.bg }};color:{{ e.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ e.icon }}" size="20"></lc-icon></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:800;line-height:1.3">{{ e.title }}</span><span style="font-size:13px;color:{{ c.text2 }};display:flex;gap:5px;align-items:center"><lc-icon name="clock" size="13"></lc-icon><span dir="ltr">{{ e.time }}</span><span>· {{ e.typeLabel }}</span></span></div>
+<lc-icon name="{{ ic.chev }}" size="20" style="color:{{ c.text2 }}"></lc-icon>
+</button>
+</sc-for>
+<sc-if value="{{ selEmpty }}"><div style="display:flex;gap:10px;align-items:center;padding:16px;border-radius:16px;background:{{ c.surface2 }};font-size:14px;color:{{ c.text2 }}"><lc-icon name="calendar-x" size="20"></lc-icon><span>{{ t.nothingDay }}</span></div></sc-if>
+</sc-if>
+
+<sc-if value="{{ s.calWeek }}">
+<div style="display:flex;align-items:center;gap:8px"><button style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};cursor:pointer"><lc-icon name="{{ ic.back2 }}" size="20"></lc-icon></button><div style="flex:1;display:flex;flex-direction:column;align-items:center"><span style="font-size:16px;font-weight:800">{{ t.thisWeek }}</span><span dir="ltr" style="font-size:13px;color:{{ c.text2 }}">11.10.2026 – 17.10.2026</span></div><button style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};cursor:pointer"><lc-icon name="{{ ic.chev }}" size="20"></lc-icon></button></div>
+<sc-for list="{{ weekDays }}" as="wd" hint-placeholder-count="7">
+<div style="display:flex;gap:10px;align-items:flex-start">
+<div style="width:52px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:8px 0;border-radius:14px;background:{{ wd.bg }};color:{{ wd.fg }};border:1px solid {{ wd.bd }}"><span style="font-size:12px;font-weight:800">{{ wd.wd }}</span><span style="font-size:20px;font-weight:900;line-height:1.1">{{ wd.n }}</span></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+<sc-for list="{{ wd.items }}" as="e" hint-placeholder-count="1">
+<button onClick="{{ e.onClick }}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;background:{{ c.surface }};border:1px solid {{ c.border }};border-inline-start:4px solid {{ e.tone.fg }};cursor:pointer;text-align:start;min-height:52px"><lc-icon name="{{ e.icon }}" size="18" style="color:{{ e.tone.fg }}"></lc-icon><div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font-size:14px;font-weight:800;line-height:1.25">{{ e.title }}</span><span style="font-size:12px;color:{{ c.text2 }}"><span dir="ltr">{{ e.time }}</span> · {{ e.typeLabel }}</span></div></button>
+</sc-for>
+<sc-if value="{{ wd.empty }}"><span style="display:flex;align-items:center;gap:6px;min-height:52px;font-size:13px;color:{{ c.text2 }}"><lc-icon name="minus" size="14"></lc-icon>{{ t.nothing }}</span></sc-if>
+</div>
+</div>
+</sc-for>
+</sc-if>
+
+<sc-if value="{{ s.calList }}">
+<div style="display:flex;flex-direction:column;gap:14px">
+<sc-for list="{{ listGroups }}" as="g" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="calendar" size="15"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ g.label }}</span></div>
+<sc-for list="{{ g.items }}" as="e" hint-placeholder-count="1">
+<button onClick="{{ e.onClick }}" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }};cursor:pointer;text-align:start">
+<span dir="ltr" style="width:44px;font-size:15px;font-weight:900;text-align:start">{{ e.time }}</span>
+<div style="width:40px;height:40px;border-radius:12px;background:{{ e.tone.bg }};color:{{ e.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ e.icon }}" size="19"></lc-icon></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px"><span style="font-size:15px;font-weight:800;line-height:1.3">{{ e.title }}</span><span style="align-self:flex-start;display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:999px;background:{{ e.tone.bg }};color:{{ e.tone.fg }};border:1px solid {{ e.tone.bd }};font-size:11px;font-weight:800"><lc-icon name="{{ e.typeIcon }}" size="12"></lc-icon>{{ e.typeLabel }}</span></div>
+<lc-icon name="{{ ic.chev }}" size="20" style="color:{{ c.text2 }}"></lc-icon>
+</button>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAppt }}">
+<div style="padding:16px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ tB.bg }};color:{{ tB.fg }};border:1px solid {{ tB.bd }};font-size:13px;font-weight:800"><lc-icon name="user-round" size="14"></lc-icon>{{ t.personalLeg }}</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ apChip.bg }};color:{{ apChip.fg }};border:1px solid {{ apChip.bd }};font-size:13px;font-weight:800"><lc-icon name="{{ apChip.icon }}" size="14"></lc-icon>{{ apChip.label }}</span></div>
+<div style="display:flex;gap:14px;align-items:center"><div style="width:56px;height:56px;border-radius:16px;background:{{ tT.bg }};color:{{ tT.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="stethoscope" size="28"></lc-icon></div><span style="font-size:22px;font-weight:800;line-height:1.25">{{ t.drVisit }}</span></div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<sc-for list="{{ apRows }}" as="r" hint-placeholder-count="5">
+<div style="display:flex;gap:12px;padding:12px 14px;border-bottom:1px solid {{ c.border }}"><lc-icon name="{{ r.icon }}" size="20" style="color:{{ c.text2 }}"></lc-icon><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:12px;font-weight:700;color:{{ c.text2 }}">{{ r.label }}</span><span style="font-size:15px;font-weight:700">{{ r.value }}</span></div></div>
+</sc-for>
+</div>
+<div style="display:flex;gap:10px;padding:14px;border-radius:14px;background:{{ c.surface2 }};font-size:14px;color:{{ c.text2 }}"><lc-icon name="info" size="18"></lc-icon><span>{{ t.apNote }}</span></div>
+<sc-if value="{{ s.calAppt }}"><button onClick="{{ go.calApptOk }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="calendar-check" size="20"></lc-icon><span>{{ t.confirmAttend }}</span></button></sc-if>
+<sc-if value="{{ s.calApptOk }}"><div style="height:56px;border-radius:16px;background:{{ tG.bg }};border:1px solid {{ tG.bd }};color:{{ tG.fg }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px"><lc-icon name="circle-check" size="20"></lc-icon><span>{{ t.youConfirmed }}</span></div></sc-if>
+<div style="display:flex;gap:10px">
+<button onClick="{{ go.inqNew1 }}" style="flex:1;height:52px;border-radius:14px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><lc-icon name="message-square-plus" size="18"></lc-icon><span>{{ t.askQ }}</span></button>
+<button style="flex:1;height:52px;border-radius:14px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><lc-icon name="calendar-plus" size="18"></lc-icon><span>{{ t.addCal }}</span></button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.calEvent }}">
+<div style="padding:0 0 28px;display:flex;flex-direction:column;gap:16px">
+<div style="height:180px;background:repeating-linear-gradient(135deg,{{ c.stA }} 0 12px,{{ c.stB }} 12px 24px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:{{ c.text2 }}">event photo · courtyard</div>
+<div style="padding:0 16px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ tP.bg }};color:{{ tP.fg }};border:1px solid {{ tP.bd }};font-size:13px;font-weight:800"><lc-icon name="building-2" size="14"></lc-icon>{{ t.centerLeg }}</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ tA.bg }};color:{{ tA.fg }};border:1px solid {{ tA.bd }};font-size:13px;font-weight:800"><lc-icon name="hourglass" size="14"></lc-icon>{{ t.awaitRsvp }}</span></div>
+<span style="font-size:24px;font-weight:800;line-height:1.2">{{ t.musicTitle }}</span>
+<span style="font-size:16px;line-height:1.55">{{ t.musicBody }}</span>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<sc-for list="{{ evRows }}" as="r" hint-placeholder-count="4">
+<div style="display:flex;gap:12px;padding:12px 14px;border-bottom:1px solid {{ c.border }}"><lc-icon name="{{ r.icon }}" size="20" style="color:{{ c.text2 }}"></lc-icon><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:12px;font-weight:700;color:{{ c.text2 }}">{{ r.label }}</span><span style="font-size:15px;font-weight:700">{{ r.value }}</span></div></div>
+</sc-for>
+</div>
+<button onClick="{{ go.rsvp }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="calendar-check" size="20"></lc-icon><span>{{ t.rsvpBtn }}</span></button>
+<span style="font-size:13px;color:{{ c.text2 }};text-align:center;margin-top:-6px">{{ t.rsvpBy }}</span>
+</div>
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ hasReply }}">
+<div style="padding:10px 14px 30px;border-top:1px solid {{ c.border }};background:{{ c.surface }};display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;gap:8px;align-items:flex-end">
+<button style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:52px;height:52px;border-radius:14px;border:1px solid {{ c.border }};background:{{ c.surface2 }};cursor:pointer"><lc-icon name="paperclip" size="19"></lc-icon><span style="font-size:10px;font-weight:800">{{ t.attach }}</span></button>
+<div style="flex:1;min-height:52px;padding:14px;box-sizing:border-box;border-radius:14px;border:1.5px solid {{ c.border }};background:{{ c.bg }};font-size:15px;color:{{ c.text2 }}">{{ t.replyPh }}</div>
+<button onClick="{{ go.inqReplied }}" style="display:flex;align-items:center;gap:6px;height:52px;padding:0 14px;border-radius:14px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:15px;font-weight:800;cursor:pointer"><lc-icon name="send" size="18"></lc-icon><span>{{ t.send }}</span></button>
+</div>
+<span style="font-size:12px;color:{{ c.text2 }};display:flex;gap:5px;align-items:center"><lc-icon name="info" size="13"></lc-icon>{{ t.replyNote }}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMain }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;padding:6px 4px 26px;border-top:1px solid {{ c.border }};background:{{ c.surface }}">
+<sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="5">
+<button onClick="{{ tb.onClick }}" style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:54px;padding:4px 0;background:none;border:none;color:{{ tb.color }};cursor:pointer">
+<div style="position:relative;display:flex;align-items:center;justify-content:center;width:52px;height:30px;border-radius:15px;background:{{ tb.pill }}"><lc-icon name="{{ tb.icon }}" size="22"></lc-icon><sc-if value="{{ tb.hasBadge }}"><span style="position:absolute;top:-4px;inset-inline-end:2px;min-width:18px;height:18px;padding:0 4px;box-sizing:border-box;border-radius:9px;background:{{ c.danger }};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid {{ c.surface }}">{{ tb.badge }}</span></sc-if></div>
+<span style="font-size:12px;font-weight:{{ tb.weight }};white-space:nowrap">{{ tb.label }}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
+<sc-if value="{{ isInqList }}">
+<button onClick="{{ go.inqNew1 }}" style="position:absolute;bottom:104px;inset-inline-end:16px;z-index:10;display:flex;align-items:center;gap:8px;height:56px;padding:0 20px;border-radius:28px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 10px 24px -8px rgba(15,20,30,.45)"><lc-icon name="message-square-plus" size="20"></lc-icon><span>{{ t.newInq }}</span></button>
+</sc-if>
+
+<sc-if value="{{ hasToast }}">
+<div style="position:absolute;left:16px;right:16px;bottom:{{ toastBottom }};z-index:30;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:{{ c.toastBg }};color:{{ c.toastFg }};box-shadow:0 14px 30px -10px rgba(10,14,22,.5)">
+<div style="width:34px;height:34px;border-radius:50%;background:{{ tG.fg }};color:{{ c.toastBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="check" size="19" stroke="3"></lc-icon></div>
+<div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:800">{{ toast.title }}</span><span style="font-size:13px;opacity:.8">{{ toast.body }}</span></div>
+</div>
+</sc-if>
+
+<div style="position:absolute;bottom:8px;left:50%;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:{{ c.text }};z-index:45;pointer-events:none"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:410,&quot;height&quot;:864},&quot;screen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;inqList&quot;,&quot;inqNoResults&quot;,&quot;inqNew1&quot;,&quot;inqNew2&quot;,&quot;inqSent&quot;,&quot;inqThread&quot;,&quot;inqThreadNew&quot;,&quot;inqReplied&quot;,&quot;inqClosed&quot;,&quot;calMonth&quot;,&quot;calWeek&quot;,&quot;calList&quot;,&quot;calAppt&quot;,&quot;calApptOk&quot;,&quot;calEvent&quot;],&quot;default&quot;:&quot;inqList&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;he&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;interactive&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onNav&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { cur: null, filter: 'all', dept: 'physio', day: 16 };
+  componentDidUpdate(pp) { if (pp.screen !== this.props.screen && this.state.cur) this.setState({ cur: null }); }
+  renderVals() {
+    const P = this.props, S = this.state, I = !!P.interactive;
+    const lang = P.lang || 'en', theme = P.theme || 'light';
+    const he = lang === 'he', dark = theme === 'dark';
+    const L = (e, h) => he ? h : e;
+    const scr = S.cur || P.screen || 'inqList';
+    const c = dark ? {
+      bg: '#10141C', surface: '#1A202B', surface2: '#242B38', border: '#2D3544', text: '#ECEEF2', text2: '#A9B0BC', label: '#929AA8',
+      navy: '#26314D', primary: '#B9C7F2', onPrimary: '#10141C', link: '#9DB4FF', danger: '#FF6B71', tabActive: '#E4E9F7', tabIdle: '#8E95A3', pill: '#2B3550',
+      stA: '#232A36', stB: '#1D232E', shadow: 'none', toastBg: '#ECEEF2', toastFg: '#10141C', mine: '#1E2638'
+    } : {
+      bg: '#FCF8F1', surface: '#FFFFFF', surface2: '#F4EFE6', border: '#E6E1D7', text: '#1A2233', text2: '#5C6474', label: '#6B7180',
+      navy: '#1F2A44', primary: '#1F2A44', onPrimary: '#FFFFFF', link: '#2A4FB8', danger: '#D63A40', tabActive: '#1F2A44', tabIdle: '#737985', pill: '#E9EDF6',
+      stA: '#EFEAE1', stB: '#F7F3EC', shadow: '0 1px 2px rgba(26,34,51,.05)', toastBg: '#1F2A44', toastFg: '#FFFFFF', mine: '#F1F4FA'
+    };
+    const TONES = {
+      blue: [['#1F5FD1', '#EAF1FE', '#C5D8FB'], ['#8DB4FF', '#1A2742', '#2C4370']], amber: [['#935800', '#FFF4E0', '#F3D296'], ['#F5C46B', '#33280F', '#5A4518']],
+      violet: [['#6B3FC9', '#F2ECFE', '#D9CBFA'], ['#C3A8FF', '#2A2142', '#45366B']], green: [['#157347', '#E7F6EE', '#BCE5CF'], ['#6FD6A0', '#15291F', '#24503A']],
+      red: [['#C42B32', '#FDECEC', '#F6C3C5'], ['#FF8E92', '#3A1A1C', '#64292D']], slate: [['#4B5563', '#F0F1F4', '#D6D9E0'], ['#B4BAC6', '#252A33', '#3B424F']],
+      teal: [['#0F766E', '#E3F5F2', '#B5E3DB'], ['#5ED3C2', '#11302C', '#1F514A']], pink: [['#B8195A', '#FDEBF2', '#F6C4D7'], ['#FF8FB8', '#3A1926', '#62293F']],
+    };
+    const tn = k => { const [fg, bg, bd] = TONES[k][dark ? 1 : 0]; return { fg, bg, bd }; };
+    const ic = { chev: he ? 'chevron-left' : 'chevron-right', back: he ? 'arrow-right' : 'arrow-left', back2: he ? 'chevron-right' : 'chevron-left', fwd: he ? 'arrow-left' : 'arrow-right' };
+    const OWN = ['inqList', 'inqNoResults', 'inqNew1', 'inqNew2', 'inqSent', 'inqThread', 'inqThreadNew', 'inqReplied', 'inqClosed', 'calMonth', 'calWeek', 'calList', 'calAppt', 'calApptOk', 'calEvent'];
+    const ALL = OWN.concat(['home', 'resGeneral', 'pickerSheet', 'notifCenter', 'more', 'rsvp']);
+    const go = {}, s = {};
+    ALL.forEach(k => { go[k] = !I ? undefined : OWN.includes(k) ? () => this.setState({ cur: k }) : (P.onNav ? () => P.onNav(k) : undefined); });
+    OWN.forEach(k => s[k] = scr === k);
+
+    const ST = {
+      new: ['blue', 'sparkles', L('New', 'חדש')], read: ['slate', 'eye', L('Read', 'נקרא')], progress: ['amber', 'loader', L('In progress', 'בטיפול')],
+      wait: ['violet', 'reply', L('Waiting for you', 'ממתין לכם')], handled: ['green', 'circle-check', L('Handled', 'טופל')], closed: ['slate', 'archive', L('Closed', 'סגור')]
+    };
+    const chip = k => { const d = ST[k]; return { ...tn(d[0]), icon: d[1], label: d[2] }; };
+
+    const t = {
+      switch: L('Switch', 'החלפה'), alerts: L('Alerts', 'התראות'), resInit: L('ML', 'מל'), resName: L('Miriam Levi', 'מרים לוי'), resPlace: L('Ward B · Room 12', 'מחלקה ב׳ · חדר 12'),
+      inqTitle: L('Contact Staff', 'פנייה לצוות'), inqSub: L('Inquiries are organized by subject. Each one is handled by a department and has a status you can follow.', 'הפניות מאורגנות לפי נושא. כל פנייה מטופלת על ידי מחלקה, ואפשר לעקוב אחרי הסטטוס שלה.'),
+      searchPh: L('Search by subject or message', 'חיפוש לפי נושא או הודעה'), clear: L('Clear', 'ניקוי'), allDepts: L('All departments', 'כל המחלקות'), newest: L('Newest', 'החדשות'),
+      newReply: L('New reply', 'תשובה חדשה'), newInq: L('New inquiry', 'פנייה חדשה'),
+      noResTitle: L('No inquiries match your search', 'לא נמצאו פניות שתואמות לחיפוש'), noResBody: L('We couldn\'t find "hearing aid" in Social work inquiries. Try a different word, or clear the filters to see all your inquiries.', 'לא מצאנו את "מכשיר שמיעה" בפניות לעבודה סוציאלית. נסו מילה אחרת, או נקו את המסננים כדי לראות את כל הפניות.'),
+      clearFilters: L('Clear search and filters', 'ניקוי החיפוש והמסננים'),
+      whoTitle: L('Who would you like to contact?', 'למי תרצו לפנות?'), whoSub: L('Choose the department that can best help. If you\'re not sure, choose "Other" and the social worker will route it.', 'בחרו את המחלקה שיכולה לעזור הכי טוב. אם אינכם בטוחים, בחרו "אחר" והעובדת הסוציאלית תעביר את הפנייה.'),
+      selected: L('Selected', 'נבחר'), continue: L('Continue', 'המשך'), sendingTo: L('Sending to', 'נשלח אל'), wardB: L('Ward B', 'מחלקה ב׳'), change: L('Change', 'שינוי'),
+      subject: L('Subject', 'נושא'), subjVal: L('Exercises we can do during visits', 'תרגילים שאפשר לעשות בזמן הביקור'), subjHelp: L('A short title helps the team find your inquiry quickly.', 'כותרת קצרה עוזרת לצוות למצוא את הפנייה במהירות.'),
+      message: L('Message', 'הודעה'), msgVal: L('Hi Noa, I visit Miriam on Tuesdays and Fridays. Which walking exercises are safe for us to do together in the corridor? I attached the plan we got last year.', 'שלום נועה, אני מבקרת את מרים בימי שלישי ושישי. אילו תרגילי הליכה בטוח לנו לעשות יחד במסדרון? צירפתי את התוכנית שקיבלנו בשנה שעברה.'),
+      msgHelp: L('Please don\'t include passwords or ID numbers.', 'אין לכלול סיסמאות או מספרי זהות.'), attachments: L('Photos and files (optional)', 'תמונות וקבצים (לא חובה)'), remove: L('Remove', 'הסרה'),
+      addPhoto: L('Add photo', 'הוספת תמונה'), addFile: L('Add file', 'הוספת קובץ'), attHelp: L('Up to 5 files, 10 MB each. JPG, PNG or PDF.', 'עד 5 קבצים, עד 10MB לכל קובץ. JPG, PNG או PDF.'),
+      urgentNote: L('This is not for emergencies. For anything urgent, call the nurses\' station at', 'הפנייה אינה מיועדת למקרי חירום. בכל עניין דחוף, התקשרו לעמדת האחיות'),
+      sendInq: L('Send inquiry', 'שליחת הפנייה'),
+      sentAt: L('Sent on 14.10.2026 09:41', 'נשלחה ב-14.10.2026 09:41'), sentTitle: L('Your inquiry was sent', 'הפנייה נשלחה'),
+      sentBody: L('The Physiotherapy team received it. You\'ll get a notification when they reply, usually within 1 business day.', 'צוות הפיזיותרפיה קיבל את הפנייה. תקבלו התראה כשיגיע מענה, בדרך כלל תוך יום עסקים אחד.'),
+      viewInq: L('View inquiry', 'צפייה בפנייה'), backToInqs: L('Back to my inquiries', 'חזרה לפניות שלי'),
+      opened: L('Opened', 'נפתחה'), open: L('Open', 'פתיחה'), attach: L('Attach', 'צירוף'), replyPh: L('Write your reply…', 'כתבו את התשובה שלכם…'), send: L('Send', 'שליחה'),
+      replyNote: L('Your reply goes to Social work and is saved in Miriam\'s file.', 'התשובה תישלח לעבודה הסוציאלית ותישמר בתיק של מרים.'),
+      closedTitle: L('This inquiry is closed', 'הפנייה סגורה'), closedBody: L('Closed by Yael Mizrahi on 19.10.2026 10:05. You can no longer reply, but you can open a new inquiry on the same topic.', 'נסגרה על ידי יעל מזרחי ב-19.10.2026 10:05. אי אפשר להשיב בה, אבל אפשר לפתוח פנייה חדשה באותו נושא.'),
+      newOnTopic: L('Open a new inquiry on this topic', 'פתיחת פנייה חדשה בנושא'),
+      personalLeg: L('Personal · Miriam', 'אישי · מרים'), centerLeg: L('Center event', 'אירוע במרכז'), monthName: L('October 2026', 'אוקטובר 2026'),
+      nothingDay: L('Nothing is scheduled for this day.', 'אין פעילויות מתוכננות ביום זה.'), nothing: L('Nothing scheduled', 'אין פעילויות'), thisWeek: L('This week', 'השבוע'),
+      drVisit: L('Doctor visit · Dr. Avi Shapiro', 'ביקור רופא · ד״ר אבי שפירא'),
+      apNote: L('Confirming lets the ward staff know that you plan to join the visit. You\'re welcome to arrive 10 minutes early.', 'האישור מעדכן את צוות המחלקה שאתם מתכננים להצטרף לביקור. מומלץ להגיע 10 דקות לפני.'),
+      confirmAttend: L('Confirm I will attend', 'אישור השתתפות'), youConfirmed: L('Confirmed · see you there', 'אושר · נתראה שם'), askQ: L('Ask a question', 'שאלה לצוות'), addCal: L('Add to my calendar', 'הוספה ליומן שלי'),
+      awaitRsvp: L('Awaiting your RSVP', 'ממתין לאישור הגעה'), musicTitle: L('Family music afternoon', 'אחר צהריים של מוזיקה עם המשפחה'),
+      musicBody: L('Our residents\' choir performs autumn songs, followed by coffee and cake with families. Grandchildren are welcome.', 'מקהלת הדיירים שלנו מופיעה בשירי סתיו, ולאחר מכן קפה ועוגה עם המשפחות. הנכדים מוזמנים.'),
+      rsvpBtn: L('RSVP to this event', 'אישור הגעה לאירוע'), rsvpBy: L('Please reply by 20.10.2026 so we can prepare seating.', 'נא להשיב עד 20.10.2026 כדי שנוכל להכין מקומות ישיבה.'),
+    };
+
+    const D = {
+      nursing: ['stethoscope', 'teal', L('Nursing', 'סיעוד'), L('Daily care, medication', 'טיפול יומיומי, תרופות')],
+      doctor: ['briefcase-medical', 'blue', L('Doctor', 'רופא'), L('Medical questions', 'שאלות רפואיות')],
+      social: ['hand-heart', 'violet', L('Social work', 'עבודה סוציאלית'), L('Wellbeing, family', 'רווחה, משפחה')],
+      physio: ['footprints', 'pink', L('Physiotherapy', 'פיזיותרפיה'), L('Mobility, exercises', 'ניידות, תרגילים')],
+      nutrition: ['salad', 'green', L('Nutrition', 'תזונה'), L('Meals, diet', 'ארוחות, תפריט')],
+      activities: ['palette', 'amber', L('Activities', 'פעילויות'), L('Groups, events', 'קבוצות, אירועים')],
+      management: ['building-2', 'slate', L('Management', 'הנהלה'), L('General matters', 'עניינים כלליים')],
+      finance: ['wallet', 'blue', L('Finance', 'כספים'), L('Invoices, payments', 'חשבוניות, תשלומים')],
+      maintenance: ['wrench', 'amber', L('Maintenance', 'אחזקה'), L('Room, repairs', 'חדר, תיקונים')],
+      other: ['circle-help', 'slate', L('Other', 'אחר'), L('Not sure who to ask', 'לא בטוחים למי לפנות')],
+    };
+    const dept = k => { const [icon, tk, label, hint] = D[k]; return { icon, tone: tn(tk), label, hint }; };
+    const selDeptKey = S.dept;
+    const depts = Object.keys(D).map(k => { const sel = k === selDeptKey; return { ...dept(k), sel, bd: sel ? c.primary : c.border, bg: sel ? c.pill : c.surface, onClick: I ? () => this.setState({ dept: k }) : undefined }; });
+
+    const INQ = [
+      { id: 'wait', ref: 'INQ-2041', d: 'social', st: 'wait', date: '13.10.2026', isNew: true, subject: L('Winter clothing for Miriam', 'בגדי חורף למרים'), preview: L('Yael: Could you bring two more warm sweaters, warm socks and closed slippers by Sunday 18.10?', 'יעל: תוכלי להביא עוד שני סוודרים חמים, גרביים חמות ונעלי בית סגורות עד יום ראשון 18.10?') },
+      { id: 'prog', ref: 'INQ-2038', d: 'nursing', st: 'progress', date: '13.10.2026', isNew: true, subject: L('Evening medication time', 'שעת התרופות בערב'), preview: L('Ruth: We spoke with Dr. Shapiro and will update you after Friday\'s visit.', 'רות: דיברנו עם ד״ר שפירא ונעדכן אותך אחרי הביקור ביום שישי.') },
+      { id: 'new', ref: 'INQ-2044', d: 'management', st: 'new', date: '14.10.2026', isNew: false, subject: L('Visit with grandchildren on Saturday', 'ביקור עם הנכדים בשבת'), preview: L('You: Can we use the garden lounge on Saturday afternoon? We will be 6 people.', 'את: אפשר להשתמש בפינת הגן בשבת אחר הצהריים? נהיה 6 אנשים.') },
+      { id: 'read', ref: 'INQ-2032', d: 'physio', st: 'read', date: '09.10.2026', isNew: false, subject: L('New walker height', 'גובה ההליכון החדש'), preview: L('You: The new walker seems too low for her. Could someone check it?', 'את: נראה שההליכון החדש נמוך מדי בשבילה. מישהו יכול לבדוק?') },
+      { id: 'handled', ref: 'INQ-2027', d: 'nutrition', st: 'handled', date: '02.10.2026', isNew: false, subject: L('Lactose-free holiday meal', 'ארוחת חג ללא לקטוז'), preview: L('Michal: A lactose-free option was prepared for Miriam for the whole holiday.', 'מיכל: הוכנה למרים מנה ללא לקטוז לכל ימי החג.') },
+      { id: 'closed', ref: 'INQ-2019', d: 'finance', st: 'closed', date: '21.09.2026', isNew: false, subject: L('Question about the September invoice', 'שאלה על החשבונית של ספטמבר'), preview: L('Oren: The duplicate laundry charge was removed. Closing this inquiry.', 'אורן: החיוב הכפול על הכביסה בוטל. אנחנו סוגרים את הפנייה.') },
+    ];
+    const FIL = [['all', 'list', L('All', 'הכל')], ['wait', 'reply', L('Waiting for you', 'ממתין לכם')], ['progress', 'loader', L('In progress', 'בטיפול')], ['new', 'sparkles', L('New', 'חדש')], ['read', 'eye', L('Read', 'נקרא')], ['handled', 'circle-check', L('Handled', 'טופל')], ['closed', 'archive', L('Closed', 'סגור')]];
+    const statusFilters = FIL.map(([k, icon, label]) => { const a = k === S.filter; return { icon, label, count: String(k === 'all' ? INQ.length : INQ.filter(q => q.st === k).length), bg: a ? c.primary : c.surface, fg: a ? c.onPrimary : c.text, bd: a ? c.primary : c.border, onClick: I ? () => this.setState({ filter: k }) : undefined }; });
+    const inqs = INQ.filter(q => S.filter === 'all' || q.st === S.filter).map(q => ({ ...q, dept: dept(q.d), chip: chip(q.st), bd: q.isNew ? tn('blue').bd : c.border, onClick: I ? () => this.setState({ cur: q.st === 'closed' ? 'inqClosed' : 'inqThread' }) : undefined }));
+
+    const TS = [['new', 'sparkles', L('New', 'חדש')], ['read', 'eye', L('Read', 'נקרא')], ['progress', 'loader', L('In progress', 'בטיפול')], ['wait', 'reply', L('Waiting for you', 'ממתין לכם')], ['handled', 'circle-check', L('Handled', 'טופל')], ['closed', 'archive', L('Closed', 'סגור')]];
+    const mkSteps = (defs, idx, allDone) => defs.map(([k, icon, label], i) => {
+      const g = tn('green'), done = allDone || i < idx, act = !allDone && i === idx;
+      return { label, icon: done ? 'check' : icon, bg: done ? g.fg : act ? c.primary : c.surface, fg: done ? (dark ? '#10141C' : '#fff') : act ? c.onPrimary : c.text2, bd: done ? g.fg : act ? c.primary : c.border, lbl: act || done ? c.text : c.text2, weight: act ? 800 : 600, line: done && i < defs.length - 1 && (allDone || i + 1 <= idx) ? g.fg : c.border, lineDisp: i < defs.length - 1 ? 'block' : 'none' };
+    });
+    const isThread = s.inqThread || s.inqReplied || s.inqClosed || s.inqThreadNew;
+    const me = { isMsg: true, init: L('DC', 'דכ'), tone: tn('pink'), name: L('Dana Cohen (you)', 'דנה כהן (את)'), role: L('Daughter', 'בת'), roleIcon: 'heart', bg: c.mine };
+    const yael = { isMsg: true, init: L('YM', 'ימ'), tone: tn('violet'), name: L('Yael Mizrahi', 'יעל מזרחי'), role: L('Social worker, Ward B', 'עובדת סוציאלית, מחלקה ב׳'), roleIcon: 'hand-heart', bg: c.surface };
+    const ev = (icon, text, time) => ({ isEvent: true, icon, text, time });
+    let msgs = [
+      { ...me, time: '12.10.2026 18:05', text: L('Hello Yael, the weather is getting colder. Does Miriam have enough warm clothes in her closet? I can bring things on my next visit.', 'שלום יעל, מתחיל להתקרר. יש למרים מספיק בגדים חמים בארון? אוכל להביא דברים בביקור הבא.') },
+      ev('eye', L('Read by Social work', 'נקרא על ידי עבודה סוציאלית'), '13.10.2026 08:12'),
+      ev('loader', L('Status: In progress', 'סטטוס: בטיפול'), '13.10.2026 08:30'),
+      { ...yael, time: '13.10.2026 11:20', text: L('Hi Dana, thank you for checking. Miriam has one warm sweater. Could you bring two more warm sweaters, warm socks and closed slippers by Sunday 18.10? Please label everything with her name and room number.', 'שלום דנה, תודה שבדקת. למרים יש סוודר חם אחד. תוכלי להביא עוד שני סוודרים חמים, גרביים חמות ונעלי בית סגורות עד יום ראשון 18.10? נא לסמן הכל בשם ובמספר החדר.'), hasAtt: true, attIcon: 'file-text', attName: 'clothing-labels.pdf', attSize: 'PDF · 240 KB' },
+      ev('reply', L('Status: Waiting for you', 'סטטוס: ממתין לכם'), '13.10.2026 11:20'),
+    ];
+    let thStatus = 'wait', thIdx = 3;
+    if (s.inqReplied || s.inqClosed) {
+      msgs = msgs.concat([{ ...me, time: '14.10.2026 09:41', text: L('Thanks Yael! I\'ll bring them on Friday, all labeled.', 'תודה יעל! אביא אותם ביום שישי, הכל מסומן.') }, ev('loader', L('Status: In progress', 'סטטוס: בטיפול'), '14.10.2026 09:41')]);
+      thStatus = 'progress'; thIdx = 2;
+    }
+    if (s.inqClosed) {
+      msgs = msgs.concat([ev('circle-check', L('Status: Handled', 'סטטוס: טופל'), '16.10.2026 15:30'), { ...yael, time: '19.10.2026 10:05', text: L('We received the clothes and put them in Miriam\'s closet. Thank you, Dana! Closing this inquiry.', 'קיבלנו את הבגדים וסידרנו אותם בארון של מרים. תודה דנה! אנחנו סוגרים את הפנייה.') }, ev('archive', L('Closed', 'נסגרה'), '19.10.2026 10:05')]);
+      thStatus = 'closed'; thIdx = 6;
+    }
+    let th = { subject: L('Winter clothing for Miriam', 'בגדי חורף למרים'), ref: 'INQ-2041', date: '12.10.2026', dept: dept('social') };
+    if (s.inqThreadNew) {
+      th = { subject: t.subjVal, ref: 'INQ-2045', date: '14.10.2026', dept: dept('physio') };
+      msgs = [{ ...me, time: '14.10.2026 09:41', text: t.msgVal, hasAtt: true, attIcon: 'file-text', attName: 'walking-plan.pdf', attSize: 'PDF · 320 KB' }, ev('sparkles', L('Status: New · waiting to be read', 'סטטוס: חדש · ממתין לקריאה'), '14.10.2026 09:41')];
+      thStatus = 'new'; thIdx = 0;
+    }
+    const DESC = { new: L('Sent. The department will read it soon.', 'נשלחה. המחלקה תקרא אותה בקרוב.'), progress: L('The team is working on it. We\'ll notify you of any reply.', 'הצוות מטפל בפנייה. נעדכן אתכם בכל תשובה.'), wait: L('The team replied and is waiting for your answer.', 'הצוות השיב ומחכה לתשובה שלכם.'), closed: L('This inquiry is closed and kept for your records.', 'הפנייה סגורה ונשמרת לעיונכם.') };
+    th.chip = chip(thStatus); th.statusDesc = DESC[thStatus];
+    const thSteps = mkSteps(TS, thIdx, thIdx >= 6);
+
+    const newSteps = mkSteps([['d', 'building-2', L('Department', 'מחלקה')], ['m', 'pencil', L('Message', 'הודעה')]], s.inqNew1 ? 0 : 1, false);
+    const sentRows = [
+      { icon: 'hash', label: L('Reference', 'מספר פנייה'), value: 'INQ-2045', dir: 'ltr' }, { icon: 'footprints', label: L('Department', 'מחלקה'), value: D.physio[2] },
+      { icon: 'type', label: t.subject, value: t.subjVal }, { icon: 'sparkles', label: L('Status', 'סטטוס'), value: L('New', 'חדש') },
+    ];
+
+    const P_ = tn('blue'), C_ = tn('pink');
+    const EV = [
+      { d: 12, time: '15:00', p: 1, icon: 'video', title: L('Video call with Noam', 'שיחת וידאו עם נועם') },
+      { d: 14, time: '11:30', p: 1, icon: 'footprints', title: L('Physiotherapy session', 'טיפול פיזיותרפיה') },
+      { d: 15, time: '17:00', p: 0, icon: 'mic-vocal', title: L('Choir rehearsal open to families', 'חזרת מקהלה פתוחה למשפחות') },
+      { d: 16, time: '11:00', p: 1, icon: 'stethoscope', title: t.drVisit, appt: true },
+      { d: 18, time: '10:00', p: 1, icon: 'scissors', title: L('Hairdresser appointment', 'תור למספרה') },
+      { d: 20, time: '09:00', p: 1, icon: 'syringe', title: L('Flu vaccination', 'חיסון שפעת') },
+      { d: 22, time: '16:30', p: 0, icon: 'music', title: t.musicTitle, event: true },
+      { d: 27, time: '18:00', p: 0, icon: 'users', title: L('Family support group', 'קבוצת תמיכה למשפחות') },
+      { d: 29, time: '12:00', p: 0, icon: 'trees', title: L('Autumn picnic in the garden', 'פיקניק סתיו בגן') },
+    ];
+    const evItem = e => ({ ...e, tone: e.p ? P_ : C_, typeLabel: e.p ? t.personalLeg : t.centerLeg, typeIcon: e.p ? 'user-round' : 'building-2', onClick: e.appt ? go.calAppt : e.event ? go.calEvent : undefined });
+    const WD = he ? ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ש׳'] : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const WDL = he ? ['יום ראשון', 'יום שני', 'יום שלישי', 'יום רביעי', 'יום חמישי', 'יום שישי', 'שבת'] : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const cells = [];
+    for (let i = 0; i < 35; i++) {
+      const n = i - 3, out = n < 1;
+      const de = EV.filter(e => e.d === n), today = n === 14, sel = n === S.day;
+      cells.push({ n: out ? String(26 + i) : String(n), weight: today || sel ? 900 : 600, fg: out ? c.label : sel ? c.onPrimary : c.text, bg: sel ? c.primary : 'transparent', bd: today && !sel ? '2px solid ' + c.primary : '2px solid transparent', pDisp: !out && de.some(e => e.p) ? 'block' : 'none', cDisp: !out && de.some(e => !e.p) ? 'block' : 'none', onClick: I && !out ? () => this.setState({ day: n }) : undefined });
+    }
+    const dd = n => (n < 10 ? '0' : '') + n + '.10.2026';
+    const wdOf = n => (n + 3) % 7;
+    const selItems = EV.filter(e => e.d === S.day).map(evItem);
+    const weekDays = [11, 12, 13, 14, 15, 16, 17].map(n => { const items = EV.filter(e => e.d === n).map(evItem), today = n === 14; return { n: String(n), wd: WD[wdOf(n)], items, empty: !items.length, bg: today ? c.primary : c.surface, fg: today ? c.onPrimary : c.text, bd: today ? c.primary : c.border }; });
+    const groups = {};
+    EV.filter(e => e.d >= 14).forEach(e => { const k = e.d; (groups[k] = groups[k] || []).push(evItem(e)); });
+    const listGroups = Object.keys(groups).map(Number).sort((a, b) => a - b).map(n => ({ label: (n === 14 ? L('TODAY · ', 'היום · ') : '') + WDL[wdOf(n)].toUpperCase() + ' · ' + dd(n), items: groups[n] }));
+    listGroups.push({ label: WDL[4].toUpperCase() + ' · 10.12.2026', items: [evItem({ time: '17:00', p: 0, icon: 'party-popper', title: L('Hanukkah family evening', 'ערב חנוכה למשפחות') })] });
+    const calViews = [['calMonth', 'calendar', L('Month', 'חודש')], ['calWeek', 'calendar-range', L('Week', 'שבוע')], ['calList', 'list', L('List', 'רשימה')]].map(([k, icon, label]) => { const a = s[k]; return { icon, label, bg: a ? c.surface : 'transparent', fg: a ? c.text : c.text2, sh: a ? '0 1px 3px rgba(0,0,0,.12)' : 'none', onClick: go[k] }; });
+
+    const apRows = [
+      { icon: 'calendar', label: L('Date and time', 'תאריך ושעה'), value: WDL[5] + ', 16.10.2026 · 11:00–11:30' }, { icon: 'map-pin', label: L('Location', 'מיקום'), value: L('Ward B clinic, 1st floor', 'מרפאת מחלקה ב׳, קומה 1') },
+      { icon: 'user-round', label: L('With', 'עם'), value: L('Dr. Avi Shapiro, family physician', 'ד״ר אבי שפירא, רופא משפחה') }, { icon: 'clipboard-list', label: L('Purpose', 'מטרה'), value: L('Routine monthly check', 'בדיקה חודשית שגרתית') },
+      { icon: 'history', label: L('Changed', 'שינוי'), value: L('Moved from 15.10.2026 on 11.10.2026', 'הוזז מ-15.10.2026 ב-11.10.2026') },
+    ];
+    const apChip = s.calApptOk ? { ...tn('green'), icon: 'circle-check', label: L('Confirmed', 'אושר') } : { ...tn('violet'), icon: 'circle-alert', label: L('Needs your confirmation', 'נדרש אישור שלכם') };
+    const evRows = [
+      { icon: 'calendar', label: L('Date and time', 'תאריך ושעה'), value: WDL[4] + ', 22.10.2026 · 16:30–18:00' }, { icon: 'map-pin', label: L('Location', 'מיקום'), value: L('Center courtyard (main hall if it rains)', 'חצר המרכז (באולם הראשי במקרה של גשם)') },
+      { icon: 'users', label: L('Who can come', 'מי מוזמן'), value: L('Residents and up to 4 guests each', 'דיירים ועד 4 אורחים לכל דייר') }, { icon: 'accessibility', label: L('Accessibility', 'נגישות'), value: L('Wheelchair accessible, seating provided', 'נגיש לכיסאות גלגלים, יש מקומות ישיבה') },
+    ];
+
+    const tabDefs = [['home', 'house', L('Home', 'בית'), 0, go.home], ['res', 'user-round', L('Resident', 'הדייר'), 2, go.resGeneral], ['staff', 'messages-square', L('Contact Staff', 'פנייה לצוות'), 2, go.inqList], ['cal', 'calendar-days', L('Calendar', 'יומן'), 1, go.calMonth], ['more', 'layout-grid', L('More', 'עוד'), 3, go.more]];
+    const isCal = s.calMonth || s.calWeek || s.calList, isInqList = s.inqList || s.inqNoResults;
+    const activeTab = isCal ? 'cal' : 'staff';
+    const tabs = tabDefs.map(([k, icon, label, badge, onClick]) => { const a = k === activeTab; return { icon, label, hasBadge: !!badge && !a, badge, onClick, color: a ? c.tabActive : c.tabIdle, pill: a ? c.pill : 'transparent', weight: a ? 800 : 600 }; });
+
+    const TOP = { inqNew1: [L('New inquiry', 'פנייה חדשה'), go.inqList, L('Cancel', 'ביטול')], inqNew2: [L('New inquiry', 'פנייה חדשה'), go.inqNew1, L('Back', 'חזרה')], inqThread: [L('Inquiry', 'פנייה'), go.inqList, L('Inquiries', 'פניות')], inqThreadNew: [L('Inquiry', 'פנייה'), go.inqList, L('Inquiries', 'פניות')], inqReplied: [L('Inquiry', 'פנייה'), go.inqList, L('Inquiries', 'פניות')], inqClosed: [L('Inquiry', 'פנייה'), go.inqList, L('Inquiries', 'פניות')], calAppt: [L('Appointment', 'תור'), go.calMonth, L('Calendar', 'יומן')], calApptOk: [L('Appointment', 'תור'), go.calMonth, L('Calendar', 'יומן')], calEvent: [L('Center event', 'אירוע במרכז'), go.calList, L('Calendar', 'יומן')] };
+    const top = TOP[scr];
+    const toast = s.inqReplied ? { title: L('Sent', 'נשלח'), body: L('Your reply was sent to Social work', 'התשובה נשלחה לעבודה הסוציאלית') } : { title: L('Confirmed', 'אושר'), body: L('Ward B was notified that you will attend', 'מחלקה ב׳ עודכנה שתגיעו לביקור') };
+
+    return {
+      c, t, s, go, ic, av: tn('pink'), tR: tn('red'), tB: tn('blue'), tG: tn('green'), tA: tn('amber'), tT: tn('teal'), tP: tn('pink'),
+      dir: he ? 'rtl' : 'ltr', font: he ? "'Rubik',system-ui,sans-serif" : "'Nunito',system-ui,sans-serif",
+      isMain: isInqList || isCal, isInqList, isCal, isThread, isAppt: s.calAppt || s.calApptOk, hasReply: s.inqThread || s.inqReplied || s.inqThreadNew,
+      hasTopBar: !!top, topTitle: top ? top[0] : '', backGo: top ? top[1] : undefined, backLabel: top ? top[2] : '',
+      hasStepper: s.inqNew1 || s.inqNew2, steps: newSteps,
+      searchText: s.inqNoResults ? L('hearing aid', 'מכשיר שמיעה') : t.searchPh, searchColor: s.inqNoResults ? c.text : c.text2, searchBd: s.inqNoResults ? c.primary : c.border,
+      statusFilters, inqs, depts, selDept: dept(selDeptKey), sentRows, th, thSteps, msgs,
+      calViews, wdays: WD, cells, selItems, selEmpty: !selItems.length, selDayLabel: WDL[wdOf(S.day)].toUpperCase() + ' · ' + dd(S.day), weekDays, listGroups,
+      apRows, apChip, evRows,
+      tabs, hasToast: s.inqReplied || s.calApptOk, toast, toastBottom: s.inqReplied ? '128px' : '34px',
+    };
+  }
+}
+</script>
+</body>
+</html>

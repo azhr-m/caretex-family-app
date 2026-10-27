@@ -1,0 +1,84 @@
+{
+  "views": {
+    "label": "Calendar view",
+    "month": "Month",
+    "week": "Week",
+    "list": "List"
+  },
+  "legend": {
+    "personal": "Personal · {{name}}",
+    "center": "Center event"
+  },
+  "month": {
+    "prev": "Previous month",
+    "next": "Next month",
+    "cellLabel_one": "{{date}}, {{count}} item",
+    "cellLabel_other": "{{date}}, {{count}} items",
+    "today": "today"
+  },
+  "dayHeader": "{{weekday}} · <ltr>{{date}}</ltr>",
+  "todayHeader": "Today · {{weekday}} · <ltr>{{date}}</ltr>",
+  "nothingDay": "Nothing is scheduled for this day.",
+  "nothing": "Nothing scheduled",
+  "week": {
+    "this": "This week",
+    "prev": "Previous week",
+    "next": "Next week"
+  },
+  "list": {
+    "empty": "Nothing is scheduled in the coming months."
+  },
+  "allDay": "All day",
+  "appt": {
+    "title": "Appointment",
+    "back": "Calendar",
+    "needsConfirm": "Needs your confirmation",
+    "confirmed": "Confirmed",
+    "dateTime": "Date and time",
+    "dateTimeValue": "{{weekday}}, <ltr>{{when}}</ltr>",
+    "location": "Location",
+    "with": "With",
+    "purpose": "Purpose",
+    "changed": "Changed",
+    "changedValue": "Moved from <ltr>{{from}}</ltr> on <ltr>{{at}}</ltr>",
+    "notes": "Notes",
+    "note": "Confirming lets the ward staff know that you plan to join the visit. You're welcome to arrive 10 minutes early.",
+    "confirm": "Confirm I will attend",
+    "youConfirmed": "Confirmed · see you there",
+    "ask": "Ask a question",
+    "askSubject": "About: {{title}}",
+    "addToCalendar": "Add to my calendar",
+    "downloadFailed": "We couldn't download the calendar file. Try again.",
+    "confirmedToast": "Confirmed",
+    "confirmedToastBody": "{{ward}} was notified that you will attend"
+  },
+  "event": {
+    "title": "Center event",
+    "rsvp": {
+      "none": "Awaiting your RSVP",
+      "attending": "You're attending",
+      "not_attending": "Not attending",
+      "undecided": "Undecided"
+    },
+    "dateTime": "Date and time",
+    "location": "Location",
+    "who": "Who can come",
+    "whoValue_one": "Residents and up to {{count}} guest each",
+    "whoValue_other": "Residents and up to {{count}} guests each",
+    "accessibility": "Accessibility",
+    "program": "Program",
+    "rsvpButton": "RSVP to this event",
+    "changeRsvp": "Change my RSVP",
+    "rsvpBy": "Please reply by <ltr>{{date}}</ltr> so we can prepare seating.",
+    "rsvpClosed": "Replies closed on <ltr>{{date}}</ltr>.",
+    "invitation": "Invitation",
+    "yourAnswer": "Your answer: {{answer}}",
+    "answer": {
+      "attending": "Attending",
+      "attendingGuests_one": "Attending · {{count}} guest",
+      "attendingGuests_other": "Attending · {{count}} guests",
+      "not_attending": "Not attending",
+      "undecided": "Not decided yet"
+    }
+  }
+}

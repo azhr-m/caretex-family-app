@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;family=Rubik:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+<script src="./icons.js"></script>
+<style>button{font:inherit;color:inherit}</style>
+</helmet>
+<div dir="{{ dir }}" style="width:410px;height:864px;padding:10px;box-sizing:border-box;background:#0D1017;border-radius:58px;box-shadow:0 30px 60px -24px rgba(20,25,35,.45)">
+<div style="position:relative;width:390px;height:844px;border-radius:48px;overflow:hidden;background:{{ c.bg }};color:{{ c.text }};font-family:{{ font }};font-size:16px;line-height:1.4">
+
+<div dir="ltr" style="position:absolute;top:0;left:0;right:0;height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 36px;z-index:40;color:{{ sbColor }};font-family:-apple-system,system-ui,sans-serif;font-weight:600;font-size:16px;pointer-events:none">
+<span>{{ sbTime }}</span>
+<div style="position:absolute;left:50%;top:11px;width:122px;height:35px;margin-left:-61px;border-radius:20px;background:#000"></div>
+<div style="display:flex;gap:6px;align-items:center"><lc-icon name="signal" size="17"></lc-icon><lc-icon name="{{ wifiIcon }}" size="17"></lc-icon><lc-icon name="battery-full" size="22"></lc-icon></div>
+</div>
+
+<div style="position:absolute;top:47px;left:0;right:0;bottom:0;display:flex;flex-direction:column">
+
+<sc-if value="{{ isMain }}">
+<div style="display:flex;align-items:center;gap:10px;padding:6px 14px 12px;border-bottom:1px solid {{ c.border }};background:{{ c.bg }}">
+<div style="flex:1;min-width:0;display:flex;align-items:center;gap:10px;padding:6px 10px;border:1px solid {{ c.border }};border-radius:16px;background:{{ c.surface }};min-height:56px;box-sizing:border-box">
+<div style="width:42px;height:42px;border-radius:50%;background:{{ c.sk }};flex-shrink:0"></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:6px"><div style="width:110px;height:12px;border-radius:6px;background:{{ c.sk }}"></div><div style="width:80px;height:10px;border-radius:5px;background:{{ c.sk }}"></div></div>
+</div>
+<div style="width:62px;height:56px;border:1px solid {{ c.border }};border-radius:16px;background:{{ c.surface }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:{{ c.text2 }}"><lc-icon name="bell" size="22"></lc-icon><span style="font-size:11px;font-weight:700">{{ t.alerts }}</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasTopBar }}">
+<div style="display:flex;align-items:center;gap:8px;padding:4px 12px 10px;border-bottom:1px solid {{ c.border }}">
+<button onClick="{{ backGo }}" style="display:flex;align-items:center;gap:4px;min-height:44px;min-width:96px;padding:0 8px;border:none;background:none;cursor:pointer;font-size:15px;font-weight:700;color:{{ c.link }}"><lc-icon name="{{ ic.back }}" size="20"></lc-icon><span>{{ backLabel }}</span></button>
+<span style="flex:1;text-align:center;font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ topTitle }}</span>
+<div style="min-width:96px;display:flex;justify-content:flex-end">
+<sc-if value="{{ isNotif }}"><button onClick="{{ markAll }}" style="display:flex;align-items:center;gap:5px;min-height:44px;padding:0 4px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:800;color:{{ markColor }}"><lc-icon name="check-check" size="17"></lc-icon><span>{{ t.markAll }}</span></button></sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.stateOffline }}">
+<div style="display:flex;gap:10px;align-items:flex-start;padding:12px 16px;background:{{ c.offBg }};color:{{ c.offFg }}"><lc-icon name="wifi-off" size="20"></lc-icon><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:800">{{ t.offTitle }}</span><span style="font-size:13px;opacity:.9">{{ t.offBody }}</span></div></div>
+</sc-if>
+<sc-if value="{{ s.stateChanged }}">
+<div style="display:flex;gap:10px;align-items:center;padding:12px 16px;background:{{ tA.bg }};border-bottom:1px solid {{ tA.bd }}"><lc-icon name="refresh-ccw-dot" size="22" style="color:{{ tA.fg }}"></lc-icon><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:800">{{ t.chgTitle }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ t.chgBody }}</span></div><button style="display:flex;align-items:center;gap:5px;height:44px;padding:0 12px;border-radius:12px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:13px;font-weight:800;cursor:pointer"><lc-icon name="refresh-cw" size="16"></lc-icon><span>{{ t.refresh }}</span></button></div>
+</sc-if>
+
+<div style="flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none">
+
+<sc-if value="{{ isSvcList }}">
+<div style="padding:14px 16px 100px;display:flex;flex-direction:column;gap:12px">
+<span style="font-size:14px;color:{{ c.text2 }}">{{ t.svcIntro }}</span>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ svcs }}" as="r" hint-placeholder-count="4">
+<button onClick="{{ go.serviceDetail }}" style="display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};cursor:pointer;text-align:start;opacity:{{ r.op }}">
+<div style="width:44px;height:44px;border-radius:12px;background:{{ r.tone.bg }};color:{{ r.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ r.icon }}" size="22"></lc-icon></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px"><span style="font-size:16px;font-weight:800;line-height:1.3">{{ r.title }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ r.type }} · <span dir="ltr">{{ r.ref }}</span></span><span style="font-size:13px;color:{{ c.text2 }}">{{ r.meta }}</span>
+<span style="align-self:flex-start;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ r.chip.bg }};color:{{ r.chip.fg }};border:1px solid {{ r.chip.bd }};font-size:12px;font-weight:800;margin-top:2px"><lc-icon name="{{ r.chip.icon }}" size="14"></lc-icon>{{ r.chip.label }}</span></div>
+<lc-icon name="{{ ic.chev }}" size="20" style="color:{{ c.text2 }}"></lc-icon>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSvcNew }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:22px;font-weight:800">{{ t.svcWhat }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ t.svcWhatSub }}</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{ svcTypes }}" as="d" hint-placeholder-count="7">
+<button onClick="{{ d.onClick }}" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;border:2px solid {{ d.bd }};background:{{ d.bg }};cursor:pointer;text-align:start;min-height:64px">
+<div style="width:40px;height:40px;border-radius:12px;background:{{ d.tone.bg }};color:{{ d.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ d.icon }}" size="20"></lc-icon></div>
+<span style="flex:1;font-size:14px;font-weight:800;line-height:1.25">{{ d.label }}</span>
+<lc-icon name="{{ d.mark }}" size="18" style="color:{{ d.markFg }}"></lc-icon>
+</button>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:700">{{ t.svcDesc }}</span><div style="min-height:100px;padding:12px 14px;border-radius:14px;border:2px solid {{ c.primary }};background:{{ c.surface }};font-size:16px;line-height:1.5;box-sizing:border-box">{{ t.svcDescVal }}</div><span style="font-size:13px;color:{{ c.text2 }}">{{ t.svcDescHelp }}</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:14px;font-weight:700">{{ t.prefTime }}</span>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ timeOpts }}" as="o" hint-placeholder-count="3"><span style="display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:22px;border:1px solid {{ o.bd }};background:{{ o.bg }};color:{{ o.fg }};font-size:14px;font-weight:800"><lc-icon name="{{ o.icon }}" size="16"></lc-icon>{{ o.label }}</span></sc-for></div></div>
+<button style="height:48px;border-radius:14px;border:1.5px dashed {{ c.border }};background:none;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><lc-icon name="camera" size="18"></lc-icon><span>{{ t.addPhotoOpt }}</span></button>
+<sc-if value="{{ s.stateError }}">
+<div style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:16px;background:{{ tR.bg }};border:1px solid {{ tR.bd }}">
+<div style="display:flex;gap:10px;align-items:flex-start"><lc-icon name="circle-alert" size="22" style="color:{{ tR.fg }}"></lc-icon><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:800;color:{{ tR.fg }}">{{ t.errTitle }}</span><span style="font-size:14px">{{ t.errBody }}</span></div></div>
+<button onClick="{{ go.serviceSent }}" style="height:48px;border-radius:12px;border:none;background:{{ tR.fg }};color:{{ c.onDanger }};font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><lc-icon name="rotate-cw" size="18"></lc-icon><span>{{ t.retry }}</span></button>
+</div>
+</sc-if>
+<button onClick="{{ go.serviceSent }}" style="height:56px;border-radius:16px;border:none;background:{{ sendBg }};color:{{ sendFg }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="send" size="20"></lc-icon><span>{{ t.sendReq }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.serviceSent }}">
+<div style="min-height:100%;box-sizing:border-box;padding:44px 22px 32px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px">
+<div style="width:96px;height:96px;border-radius:28px;background:{{ tG.bg }};color:{{ tG.fg }};border:1px solid {{ tG.bd }};display:flex;align-items:center;justify-content:center"><lc-icon name="circle-check" size="44"></lc-icon></div>
+<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:{{ tG.bg }};color:{{ tG.fg }};border:1px solid {{ tG.bd }};font-size:13px;font-weight:800"><lc-icon name="clock" size="15"></lc-icon>{{ t.sentAt }}</span>
+<span style="font-size:26px;font-weight:800;line-height:1.2">{{ t.sentTitle }}</span>
+<span style="font-size:16px;color:{{ c.text2 }}">{{ t.sentBody }}</span>
+</div>
+<div style="flex:1"></div>
+<button onClick="{{ go.serviceDetail }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="eye" size="20"></lc-icon><span>{{ t.viewReq }}</span></button>
+<button onClick="{{ go.serviceList }}" style="height:56px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;margin-top:-8px"><lc-icon name="list" size="20"></lc-icon><span>{{ t.allReqs }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSvcDetail }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:48px;height:48px;border-radius:14px;background:{{ tV.bg }};color:{{ tV.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="shirt" size="24"></lc-icon></div><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:20px;font-weight:800;line-height:1.25">{{ t.sdTitle }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ t.laundry }} · <span dir="ltr">SR-1193</span> · {{ t.opened }} <span dir="ltr">14.10.2026</span></span></div></div>
+<span style="align-self:flex-start;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ sdChip.bg }};color:{{ sdChip.fg }};border:1px solid {{ sdChip.bd }};font-size:12px;font-weight:800"><lc-icon name="{{ sdChip.icon }}" size="14"></lc-icon>{{ sdChip.label }}</span>
+<div style="display:flex;align-items:flex-start;padding:8px 0">
+<sc-for list="{{ sdSteps }}" as="st" hint-placeholder-count="5">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative">
+<div style="position:absolute;top:14px;inset-inline-start:50%;width:100%;height:2px;background:{{ st.line }};display:{{ st.lineDisp }}"></div>
+<div style="position:relative;width:30px;height:30px;border-radius:50%;background:{{ st.bg }};color:{{ st.fg }};border:2px solid {{ st.bd }};box-sizing:border-box;display:flex;align-items:center;justify-content:center"><lc-icon name="{{ st.icon }}" size="15"></lc-icon></div>
+<span style="font-size:12px;font-weight:{{ st.weight }};color:{{ st.lbl }};text-align:center;line-height:1.2">{{ st.label }}</span>
+</div>
+</sc-for>
+</div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<sc-for list="{{ sdRows }}" as="r" hint-placeholder-count="4"><div style="display:flex;gap:12px;padding:12px 14px;border-bottom:1px solid {{ c.border }}"><lc-icon name="{{ r.icon }}" size="20" style="color:{{ c.text2 }}"></lc-icon><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:12px;font-weight:700;color:{{ c.text2 }}">{{ r.label }}</span><span style="font-size:15px;font-weight:700">{{ r.value }}</span></div></div></sc-for>
+</div>
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="history" size="16"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.activity }}</span></div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<sc-for list="{{ sdLog }}" as="l" hint-placeholder-count="3"><div style="display:flex;gap:12px;align-items:flex-start;padding:8px 0"><div style="width:32px;height:32px;border-radius:50%;background:{{ l.tone.bg }};color:{{ l.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ l.icon }}" size="16"></lc-icon></div><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:700">{{ l.text }}</span><span dir="ltr" style="font-size:12px;color:{{ c.text2 }};text-align:start">{{ l.time }}</span></div></div></sc-for>
+</div>
+<div style="display:flex;gap:10px">
+<button style="flex:1;height:52px;border-radius:14px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><lc-icon name="message-square-plus" size="18"></lc-icon><span>{{ t.addComment }}</span></button>
+<button style="flex:1;height:52px;border-radius:14px;border:1px solid {{ tR.bd }};background:{{ tR.bg }};color:{{ tR.fg }};font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><lc-icon name="circle-x" size="18"></lc-icon><span>{{ t.cancelReq }}</span></button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.centerInfo }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:18px;background:{{ c.navy }};color:#fff">
+<div style="display:flex;gap:12px;align-items:center"><div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center"><lc-icon name="building-2" size="26"></lc-icon></div><div style="display:flex;flex-direction:column"><span style="font-size:18px;font-weight:800">{{ t.centerName }}</span><span style="font-size:13px;opacity:.85">{{ t.address }}</span></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+<sc-for list="{{ ciActions }}" as="a" hint-placeholder-count="3"><button style="display:flex;flex-direction:column;align-items:center;gap:4px;height:64px;justify-content:center;border-radius:14px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;cursor:pointer"><lc-icon name="{{ a.icon }}" size="20"></lc-icon><span style="font-size:13px;font-weight:800">{{ a.label }}</span></button></sc-for>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="clock" size="16"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.visitHours }}</span></div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<sc-for list="{{ hours }}" as="h" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid {{ c.border }};min-height:44px"><lc-icon name="{{ h.icon }}" size="18" style="color:{{ h.fg }}"></lc-icon><span style="flex:1;font-size:15px;font-weight:700">{{ h.day }}</span><span dir="ltr" style="font-size:15px;font-weight:800;color:{{ h.fg }}">{{ h.time }}</span></div></sc-for>
+</div>
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="contact-round" size="16"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.staffByRole }}</span></div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<sc-for list="{{ contacts }}" as="p" hint-placeholder-count="5"><div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid {{ c.border }}"><div style="width:40px;height:40px;border-radius:12px;background:{{ p.tone.bg }};color:{{ p.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ p.icon }}" size="19"></lc-icon></div><div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font-size:12px;font-weight:800;color:{{ c.text2 }}">{{ p.role }}</span><span style="font-size:15px;font-weight:800">{{ p.name }}</span><span dir="ltr" style="font-size:13px;color:{{ c.text2 }};text-align:start;unicode-bidi:isolate">{{ p.phone }}</span></div><button style="display:flex;flex-direction:column;align-items:center;min-width:52px;min-height:48px;justify-content:center;border:1px solid {{ c.border }};border-radius:12px;background:{{ c.surface2 }};cursor:pointer"><lc-icon name="phone" size="17"></lc-icon><span style="font-size:11px;font-weight:800">{{ t.call }}</span></button></div></sc-for>
+</div>
+<button onClick="{{ go.centerGuide }}" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};cursor:pointer;text-align:start"><div style="width:44px;height:44px;border-radius:12px;background:{{ tT.bg }};color:{{ tT.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="book-open" size="22"></lc-icon></div><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:16px;font-weight:800">{{ t.guideTitle }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ t.guideSub }}</span></div><lc-icon name="{{ ic.chev }}" size="20" style="color:{{ c.text2 }}"></lc-icon></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.centerGuide }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<sc-for list="{{ guide }}" as="g" hint-placeholder-count="6">
+<div style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<div style="display:flex;gap:10px;align-items:center"><div style="width:38px;height:38px;border-radius:10px;background:{{ g.tone.bg }};color:{{ g.tone.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="{{ g.icon }}" size="19"></lc-icon></div><span style="flex:1;font-size:16px;font-weight:800">{{ g.title }}</span></div>
+<sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3"><div style="display:flex;gap:10px;align-items:flex-start"><lc-icon name="{{ it.icon }}" size="18" style="color:{{ it.fg }}"></lc-icon><span style="flex:1;font-size:14px;line-height:1.45">{{ it.text }}</span><span dir="ltr" style="font-size:14px;font-weight:800;unicode-bidi:isolate">{{ it.num }}</span></div></sc-for>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.permissions }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:10px;padding:14px;border-radius:14px;background:{{ tB.bg }};border:1px solid {{ tB.bd }};font-size:14px"><lc-icon name="building-2" size="19" style="color:{{ tB.fg }}"></lc-icon><span>{{ t.permIntro }}</span></div>
+<div style="display:flex;padding:4px;border-radius:16px;background:{{ c.surface2 }};gap:4px">
+<sc-for list="{{ permTabs }}" as="v" hint-placeholder-count="2"><button onClick="{{ v.onClick }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:48px;border-radius:12px;border:none;background:{{ v.bg }};color:{{ v.fg }};font-size:14px;font-weight:800;cursor:pointer;box-shadow:{{ v.sh }}"><div style="width:26px;height:26px;border-radius:50%;background:{{ v.av.bg }};color:{{ v.av.fg }};display:flex;align-items:center;justify-content:center;font-size:11px">{{ v.init }}</div><span>{{ v.label }}</span></button></sc-for>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ c.surface2 }};font-size:12px;font-weight:800"><lc-icon name="heart" size="13"></lc-icon>{{ t.relDaughter }}</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ c.surface2 }};font-size:12px;font-weight:800"><lc-icon name="calendar-check" size="13"></lc-icon>{{ t.permUpdated }}</span></div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};overflow:hidden">
+<sc-for list="{{ perms }}" as="p" hint-placeholder-count="9"><div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid {{ c.border }};min-height:52px"><lc-icon name="{{ p.icon }}" size="20" style="color:{{ c.text2 }}"></lc-icon><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:700">{{ p.label }}</span><span style="font-size:12px;color:{{ c.text2 }}">{{ p.note }}</span></div><span style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;background:{{ p.chip.bg }};color:{{ p.chip.fg }};border:1px solid {{ p.chip.bd }};font-size:12px;font-weight:800;white-space:nowrap"><lc-icon name="{{ p.chip.icon }}" size="14"></lc-icon>{{ p.chip.label }}</span></div></sc-for>
+</div>
+<button style="height:52px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><lc-icon name="message-square-plus" size="18"></lc-icon><span>{{ t.askPerm }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.payments }}">
+<div style="padding:22px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px">
+<div style="width:80px;height:80px;border-radius:24px;background:{{ c.surface2 }};color:{{ c.text2 }};display:flex;align-items:center;justify-content:center"><lc-icon name="wallet" size="38"></lc-icon></div>
+<span style="display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:999px;background:{{ tS.bg }};color:{{ tS.fg }};border:1px solid {{ tS.bd }};font-size:13px;font-weight:800"><lc-icon name="clock" size="14"></lc-icon>{{ t.soon }}</span>
+<span style="font-size:22px;font-weight:800;line-height:1.25">{{ t.payTitle }}</span>
+<span style="font-size:15px;color:{{ c.text2 }}">{{ t.payBody }}</span>
+</div>
+<div style="position:relative;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;flex-direction:column;gap:10px;opacity:.45;pointer-events:none">
+<div style="padding:16px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;font-weight:800;color:{{ c.text2 }}">{{ t.balance }}</span><span dir="ltr" style="font-size:30px;font-weight:900;text-align:start">₪ 0.00</span><span style="font-size:13px;color:{{ c.text2 }}">{{ t.upToDate }}</span></div>
+<sc-for list="{{ invoices }}" as="iv" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }}"><lc-icon name="{{ iv.icon }}" size="20"></lc-icon><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:800">{{ iv.title }}</span><span style="font-size:12px;color:{{ c.text2 }}">{{ iv.meta }}</span></div><span dir="ltr" style="font-size:15px;font-weight:800">{{ iv.amount }}</span></div></sc-for>
+</div>
+<span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:14px;font-weight:800;white-space:nowrap"><lc-icon name="eye" size="16"></lc-icon>{{ t.preview }}</span>
+</div>
+<div style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }}"><lc-icon name="bell-ring" size="20"></lc-icon><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:800">{{ t.notifyMe }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ t.notifyMeSub }}</span></div><div style="width:51px;height:31px;border-radius:16px;background:{{ tG.fg }};position:relative;flex-shrink:0"><div style="position:absolute;top:3px;inset-inline-end:3px;width:25px;height:25px;border-radius:50%;background:#fff"></div></div></div>
+<span style="font-size:13px;color:{{ c.text2 }};text-align:center">{{ t.payMeanwhile }} <span dir="ltr" style="unicode-bidi:isolate;font-weight:800">03-555-0170</span></span>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSettings }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="languages" size="16"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.language }}</span></div>
+<div style="display:flex;padding:4px;border-radius:16px;background:{{ c.surface2 }};gap:4px"><sc-for list="{{ langOpts }}" as="v" hint-placeholder-count="2"><button onClick="{{ v.onClick }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:48px;border-radius:12px;border:none;background:{{ v.bg }};color:{{ v.fg }};font-size:15px;font-weight:800;cursor:pointer;box-shadow:{{ v.sh }};font-family:{{ v.font }}"><lc-icon name="{{ v.icon }}" size="17"></lc-icon><span>{{ v.label }}</span></button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="sun-moon" size="16"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.theme }}</span></div>
+<div style="display:flex;padding:4px;border-radius:16px;background:{{ c.surface2 }};gap:4px"><sc-for list="{{ themeOpts }}" as="v" hint-placeholder-count="3"><button onClick="{{ v.onClick }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:48px;border-radius:12px;border:none;background:{{ v.bg }};color:{{ v.fg }};font-size:14px;font-weight:800;cursor:pointer;box-shadow:{{ v.sh }}"><lc-icon name="{{ v.icon }}" size="17"></lc-icon><span>{{ v.label }}</span></button></sc-for></div>
+<span style="font-size:13px;color:{{ c.text2 }}">{{ t.themeHelp }}</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="bell" size="16"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.notifs }}</span></div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};overflow:hidden">
+<sc-for list="{{ toggles }}" as="g" hint-placeholder-count="6"><button onClick="{{ g.onClick }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:10px 14px;border:none;border-bottom:1px solid {{ c.border }};background:none;cursor:pointer;text-align:start;min-height:60px"><lc-icon name="{{ g.icon }}" size="20" style="color:{{ c.text2 }}"></lc-icon><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:700">{{ g.label }}</span><span style="font-size:12px;color:{{ c.text2 }}">{{ g.sub }}</span></div><div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:51px;height:31px;border-radius:16px;background:{{ g.track }};position:relative;flex-shrink:0;opacity:{{ g.op }}"><div style="position:absolute;top:3px;inset-inline-start:{{ g.knob }};width:25px;height:25px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)"></div></div><span style="font-size:10px;font-weight:800;color:{{ g.stateFg }}">{{ g.state }}</span></div></button></sc-for>
+</div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="shield" size="16"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.secPriv }}</span></div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};overflow:hidden">
+<sc-for list="{{ secRows }}" as="r" hint-placeholder-count="4"><div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid {{ c.border }};min-height:56px"><lc-icon name="{{ r.icon }}" size="20" style="color:{{ c.text2 }}"></lc-icon><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:700">{{ r.label }}</span><span style="font-size:12px;color:{{ c.text2 }}">{{ r.sub }}</span></div><lc-icon name="{{ ic.chev }}" size="18" style="color:{{ c.text2 }}"></lc-icon></div></sc-for>
+</div></div>
+<button onClick="{{ go.logoutSheet }}" style="height:56px;border-radius:16px;border:1.5px solid {{ tR.bd }};background:{{ tR.bg }};color:{{ tR.fg }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="log-out" size="20"></lc-icon><span>{{ t.logout }}</span></button>
+<span dir="ltr" style="text-align:center;font-size:12px;color:{{ c.label }}">CARETEX Family App · 2.4.0 (318)</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ isNotif }}">
+<div style="padding:12px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<sc-for list="{{ notifs }}" as="g" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="calendar" size="15"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ g.label }}</span></div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};overflow:hidden">
+<sc-for list="{{ g.items }}" as="n" hint-placeholder-count="2">
+<button onClick="{{ n.onClick }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:12px 14px;border:none;border-bottom:1px solid {{ c.border }};background:{{ n.bg }};cursor:pointer;text-align:start;min-height:68px">
+<div style="width:10px;display:flex;justify-content:center"><div style="width:9px;height:9px;border-radius:50%;background:{{ n.dot }}"></div></div>
+<div style="width:42px;height:42px;border-radius:12px;background:{{ n.tone.bg }};color:{{ n.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ n.icon }}" size="20"></lc-icon></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:15px;font-weight:{{ n.weight }};line-height:1.3">{{ n.title }}</span><span style="font-size:12px;color:{{ c.text2 }}">{{ n.kind }} · <span dir="ltr">{{ n.time }}</span> · {{ n.state }}</span></div>
+<lc-icon name="{{ ic.chev }}" size="20" style="color:{{ c.text2 }}"></lc-icon>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.stateSkeleton }}">
+<div style="padding:16px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:{{ c.text2 }}"><lc-icon name="loader" size="16"></lc-icon><span>{{ t.loading }}</span></div>
+<div style="width:200px;height:22px;border-radius:8px;background:{{ c.sk }}"></div>
+<div style="height:104px;border-radius:18px;background:{{ c.sk }}"></div>
+<div style="width:150px;height:12px;border-radius:6px;background:{{ c.sk }}"></div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};padding:4px 14px">
+<sc-for list="{{ skRows }}" as="k" hint-placeholder-count="4"><div style="display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid {{ c.border }}"><div style="width:42px;height:42px;border-radius:12px;background:{{ c.sk }}"></div><div style="flex:1;display:flex;flex-direction:column;gap:8px"><div style="width:{{ k.w1 }};height:12px;border-radius:6px;background:{{ c.sk }}"></div><div style="width:{{ k.w2 }};height:10px;border-radius:5px;background:{{ c.sk2 }}"></div></div></div></sc-for>
+</div>
+<div style="height:140px;border-radius:18px;background:{{ c.sk }}"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.stateEmpty }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;padding:4px;border-radius:16px;background:{{ c.surface2 }};gap:4px">
+<div style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;height:44px;border-radius:12px;background:{{ c.surface }};font-size:13px;font-weight:800;box-shadow:0 1px 3px rgba(0,0,0,.12)"><lc-icon name="pen-line" size="16"></lc-icon>{{ t.toSign }} 0</div>
+<div style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;height:44px;font-size:13px;font-weight:800;color:{{ c.text2 }}"><lc-icon name="eye" size="16"></lc-icon>{{ t.toConfirm }} 0</div>
+<div style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;height:44px;font-size:13px;font-weight:800;color:{{ c.text2 }}"><lc-icon name="circle-check" size="16"></lc-icon>{{ t.completedW }} 6</div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:36px 8px">
+<div style="width:96px;height:96px;border-radius:28px;background:{{ tG.bg }};color:{{ tG.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="folder-check" size="46"></lc-icon></div>
+<span style="font-size:21px;font-weight:800;line-height:1.3">{{ t.emptyTitle }}</span>
+<span style="font-size:15px;color:{{ c.text2 }}">{{ t.emptyBody }}</span>
+<button style="margin-top:6px;height:52px;padding:0 20px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px;cursor:pointer"><lc-icon name="circle-check" size="18"></lc-icon><span>{{ t.viewCompleted }}</span></button>
+</div>
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ isMain }}">
+<div style="display:flex;padding:6px 4px 26px;border-top:1px solid {{ c.border }};background:{{ c.surface }}">
+<sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="5">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:54px;padding:4px 0;color:{{ tb.color }}">
+<div style="display:flex;align-items:center;justify-content:center;width:52px;height:30px;border-radius:15px;background:{{ tb.pill }}"><lc-icon name="{{ tb.icon }}" size="22"></lc-icon></div>
+<span style="font-size:12px;font-weight:{{ tb.weight }};white-space:nowrap">{{ tb.label }}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
+<sc-if value="{{ isSvcList }}">
+<button onClick="{{ go.serviceNew }}" style="position:absolute;bottom:34px;inset-inline-end:16px;z-index:10;display:flex;align-items:center;gap:8px;height:56px;padding:0 20px;border-radius:28px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 10px 24px -8px rgba(15,20,30,.45)"><lc-icon name="plus" size="20"></lc-icon><span>{{ t.newReq }}</span></button>
+</sc-if>
+
+<sc-if value="{{ s.lockScreen }}">
+<div dir="ltr" style="position:absolute;inset:0;z-index:20;background:repeating-linear-gradient(160deg,#1B2337 0 14px,#182032 14px 28px);color:#fff;display:flex;flex-direction:column;align-items:center;padding-top:84px;font-family:-apple-system,system-ui,sans-serif">
+<lc-icon name="lock" size="22"></lc-icon>
+<span style="margin-top:8px;font-size:20px;font-weight:600;opacity:.9">{{ t.lockDate }}</span>
+<span style="font-size:96px;font-weight:700;line-height:1;letter-spacing:-2px">09:41</span>
+<div dir="{{ dir }}" style="margin-top:36px;width:358px;display:flex;flex-direction:column;gap:8px;font-family:{{ font }}">
+<sc-for list="{{ pushes }}" as="p" hint-placeholder-count="2">
+<div style="display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:22px;background:rgba(245,245,250,.82);color:#111827">
+<div style="width:40px;height:40px;border-radius:10px;background:#1F2A44;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="heart-handshake" size="22"></lc-icon></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:1px"><div style="display:flex;justify-content:space-between;gap:8px"><span dir="ltr" style="font-size:14px;font-weight:800">CARETEX Family</span><span style="font-size:13px;color:#4B5563">{{ p.time }}</span></div><span style="font-size:15px">{{ p.text }}</span></div>
+</div>
+</sc-for>
+</div>
+<div dir="{{ dir }}" style="margin-top:14px;width:358px;display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:rgba(0,0,0,.35);font-family:{{ font }};font-size:13px"><lc-icon name="shield-check" size="16"></lc-icon><span>{{ t.lockNote }}</span></div>
+<div style="position:absolute;bottom:56px;left:0;right:0;display:flex;justify-content:space-between;padding:0 48px"><div style="width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center"><lc-icon name="flashlight" size="22"></lc-icon></div><div style="width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center"><lc-icon name="camera" size="22"></lc-icon></div></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.logoutSheet }}">
+<div style="position:absolute;inset:0;z-index:25;background:rgba(10,14,22,.5);display:flex;flex-direction:column;justify-content:flex-end">
+<div style="background:{{ c.bg }};border-radius:28px 28px 0 0;padding:10px 20px 34px;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center">
+<div style="width:44px;height:5px;border-radius:3px;background:{{ c.border }}"></div>
+<div style="width:64px;height:64px;border-radius:20px;background:{{ tR.bg }};color:{{ tR.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="log-out" size="30"></lc-icon></div>
+<span style="font-size:22px;font-weight:800">{{ t.logoutQ }}</span>
+<span style="font-size:15px;color:{{ c.text2 }}">{{ t.logoutBody }}</span>
+<div style="width:100%;display:flex;flex-direction:column;gap:10px;margin-top:4px">
+<button onClick="{{ go.login }}" style="height:56px;border-radius:16px;border:none;background:{{ tR.fg }};color:{{ c.onDanger }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="log-out" size="20"></lc-icon><span>{{ t.logoutYes }}</span></button>
+<button onClick="{{ go.settings }}" style="height:56px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="x" size="20"></lc-icon><span>{{ t.stay }}</span></button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}">
+<div style="position:absolute;left:16px;right:16px;bottom:34px;z-index:30;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:{{ c.toastBg }};color:{{ c.toastFg }};box-shadow:0 14px 30px -10px rgba(10,14,22,.5)">
+<div style="width:34px;height:34px;border-radius:50%;background:{{ tG.fg }};color:{{ c.toastBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="check" size="19" stroke="3"></lc-icon></div>
+<div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:800">{{ toast.title }}</span><span style="font-size:13px;opacity:.8">{{ toast.body }}</span></div>
+</div>
+</sc-if>
+
+<div style="position:absolute;bottom:8px;left:50%;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:{{ homeBar }};z-index:45;pointer-events:none"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:410,&quot;height&quot;:864},&quot;screen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;serviceList&quot;,&quot;serviceNew&quot;,&quot;serviceSent&quot;,&quot;serviceDetail&quot;,&quot;centerInfo&quot;,&quot;centerGuide&quot;,&quot;permissions&quot;,&quot;payments&quot;,&quot;settings&quot;,&quot;logoutSheet&quot;,&quot;notifCenter&quot;,&quot;lockScreen&quot;,&quot;stateSkeleton&quot;,&quot;stateEmpty&quot;,&quot;stateError&quot;,&quot;stateOffline&quot;,&quot;stateChanged&quot;,&quot;stateToast&quot;],&quot;default&quot;:&quot;settings&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;he&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;interactive&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onNav&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;},&quot;onPref&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(p: object) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { cur: null, svcType: 'laundry', permRes: 'miriam', allRead: false, lang: null, theme: null, themePick: null, tg: {} };
+  componentDidUpdate(pp) { if (pp.screen !== this.props.screen && this.state.cur) this.setState({ cur: null, allRead: false }); }
+  renderVals() {
+    const P = this.props, S = this.state, I = !!P.interactive;
+    const lang = S.lang || P.lang || 'en', theme = S.theme || P.theme || 'light';
+    const he = lang === 'he', dark = theme === 'dark';
+    const L = (e, h) => he ? h : e;
+    const scr = S.cur || P.screen || 'settings';
+    const c = dark ? {
+      bg: '#10141C', surface: '#1A202B', surface2: '#242B38', border: '#2D3544', text: '#ECEEF2', text2: '#A9B0BC', label: '#929AA8', sk: '#262D3A', sk2: '#20262F',
+      navy: '#26314D', primary: '#B9C7F2', onPrimary: '#10141C', onDanger: '#10141C', link: '#9DB4FF', tabActive: '#E4E9F7', tabIdle: '#8E95A3', pill: '#2B3550',
+      toastBg: '#ECEEF2', toastFg: '#10141C', offBg: '#3B424F', offFg: '#FFFFFF', unread: '#1C2333'
+    } : {
+      bg: '#FCF8F1', surface: '#FFFFFF', surface2: '#F4EFE6', border: '#E6E1D7', text: '#1A2233', text2: '#5C6474', label: '#6B7180', sk: '#ECE7DE', sk2: '#F3EFE8',
+      navy: '#1F2A44', primary: '#1F2A44', onPrimary: '#FFFFFF', onDanger: '#FFFFFF', link: '#2A4FB8', tabActive: '#1F2A44', tabIdle: '#737985', pill: '#E9EDF6',
+      toastBg: '#1F2A44', toastFg: '#FFFFFF', offBg: '#3B424F', offFg: '#FFFFFF', unread: '#F3F6FC'
+    };
+    const TONES = {
+      blue: [['#1F5FD1', '#EAF1FE', '#C5D8FB'], ['#8DB4FF', '#1A2742', '#2C4370']], amber: [['#935800', '#FFF4E0', '#F3D296'], ['#F5C46B', '#33280F', '#5A4518']],
+      violet: [['#6B3FC9', '#F2ECFE', '#D9CBFA'], ['#C3A8FF', '#2A2142', '#45366B']], green: [['#157347', '#E7F6EE', '#BCE5CF'], ['#6FD6A0', '#15291F', '#24503A']],
+      red: [['#C42B32', '#FDECEC', '#F6C3C5'], ['#FF8E92', '#3A1A1C', '#64292D']], slate: [['#4B5563', '#F0F1F4', '#D6D9E0'], ['#B4BAC6', '#252A33', '#3B424F']],
+      teal: [['#0F766E', '#E3F5F2', '#B5E3DB'], ['#5ED3C2', '#11302C', '#1F514A']], pink: [['#B8195A', '#FDEBF2', '#F6C4D7'], ['#FF8FB8', '#3A1926', '#62293F']],
+    };
+    const tn = k => { const [fg, bg, bd] = TONES[k][dark ? 1 : 0]; return { fg, bg, bd }; };
+    const ch = (k, icon, label) => ({ ...tn(k), icon, label });
+    const ic = { chev: he ? 'chevron-left' : 'chevron-right', back: he ? 'arrow-right' : 'arrow-left' };
+    const OWN = ['serviceList', 'serviceNew', 'serviceSent', 'serviceDetail', 'centerInfo', 'centerGuide', 'permissions', 'payments', 'settings', 'logoutSheet', 'notifCenter', 'lockScreen', 'stateSkeleton', 'stateEmpty', 'stateError', 'stateOffline', 'stateChanged', 'stateToast'];
+    const FOREIGN = ['moreMenu', 'home', 'login', 'docView', 'inqThread', 'eventInvite', 'calAppt', 'surveyIntro', 'resUpdate', 'docsList'];
+    const go = {}, s = {};
+    OWN.concat(FOREIGN).forEach(k => { go[k] = !I ? undefined : OWN.includes(k) ? () => this.setState({ cur: k }) : (P.onNav ? () => P.onNav(k) : undefined); });
+    OWN.forEach(k => s[k] = scr === k);
+
+    const t = {
+      alerts: L('Alerts', 'התראות'), markAll: L('Mark all read', 'סימון הכל כנקרא'),
+      offTitle: L('No internet connection', 'אין חיבור לאינטרנט'), offBody: L('Showing information saved at 09:30. New requests will be sent when you\'re back online.', 'מוצג מידע שנשמר ב-09:30. בקשות חדשות יישלחו כשהחיבור יחזור.'),
+      chgTitle: L('This information has changed since you opened it', 'המידע השתנה מאז שפתחתם אותו'), chgBody: L('The laundry team updated this request at 09:43.', 'צוות הכביסה עדכן את הבקשה ב-09:43.'), refresh: L('Refresh', 'רענון'),
+      svcIntro: L('Requests for everyday services for Miriam. Each request has a status, and you\'ll be notified when it changes.', 'בקשות לשירותים יומיומיים עבור מרים. לכל בקשה יש סטטוס, ותקבלו התראה כשהוא משתנה.'),
+      newReq: L('New request', 'בקשה חדשה'), svcWhat: L('What do you need?', 'במה אפשר לעזור?'), svcWhatSub: L('Choose the type of service. The request goes straight to the right team.', 'בחרו את סוג השירות. הבקשה תגיע ישירות לצוות המתאים.'),
+      svcDesc: L('Describe the request', 'תיאור הבקשה'), svcDescVal: L('I\'m bringing 6 new winter items on Friday. Please label them with Miriam\'s name and room number.', 'אביא ביום שישי 6 פריטי חורף חדשים. אבקש לסמן אותם בשם של מרים ובמספר החדר.'),
+      svcDescHelp: L('Include sizes, quantities or the location of the problem.', 'ציינו מידות, כמויות או את מיקום התקלה.'), prefTime: L('Preferred time', 'זמן מועדף'), addPhotoOpt: L('Add a photo (optional)', 'הוספת תמונה (לא חובה)'),
+      errTitle: L('We couldn\'t send your request', 'לא הצלחנו לשלוח את הבקשה'), errBody: L('The connection to CARETEX was interrupted. Your text is saved; tap Try again to send it.', 'החיבור ל-CARETEX נקטע. הטקסט שכתבתם נשמר. הקישו על "ניסיון חוזר" כדי לשלוח.'), retry: L('Try again', 'ניסיון חוזר'),
+      sendReq: L('Send request', 'שליחת הבקשה'), sentAt: L('Sent on 14.10.2026 09:41', 'נשלחה ב-14.10.2026 09:41'), sentTitle: L('Your request was sent', 'הבקשה נשלחה'),
+      sentBody: L('The laundry team will assign it today. Reference number SR-1193.', 'צוות הכביסה ישבץ אותה עוד היום. מספר בקשה SR-1193.'), viewReq: L('View request', 'צפייה בבקשה'), allReqs: L('All my requests', 'כל הבקשות שלי'),
+      sdTitle: L('Label new winter clothes', 'סימון בגדי חורף חדשים'), laundry: L('Laundry and clothing', 'כביסה וביגוד'), opened: L('Opened', 'נפתחה'), activity: L('ACTIVITY', 'פעילות'),
+      addComment: L('Add a comment', 'הוספת הערה'), cancelReq: L('Cancel request', 'ביטול הבקשה'),
+      centerName: L('Beit Hadar Care Center', 'מרכז סיעודי בית הדר'), address: L('12 HaRimon St., Ramat Gan', 'רחוב הרימון 12, רמת גן'), visitHours: L('VISITING HOURS', 'שעות ביקור'),
+      staffByRole: L('STAFF CONTACTS BY ROLE', 'אנשי צוות לפי תפקיד'), call: L('Call', 'חיוג'), guideTitle: L('Procedures and visit guide', 'נהלים ומדריך לביקור'), guideSub: L('What to bring, response hours, services and phone numbers', 'מה להביא, שעות מענה, שירותים ומספרי טלפון'),
+      permIntro: L('Permissions are managed by the care center. This is a read-only view of what you can see and do for each resident.', 'ההרשאות מנוהלות על ידי המרכז הסיעודי. זוהי תצוגה לקריאה בלבד של מה שאתם יכולים לראות ולעשות עבור כל דייר.'),
+      relDaughter: L('Daughter · Primary family contact', 'בת · איש קשר עיקרי'), permUpdated: L('Updated by the center on 01.09.2026', 'עודכן על ידי המרכז ב-01.09.2026'), askPerm: L('Ask the social worker about permissions', 'שאלה לעובדת הסוציאלית על הרשאות'),
+      soon: L('Coming soon', 'בקרוב'), payTitle: L('Accounts and Payments are coming soon', 'חשבונות ותשלומים יגיעו בקרוב'), payBody: L('Soon you\'ll be able to see invoices, receipts and your balance with Beit Hadar here.', 'בקרוב תוכלו לראות כאן חשבוניות, קבלות ואת היתרה שלכם מול בית הדר.'),
+      balance: L('Current balance', 'יתרה נוכחית'), upToDate: L('All invoices are paid', 'כל החשבוניות שולמו'), preview: L('Preview only', 'תצוגה מקדימה בלבד'),
+      notifyMe: L('Notify me when it\'s ready', 'עדכנו אותי כשזה יהיה זמין'), notifyMeSub: L('We\'ll send one notification', 'נשלח התראה אחת'), payMeanwhile: L('In the meantime, for payment questions call Finance at', 'בינתיים, לשאלות על תשלומים התקשרו למחלקת הכספים'),
+      language: L('LANGUAGE', 'שפה'), theme: L('THEME', 'ערכת נושא'), themeHelp: L('System follows your phone\'s light or dark setting.', '"מערכת" פועלת לפי הגדרת התצוגה של הטלפון.'), notifs: L('NOTIFICATIONS', 'התראות'), secPriv: L('SECURITY AND PRIVACY', 'אבטחה ופרטיות'),
+      logout: L('Log out', 'יציאה מהחשבון'), logoutQ: L('Log out of CARETEX Family?', 'לצאת מ-CARETEX Family?'), logoutBody: L('You\'ll need your phone number and password to sign in again. Survey drafts saved on this phone will be kept.', 'כדי להתחבר שוב תצטרכו את מספר הטלפון והסיסמה. טיוטות של סקרים שנשמרו בטלפון יישמרו.'),
+      logoutYes: L('Log out', 'יציאה'), stay: L('Stay signed in', 'הישארות מחוברים'),
+      loading: L('Loading the latest from CARETEX…', 'טוען את המידע העדכני מ-CARETEX…'), toSign: L('To sign', 'לחתימה'), toConfirm: L('To confirm', 'לאישור'), completedW: L('Completed', 'הושלמו'),
+      emptyTitle: L('There are currently no documents awaiting action', 'אין כרגע מסמכים שממתינים לפעולה'), emptyBody: L('When the care center sends you a document to sign or confirm, it will appear here and we\'ll notify you.', 'כשהמרכז הסיעודי ישלח לכם מסמך לחתימה או לאישור, הוא יופיע כאן ותקבלו התראה.'), viewCompleted: L('View completed documents', 'צפייה במסמכים שהושלמו'),
+      lockDate: L('Wednesday 14 October', 'יום רביעי, 14 באוקטובר'), lockNote: L('Lock-screen notifications never include names, medical details or message content.', 'התראות במסך הנעילה לעולם אינן כוללות שמות, פרטים רפואיים או תוכן הודעות.'),
+    };
+
+    const SST = { opened: ch('blue', 'sparkles', L('Opened', 'נפתחה')), assigned: ch('violet', 'user-check', L('Assigned', 'שובצה')), progress: ch('amber', 'loader', L('In progress', 'בטיפול')), handled: ch('green', 'circle-check', L('Handled', 'טופלה')), closed: ch('slate', 'archive', L('Closed', 'סגורה')) };
+    const svcs = [
+      { icon: 'shirt', tk: 'violet', title: t.sdTitle, type: t.laundry, ref: 'SR-1193', meta: L('Opened 14.10.2026 · Laundry team', 'נפתחה 14.10.2026 · צוות הכביסה'), st: 'assigned' },
+      { icon: 'scissors', tk: 'pink', title: L('Haircut before the holiday', 'תספורת לפני החג'), type: L('Hairdresser', 'מספרה'), ref: 'SR-1190', meta: L('Scheduled 18.10.2026 10:00', 'נקבע ל-18.10.2026 10:00'), st: 'progress' },
+      { icon: 'wrench', tk: 'amber', title: L('Wardrobe door in Room 12', 'דלת הארון בחדר 12'), type: L('Maintenance', 'אחזקה'), ref: 'SR-1182', meta: L('Handled 10.10.2026', 'טופלה 10.10.2026'), st: 'handled' },
+      { icon: 'message-circle', tk: 'teal', title: L('Talk with the social worker', 'שיחה עם העובדת הסוציאלית'), type: L('Request a conversation', 'בקשה לשיחה'), ref: 'SR-1175', meta: L('Closed 28.09.2026', 'נסגרה 28.09.2026'), st: 'closed' },
+    ].map(r => ({ ...r, tone: tn(r.tk), chip: SST[r.st], op: r.st === 'closed' ? 0.8 : 1 }));
+    const TY = [['maintenance', 'wrench', 'amber', L('Maintenance', 'אחזקה')], ['laundry', 'shirt', 'violet', L('Laundry / Clothing', 'כביסה / ביגוד')], ['hair', 'scissors', 'pink', L('Hairdresser', 'מספרה')], ['equip', 'package', 'blue', L('Personal equipment', 'ציוד אישי')], ['talk', 'message-circle', 'teal', L('Request a conversation', 'בקשה לשיחה')], ['finance', 'wallet', 'green', L('Finance', 'כספים')], ['other', 'circle-help', 'slate', L('Other', 'אחר')]];
+    const svcTypes = TY.map(([k, icon, tk, label]) => { const sel = k === S.svcType; return { icon, label, tone: tn(tk), bd: sel ? c.primary : c.border, bg: sel ? c.pill : c.surface, mark: sel ? 'circle-check' : 'circle', markFg: sel ? c.primary : c.border, onClick: I ? () => this.setState({ svcType: k }) : undefined }; });
+    const timeOpts = [['clock', L('Any time', 'בכל שעה'), 0], ['sunrise', L('Friday morning', 'שישי בבוקר'), 1], ['sunset', L('Afternoon', 'אחר הצהריים'), 0]].map(([icon, label, a]) => ({ icon, label, bg: a ? c.primary : c.surface, fg: a ? c.onPrimary : c.text, bd: a ? c.primary : c.border }));
+    const SD = [['opened', 'sparkles', L('Opened', 'נפתחה')], ['assigned', 'user-check', L('Assigned', 'שובצה')], ['progress', 'loader', L('In progress', 'בטיפול')], ['handled', 'circle-check', L('Handled', 'טופלה')], ['closed', 'archive', L('Closed', 'סגורה')]];
+    const sdIdx = s.stateChanged ? 2 : 1;
+    const sdSteps = SD.map(([k, icon, label], i) => { const g = tn('green'), done = i < sdIdx, act = i === sdIdx; return { label, icon: done ? 'check' : icon, bg: done ? g.fg : act ? c.primary : c.surface, fg: done ? (dark ? '#10141C' : '#fff') : act ? c.onPrimary : c.text2, bd: done ? g.fg : act ? c.primary : c.border, lbl: act || done ? c.text : c.text2, weight: act ? 800 : 600, line: i < sdIdx ? g.fg : c.border, lineDisp: i < 4 ? 'block' : 'none' }; });
+    const sdChip = s.stateChanged ? SST.assigned : SST.assigned;
+    const sdRows = [{ icon: 'file-text', label: L('Your request', 'הבקשה שלכם'), value: t.svcDescVal }, { icon: 'sunrise', label: t.prefTime, value: L('Friday morning, 16.10.2026', 'שישי בבוקר, 16.10.2026') }, { icon: 'user-check', label: L('Assigned to', 'שובצה אל'), value: L('Orly Katz, Laundry team', 'אורלי כץ, צוות הכביסה') }, { icon: 'timer', label: L('Expected', 'צפי'), value: L('Within 2 days of receiving the clothes', 'תוך יומיים מקבלת הבגדים') }];
+    const sdLog = [{ icon: 'user-check', tone: tn('violet'), text: L('Assigned to Orly Katz', 'שובצה לאורלי כץ'), time: '14.10.2026 09:50' }, { icon: 'sparkles', tone: tn('blue'), text: L('Request opened by you', 'הבקשה נפתחה על ידכם'), time: '14.10.2026 09:41' }];
+    const ciActions = [{ icon: 'phone', label: L('Call', 'חיוג') }, { icon: 'mail', label: L('Email', 'דוא״ל') }, { icon: 'navigation', label: L('Directions', 'ניווט') }];
+    const hours = [['calendar-days', L('Sunday – Thursday', 'ראשון – חמישי'), '09:00–20:00', 0], ['calendar-days', L('Friday and holiday eves', 'שישי וערבי חג'), '09:00–14:00', 0], ['calendar-days', L('Saturday and holidays', 'שבת וחגים'), '10:00–18:00', 0], ['moon', L('Quiet hours (lobby and garden only)', 'שעות מנוחה (בלובי ובגן בלבד)'), '14:00–16:00', 1]].map(([icon, day, time, q]) => ({ icon, day, time, fg: q ? tn('amber').fg : c.text }));
+    const contacts = [['stethoscope', 'teal', L('Head nurse, Ward B', 'אחות אחראית, מחלקה ב׳'), L('Ruth Ben-David', 'רות בן דוד'), '03-555-0142'], ['hand-heart', 'violet', L('Social worker', 'עובדת סוציאלית'), L('Yael Mizrahi', 'יעל מזרחי'), '03-555-0155'], ['heart-pulse', 'blue', L('Family physician', 'רופא משפחה'), L('Dr. Avi Shapiro', 'ד״ר אבי שפירא'), '03-555-0160'], ['wallet', 'green', L('Finance office', 'מחלקת כספים'), L('Oren Levi', 'אורן לוי'), '03-555-0170'], ['concierge-bell', 'slate', L('Reception', 'קבלה'), L('Open 24 hours', 'פתוחה 24 שעות'), '03-555-0100']].map(([icon, tk, role, name, phone]) => ({ icon, tone: tn(tk), role, name, phone }));
+    const okI = { icon: 'circle-check', fg: tn('green').fg }, noI = { icon: 'circle-x', fg: tn('red').fg }, dotI = { icon: 'dot', fg: c.text2 };
+    const gi = (o, text, num) => ({ ...o, text, num: num || '' });
+    const guide = [
+      { icon: 'clock', tk: 'blue', title: L('Response hours', 'שעות מענה'), items: [gi(dotI, L('Inquiries are answered Sun–Thu 08:00–16:00, usually within 1 business day.', 'פניות נענות בימים א׳–ה׳ 08:00–16:00, בדרך כלל תוך יום עסקים אחד.')), gi(dotI, L('For anything urgent, the nurses\' station is staffed 24/7.', 'לכל עניין דחוף, עמדת האחיות מאוישת 24/7.'))] },
+      { icon: 'clipboard-list', tk: 'violet', title: L('Family procedures', 'נהלים למשפחות'), items: [gi(dotI, L('Sign in at reception on every visit.', 'נא להירשם בקבלה בכל ביקור.')), gi(dotI, L('Taking Miriam out of the center? Tell the nurses 24 hours ahead.', 'יוצאים עם מרים מהמרכז? עדכנו את האחיות 24 שעות מראש.')), gi(dotI, L('Children under 12 must be with an adult at all times.', 'ילדים מתחת לגיל 12 חייבים להיות בליווי מבוגר בכל עת.'))] },
+      { icon: 'circle-check', tk: 'green', title: L('What you may bring', 'מה מותר להביא'), items: [gi(okI, L('Clothes labeled with name and room number', 'בגדים מסומנים בשם ובמספר החדר')), gi(okI, L('Family photos and small personal items', 'תמונות משפחתיות וחפצים אישיים קטנים')), gi(okI, L('Sealed snacks approved by the dietitian', 'חטיפים סגורים באישור הדיאטנית'))] },
+      { icon: 'circle-x', tk: 'red', title: L('Please don\'t bring', 'נא לא להביא'), items: [gi(noI, L('Any medication, including over-the-counter', 'תרופות מכל סוג, כולל ללא מרשם')), gi(noI, L('Heaters or electric blankets', 'תנורי חימום או שמיכות חשמליות')), gi(noI, L('Home-cooked food without asking the nurses', 'אוכל ביתי ללא תיאום עם האחיות')), gi(noI, L('Jewelry, cash or other valuables', 'תכשיטים, מזומן או חפצי ערך'))] },
+      { icon: 'footprints', tk: 'teal', title: L('Preparing for a visit', 'הכנה לביקור'), items: [gi(dotI, L('Check Miriam\'s day in the app to avoid physiotherapy and meal times.', 'בדקו באפליקציה את היום של מרים כדי להימנע משעות פיזיותרפיה וארוחות.')), gi(dotI, L('If you have a cold, please postpone and call instead.', 'אם אתם מצוננים, נא לדחות את הביקור ולהתקשר במקום.'))] },
+      { icon: 'sparkles', tk: 'amber', title: L('Services at the center', 'שירותים במרכז'), items: [gi(dotI, L('Hairdresser: Tuesday and Thursday mornings', 'מספרה: שלישי וחמישי בבוקר')), gi(dotI, L('Laundry, synagogue, library and cafeteria', 'כביסה, בית כנסת, ספרייה וקפטריה'))] },
+      { icon: 'phone', tk: 'pink', title: L('Important phone numbers', 'מספרי טלפון חשובים'), items: [gi({ icon: 'concierge-bell', fg: c.text2 }, L('Reception', 'קבלה'), '03-555-0100'), gi({ icon: 'stethoscope', fg: c.text2 }, L('Ward B nurses\' station', 'עמדת אחיות מחלקה ב׳'), '03-555-0142'), gi({ icon: 'hand-heart', fg: c.text2 }, L('Social work', 'עבודה סוציאלית'), '03-555-0155'), gi({ icon: 'siren', fg: tn('red').fg }, L('Emergency (Magen David Adom)', 'חירום (מגן דוד אדום)'), '101')] },
+    ].map(g => ({ ...g, tone: tn(g.tk) }));
+    const PR = { miriam: [1, 1, 1, 1, 1, 1, 1, 1, 0], avraham: [1, 1, 2, 0, 1, 0, 1, 1, 0] };
+    const PL = [['info', L('General info', 'מידע כללי'), L('Details, ward and staff', 'פרטים, מחלקה וצוות')], ['newspaper', L('Personal updates', 'עדכונים אישיים'), L('Updates and photos', 'עדכונים ותמונות')], ['heart-pulse', L('Medical information', 'מידע רפואי'), L('Medications, diagnoses, tests', 'תרופות, אבחנות, בדיקות')], ['clipboard-list', L('Care plan', 'תוכנית טיפול'), L('Goals and team actions', 'יעדים ופעולות הצוות')], ['sun', L('The resident\'s day', 'סדר היום של הדייר'), L('Daily timeline', 'לוח זמנים יומי')], ['signature', L('Sign documents', 'חתימה על מסמכים'), L('Consents and approvals', 'הסכמות ואישורים')], ['messages-square', L('Contact staff', 'פנייה לצוות'), L('Open and reply to inquiries', 'פתיחת פניות ומענה')], ['wrench', L('Service requests', 'בקשות שירות'), L('Laundry, repairs and more', 'כביסה, תיקונים ועוד')], ['wallet', L('Accounts and payments', 'חשבונות ותשלומים'), L('Invoices and balance', 'חשבוניות ויתרה')]];
+    const pChip = v => v === 1 ? ch('green', 'check', L('Allowed', 'מותר')) : v === 2 ? ch('amber', 'hourglass', L('Not yet shared', 'טרם שותף')) : ch('red', 'x', L('Not allowed', 'אין הרשאה'));
+    const perms = PL.map(([icon, label, note], i) => ({ icon, label, note: S.permRes === 'avraham' && i === 3 ? L('Shared only with the legal guardian', 'משותף רק עם האפוטרופוס') : note, chip: pChip(PR[S.permRes][i]) }));
+    const permTabs = [['miriam', L('Miriam Levi', 'מרים לוי'), L('ML', 'מל'), 'pink'], ['avraham', L('Avraham Cohen', 'אברהם כהן'), L('AC', 'אכ'), 'teal']].map(([k, label, init, tk]) => { const a = S.permRes === k; return { label, init, av: tn(tk), bg: a ? c.surface : 'transparent', fg: a ? c.text : c.text2, sh: a ? '0 1px 3px rgba(0,0,0,.12)' : 'none', onClick: I ? () => this.setState({ permRes: k }) : undefined }; });
+    const invoices = [{ icon: 'receipt', title: L('Invoice · October 2026', 'חשבונית · אוקטובר 2026'), meta: L('Issued 01.10.2026 · Paid', 'הונפקה 01.10.2026 · שולמה'), amount: '₪ 12,450' }, { icon: 'receipt', title: L('Invoice · September 2026', 'חשבונית · ספטמבר 2026'), meta: L('Issued 01.09.2026 · Paid', 'הונפקה 01.09.2026 · שולמה'), amount: '₪ 12,450' }, { icon: 'file-check', title: L('Receipt · September 2026', 'קבלה · ספטמבר 2026'), meta: '05.09.2026', amount: '₪ 12,450' }];
+
+    const setLang = k => () => { if (P.onPref) P.onPref({ lang: k }); else this.setState({ lang: k }); };
+    const setTheme = k => () => { const th = k === 'system' ? 'light' : k; this.setState({ themePick: k }); if (P.onPref) P.onPref({ theme: th }); else this.setState({ theme: th }); };
+    const langOpts = [['en', 'English', "'Nunito',sans-serif"], ['he', 'עברית', "'Rubik',sans-serif"]].map(([k, label, font]) => { const a = lang === k; return { label, font, icon: a ? 'circle-check' : 'circle', bg: a ? c.surface : 'transparent', fg: a ? c.text : c.text2, sh: a ? '0 1px 3px rgba(0,0,0,.12)' : 'none', onClick: I ? setLang(k) : undefined }; });
+    const pick = S.themePick || theme;
+    const themeOpts = [['light', 'sun', L('Light', 'בהיר')], ['dark', 'moon', L('Dark', 'כהה')], ['system', 'smartphone', L('System', 'מערכת')]].map(([k, icon, label]) => { const a = pick === k; return { icon, label, bg: a ? c.surface : 'transparent', fg: a ? c.text : c.text2, sh: a ? '0 1px 3px rgba(0,0,0,.12)' : 'none', onClick: I ? setTheme(k) : undefined }; });
+    const TG = [['updates', 'newspaper', L('Updates about Miriam', 'עדכונים על מרים'), L('New personal updates and photos', 'עדכונים אישיים ותמונות חדשים'), 1], ['inq', 'messages-square', L('Inquiry replies', 'תשובות לפניות'), L('When staff reply or change a status', 'כשהצוות משיב או משנה סטטוס'), 1], ['docs', 'folder-open', L('Documents and approvals', 'מסמכים ואישורים'), L('New documents to sign or confirm', 'מסמכים חדשים לחתימה או לאישור'), 1], ['events', 'party-popper', L('Events and invitations', 'אירועים והזמנות'), L('New events and RSVP reminders', 'אירועים חדשים ותזכורות לאישור הגעה'), 1], ['surveys', 'clipboard-list', L('Surveys', 'סקרים'), L('New surveys and closing reminders', 'סקרים חדשים ותזכורות לסגירה'), 0], ['lock', 'lock', L('Message previews on lock screen', 'תצוגה מקדימה במסך הנעילה'), L('Always off · medical details are never shown', 'תמיד כבוי · פרטים רפואיים לעולם אינם מוצגים'), -1]];
+    const toggles = TG.map(([k, icon, label, sub, def]) => { const on = def === -1 ? false : (S.tg[k] !== undefined ? S.tg[k] : !!def); const locked = def === -1; return { icon, label, sub, track: on ? tn('green').fg : (dark ? '#3B424F' : '#D6D9E0'), knob: on ? '23px' : '3px', op: locked ? 0.5 : 1, state: locked ? L('Locked', 'נעול') : on ? L('On', 'פועל') : L('Off', 'כבוי'), stateFg: on ? tn('green').fg : c.text2, onClick: I && !locked ? () => this.setState({ tg: { ...S.tg, [k]: !on } }) : undefined }; });
+    const secRows = [['key-round', L('Change password', 'שינוי סיסמה'), L('Last changed 14.10.2026', 'שונתה לאחרונה 14.10.2026')], ['scan-face', L('Unlock with Face ID', 'פתיחה עם Face ID'), L('On · asks after 10 minutes idle', 'פועל · נדרש לאחר 10 דקות ללא פעילות')], ['file-lock', L('Privacy policy', 'מדיניות פרטיות'), L('How CARETEX protects your family\'s data', 'איך CARETEX מגנה על המידע של המשפחה')], ['scroll-text', L('Terms of use', 'תנאי שימוש'), L('Updated 01.06.2026', 'עודכנו 01.06.2026')]].map(([icon, label, sub]) => ({ icon, label, sub }));
+
+    const NT = [
+      { label: L('TODAY · 14.10.2026', 'היום · 14.10.2026'), items: [['file-signature', 'violet', L('You have a new document to sign', 'יש לכם מסמך חדש לחתימה'), L('Documents', 'מסמכים'), '09:05', 1, 'docView'], ['message-square-reply', 'blue', L('A reply to your inquiry has been received', 'התקבלה תשובה לפנייה שלכם'), L('Contact Staff', 'פנייה לצוות'), '08:12', 1, 'inqThread']] },
+      { label: L('YESTERDAY · 13.10.2026', 'אתמול · 13.10.2026'), items: [['party-popper', 'pink', L('A new event has been published', 'פורסם אירוע חדש'), L('Events', 'אירועים'), '16:00', 1, 'eventInvite'], ['calendar-clock', 'amber', L('An appointment time has changed', 'שעת תור השתנתה'), L('Calendar', 'יומן'), '14:40', 0, 'calAppt'], ['newspaper', 'teal', L('A new update about Miriam was shared', 'שותף עדכון חדש על מרים'), L('Resident', 'הדייר'), '10:16', 0, 'resUpdate']] },
+      { label: L('MONDAY · 12.10.2026', 'יום שני · 12.10.2026'), items: [['circle-check', 'green', L('Your service request was handled', 'בקשת השירות שלכם טופלה'), L('Service requests', 'בקשות שירות'), '12:10', 0, 'serviceDetail'], ['clipboard-list', 'teal', L('A new survey is waiting for you', 'סקר חדש ממתין לכם'), L('Surveys', 'סקרים'), '09:00', 0, 'surveyIntro']] },
+    ];
+    const notifs = NT.map(g => ({ label: g.label, items: g.items.map(([icon, tk, title, kind, time, unread, k]) => { const u = unread && !S.allRead; return { icon, tone: tn(tk), title, kind, time, weight: u ? 800 : 600, bg: u ? c.unread : 'transparent', dot: u ? tn('blue').fg : 'transparent', state: u ? L('New', 'חדש') : L('Read', 'נקרא'), onClick: go[k] }; }) }));
+    const pushes = [{ time: L('now', 'עכשיו'), text: L('You have a new message', 'יש לכם הודעה חדשה') }, { time: '09:05', text: L('You have a new document waiting', 'יש לכם מסמך חדש שממתין') }];
+
+    const TOP = {
+      serviceList: [L('Service requests', 'בקשות שירות'), go.moreMenu, L('More', 'עוד')], stateOffline: [L('Service requests', 'בקשות שירות'), go.moreMenu, L('More', 'עוד')],
+      serviceNew: [L('New request', 'בקשה חדשה'), go.serviceList, L('Cancel', 'ביטול')], stateError: [L('New request', 'בקשה חדשה'), go.serviceList, L('Cancel', 'ביטול')],
+      serviceDetail: [L('Request', 'בקשה'), go.serviceList, L('Requests', 'בקשות')], stateChanged: [L('Request', 'בקשה'), go.serviceList, L('Requests', 'בקשות')],
+      centerInfo: [L('Center information', 'מידע על המרכז'), go.moreMenu, L('More', 'עוד')], centerGuide: [L('Visit guide', 'מדריך לביקור'), go.centerInfo, L('Back', 'חזרה')],
+      permissions: [L('Permissions', 'הרשאות'), go.moreMenu, L('More', 'עוד')], payments: [L('Payments', 'תשלומים'), go.moreMenu, L('More', 'עוד')],
+      settings: [L('Settings', 'הגדרות'), go.moreMenu, L('More', 'עוד')], logoutSheet: [L('Settings', 'הגדרות'), go.moreMenu, L('More', 'עוד')], stateToast: [L('Settings', 'הגדרות'), go.moreMenu, L('More', 'עוד')],
+      notifCenter: [L('Notifications', 'התראות'), go.home, L('Back', 'חזרה')], stateEmpty: [L('Documents', 'מסמכים'), go.moreMenu, L('More', 'עוד')],
+    };
+    const top = TOP[scr];
+    const tabs = [['house', L('Home', 'בית'), 1], ['user-round', L('Resident', 'הדייר'), 0], ['messages-square', L('Contact Staff', 'פנייה לצוות'), 0], ['calendar-days', L('Calendar', 'יומן'), 0], ['layout-grid', L('More', 'עוד'), 0]].map(([icon, label, a]) => ({ icon, label, color: a ? c.tabActive : c.tabIdle, pill: a ? c.pill : 'transparent', weight: a ? 800 : 600 }));
+    const isSvcNew = s.serviceNew || s.stateError;
+
+    return {
+      c, t, s, go, ic, tR: tn('red'), tB: tn('blue'), tG: tn('green'), tA: tn('amber'), tT: tn('teal'), tV: tn('violet'), tS: tn('slate'),
+      dir: he ? 'rtl' : 'ltr', font: he ? "'Rubik',system-ui,sans-serif" : "'Nunito',system-ui,sans-serif",
+      sbColor: s.lockScreen ? '#fff' : c.text, homeBar: s.lockScreen ? '#fff' : c.text, sbTime: s.lockScreen ? '' : '09:41', wifiIcon: s.stateOffline ? 'wifi-off' : 'wifi',
+      isMain: s.stateSkeleton, hasTopBar: !!top, topTitle: top ? top[0] : '', backGo: top ? top[1] : undefined, backLabel: top ? top[2] : '',
+      isSvcList: s.serviceList || s.stateOffline, isSvcNew, isSvcDetail: s.serviceDetail || s.stateChanged, isSettings: s.settings || s.logoutSheet || s.stateToast, isNotif: s.notifCenter,
+      sendBg: s.stateError ? c.surface2 : c.primary, sendFg: s.stateError ? c.text2 : c.onPrimary,
+      svcs, svcTypes, timeOpts, sdSteps, sdChip, sdRows, sdLog, ciActions, hours, contacts, guide, perms, permTabs, invoices,
+      langOpts, themeOpts, toggles, secRows, notifs, pushes, tabs,
+      skRows: [{ w1: '70%', w2: '45%' }, { w1: '82%', w2: '38%' }, { w1: '64%', w2: '50%' }, { w1: '76%', w2: '42%' }],
+      markAll: () => this.setState({ allRead: true }), markColor: S.allRead ? c.text2 : c.link,
+      hasToast: s.stateToast || (s.notifCenter && S.allRead), toast: s.stateToast ? { title: L('Saved', 'נשמר'), body: L('Your notification preferences were updated', 'העדפות ההתראות עודכנו') } : { title: L('All caught up', 'הכל נקרא'), body: L('All notifications were marked as read', 'כל ההתראות סומנו כנקראו') },
+    };
+  }
+}
+</script>
+</body>
+</html>

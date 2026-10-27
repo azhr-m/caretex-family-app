@@ -1,0 +1,97 @@
+{
+  "types": {
+    "consent": "Consent",
+    "approval": "Approval",
+    "policy": "Policy",
+    "agreement": "Agreement",
+    "form": "Form",
+    "other": "Other"
+  },
+  "status": {
+    "signed": "Signed",
+    "approved": "Approved",
+    "declined": "Declined",
+    "read_confirmed": "Read confirmed"
+  },
+  "list": {
+    "title": "Documents",
+    "intro": "Documents the care center sent you to sign, approve or confirm. Completed documents stay here for your records.",
+    "tabs": {
+      "sign": "To sign",
+      "confirm": "To confirm",
+      "done": "Completed"
+    },
+    "allTypes": "All types",
+    "allYears": "All years",
+    "typeLabel": "Document type",
+    "yearLabel": "Year",
+    "fromSent": "{{from}} · Sent <ltr>{{date}}</ltr>",
+    "due": "Due <ltr>{{date}}</ltr>",
+    "overdue": "Overdue since <ltr>{{date}}</ltr>",
+    "empty": "There are currently no documents awaiting action",
+    "emptyDone": "No completed documents yet",
+    "viewCompleted": "View completed documents"
+  },
+  "viewer": {
+    "title": "Document",
+    "wasDue": "Was due <ltr>{{date}}</ltr>",
+    "residentL": "Resident",
+    "familyL": "Family member",
+    "page": "Page {{page}} of {{count}}",
+    "zoom": "Zoom",
+    "zoomOut": "Zoom out",
+    "ask": "Ask",
+    "askSubject": "About the document: {{title}}",
+    "signDoc": "Sign document",
+    "iRead": "I have read and understood this document",
+    "checkFirst": "Tick the box to confirm you read the document",
+    "confirmRead": "Confirm I have read this",
+    "readToast": "Read confirmed",
+    "readToastBody": "{{dept}} was notified that you read this document",
+    "decline": "Decline",
+    "approve": "Approve",
+    "declinedToast": "Your answer was sent",
+    "declinedToastBody": "{{dept}} was notified that you declined",
+    "signedOn": "Signed on <ltr>{{date}}</ltr>",
+    "approvedOn": "Approved on <ltr>{{date}}</ltr>",
+    "declinedOn": "Declined on <ltr>{{date}}</ltr>",
+    "readConfirmedOn": "Read confirmed on <ltr>{{date}}</ltr>",
+    "offlineSign": "Connect to the internet to sign.",
+    "offlineApprove": "Connect to the internet to respond.",
+    "offlineConfirm": "Connect to the internet to confirm."
+  },
+  "sign": {
+    "title": "Sign the document",
+    "titleConsent": "Sign the consent form",
+    "sub": "Your signature is attached to this document only.",
+    "padLabel": "Signature box",
+    "withFinger": "Sign with your finger inside the box",
+    "clear": "Clear",
+    "undo": "Undo",
+    "needSignature": "Please sign inside the box",
+    "send": "Sign and send"
+  },
+  "decline": {
+    "title": "Decline this request?",
+    "body": "Tell the team why, so they can follow up with you.",
+    "reason": "Reason",
+    "reasonHelp": "5–300 characters",
+    "reasonError": "Write a reason of at least 5 characters",
+    "confirm": "Send decline"
+  },
+  "result": {
+    "signedChip": "Signed on {{date}}",
+    "approvedChip": "Approved on {{date}}",
+    "signedTitle": "Document signed",
+    "signedBody": "The signed document was sent to {{dept}}. A copy is saved in Documents → Completed.",
+    "approvedTitle": "Approval sent",
+    "approvedBody": "{{dept}} was notified of your approval. A copy is saved in Documents → Completed.",
+    "document": "Document",
+    "signedBy": "Signed by",
+    "approvedBy": "Approved by",
+    "confirmation": "Confirmation",
+    "back": "Back to documents",
+    "downloadSigned": "Download signed copy",
+    "viewDocument": "View the document"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "types": {
+    "consent": "הסכמה",
+    "approval": "אישור",
+    "policy": "נוהל",
+    "agreement": "הסכם",
+    "form": "טופס",
+    "other": "אחר"
+  },
+  "status": {
+    "signed": "נחתם",
+    "approved": "אושר",
+    "declined": "נדחה",
+    "read_confirmed": "הקריאה אושרה"
+  },
+  "list": {
+    "title": "מסמכים",
+    "intro": "מסמכים שהמרכז הסיעודי שלח לכם לחתימה, לאישור או לאישור קריאה. מסמכים שהושלמו נשמרים כאן לעיונכם.",
+    "tabs": {
+      "sign": "לחתימה",
+      "confirm": "לאישור",
+      "done": "הושלמו"
+    },
+    "allTypes": "כל הסוגים",
+    "allYears": "כל השנים",
+    "typeLabel": "סוג המסמך",
+    "yearLabel": "שנה",
+    "fromSent": "{{from}} · נשלח <ltr>{{date}}</ltr>",
+    "due": "עד <ltr>{{date}}</ltr>",
+    "overdue": "באיחור מאז <ltr>{{date}}</ltr>",
+    "empty": "אין כרגע מסמכים שממתינים לפעולה",
+    "emptyDone": "עדיין אין מסמכים שהושלמו",
+    "viewCompleted": "צפייה במסמכים שהושלמו"
+  },
+  "viewer": {
+    "title": "מסמך",
+    "wasDue": "היה עד <ltr>{{date}}</ltr>",
+    "residentL": "דייר/ת",
+    "familyL": "בן משפחה",
+    "page": "עמוד {{page}} מתוך {{count}}",
+    "zoom": "הגדלה",
+    "zoomOut": "הקטנה",
+    "ask": "שאלה",
+    "askSubject": "לגבי המסמך: {{title}}",
+    "signDoc": "חתימה על המסמך",
+    "iRead": "קראתי והבנתי את המסמך",
+    "checkFirst": "סמנו את התיבה כדי לאשר שקראתם את המסמך",
+    "confirmRead": "אישור שקראתי",
+    "readToast": "הקריאה אושרה",
+    "readToastBody": "{{dept}} עודכנה שקראתם את המסמך",
+    "decline": "דחייה",
+    "approve": "אישור",
+    "declinedToast": "התשובה נשלחה",
+    "declinedToastBody": "{{dept}} עודכנה שדחיתם את הבקשה",
+    "signedOn": "נחתם ב-<ltr>{{date}}</ltr>",
+    "approvedOn": "אושר ב-<ltr>{{date}}</ltr>",
+    "declinedOn": "נדחה ב-<ltr>{{date}}</ltr>",
+    "readConfirmedOn": "הקריאה אושרה ב-<ltr>{{date}}</ltr>",
+    "offlineSign": "יש להתחבר לאינטרנט כדי לחתום.",
+    "offlineApprove": "יש להתחבר לאינטרנט כדי להשיב.",
+    "offlineConfirm": "יש להתחבר לאינטרנט כדי לאשר."
+  },
+  "sign": {
+    "title": "חתימה על המסמך",
+    "titleConsent": "חתימה על טופס ההסכמה",
+    "sub": "החתימה תצורף למסמך זה בלבד.",
+    "padLabel": "מסגרת החתימה",
+    "withFinger": "חתמו עם האצבע בתוך המסגרת",
+    "clear": "ניקוי",
+    "undo": "ביטול פעולה",
+    "needSignature": "נא לחתום בתוך המסגרת",
+    "send": "חתימה ושליחה"
+  },
+  "decline": {
+    "title": "לדחות את הבקשה?",
+    "body": "ספרו לצוות מה הסיבה, כדי שיוכלו לחזור אליכם.",
+    "reason": "סיבה",
+    "reasonHelp": "5–300 תווים",
+    "reasonError": "כתבו סיבה של לפחות 5 תווים",
+    "confirm": "שליחת הדחייה"
+  },
+  "result": {
+    "signedChip": "נחתם ב-{{date}}",
+    "approvedChip": "אושר ב-{{date}}",
+    "signedTitle": "המסמך נחתם",
+    "signedBody": "המסמך החתום נשלח ל{{dept}}. עותק נשמר במסמכים ← הושלמו.",
+    "approvedTitle": "האישור נשלח",
+    "approvedBody": "{{dept}} עודכנה באישור שלכם. עותק נשמר במסמכים ← הושלמו.",
+    "document": "מסמך",
+    "signedBy": "נחתם על ידי",
+    "approvedBy": "אושר על ידי",
+    "confirmation": "אישור",
+    "back": "חזרה למסמכים",
+    "downloadSigned": "הורדת העותק החתום",
+    "viewDocument": "צפייה במסמך"
+  }
+}

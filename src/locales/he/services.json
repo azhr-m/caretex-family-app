@@ -1,0 +1,75 @@
+{
+  "status": {
+    "opened": "נפתחה",
+    "assigned": "שובצה",
+    "in_progress": "בטיפול",
+    "handled": "טופלה",
+    "closed": "סגורה",
+    "cancelled": "בוטלה"
+  },
+  "types": {
+    "maintenance": "אחזקה",
+    "laundry": "כביסה / ביגוד",
+    "hairdresser": "מספרה",
+    "equipment": "ציוד אישי",
+    "conversation": "בקשה לשיחה",
+    "finance": "כספים",
+    "other": "אחר"
+  },
+  "list": {
+    "title": "בקשות שירות",
+    "intro": "בקשות לשירותים יומיומיים עבור {{name}}. לכל בקשה יש סטטוס, ותקבלו התראה כשהוא משתנה.",
+    "newRequest": "בקשה חדשה",
+    "empty": "עדיין אין בקשות שירות",
+    "loadingMore": "טוען בקשות נוספות…",
+    "metaOpened": "נפתחה {{date}}",
+    "metaScheduled": "נקבעה ל-{{date}}",
+    "metaHandled": "טופלה {{date}}",
+    "metaClosed": "נסגרה {{date}}",
+    "metaCancelled": "בוטלה {{date}}"
+  },
+  "new": {
+    "title": "בקשה חדשה",
+    "what": "במה אפשר לעזור?",
+    "whatSub": "בחרו את סוג השירות. הבקשה תגיע ישירות לצוות המתאים.",
+    "description": "תיאור הבקשה",
+    "descriptionHelp": "ציינו מידות, כמויות או את מיקום התקלה.",
+    "preferredTime": "זמן מועדף",
+    "addPhoto": "הוספת תמונה (לא חובה)",
+    "send": "שליחת הבקשה",
+    "offline": "יש להתחבר לאינטרנט כדי לשלוח את הבקשה."
+  },
+  "sent": {
+    "chip": "נשלחה ב-{{date}}",
+    "title": "הבקשה נשלחה",
+    "body": "צוות {{type}} יטפל בבקשה. תקבלו התראה כשהסטטוס ישתנה.",
+    "reference": "מספר בקשה",
+    "type": "סוג",
+    "view": "צפייה בבקשה",
+    "all": "כל הבקשות שלי"
+  },
+  "detail": {
+    "title": "בקשה",
+    "back": "בקשות",
+    "opened": "נפתחה <ltr>{{date}}</ltr>",
+    "stepsLabel": "סטטוס הבקשה",
+    "cancelledNote": "הבקשה בוטלה.",
+    "yourRequest": "הבקשה שלכם",
+    "preferredTime": "זמן מועדף",
+    "assignedTo": "שובצה אל",
+    "expected": "צפי",
+    "activity": "פעילות",
+    "addComment": "הוספת הערה",
+    "comment": "הערה",
+    "sendComment": "שליחת ההערה",
+    "commentSent": "ההערה נוספה לבקשה",
+    "cancel": "ביטול הבקשה",
+    "cancelTitle": "לבטל את הבקשה?",
+    "cancelBody": "הצוות יפסיק לטפל בה. אפשר לפתוח בקשה חדשה בכל עת.",
+    "cancelReason": "סיבה (לא חובה)",
+    "keep": "השארת הבקשה",
+    "cancelConfirm": "ביטול הבקשה",
+    "cancelledToast": "הבקשה בוטלה",
+    "cannotCancel": "הבקשה כבר בטיפול ואי אפשר לבטל אותה"
+  }
+}

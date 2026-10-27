@@ -1,0 +1,104 @@
+{
+  "title": "עדכונים ואירועים",
+  "categories": {
+    "all": "הכל",
+    "updates": "עדכונים",
+    "newsletters": "עלונים",
+    "activities": "פעילויות",
+    "events": "אירועים והזמנות"
+  },
+  "kinds": {
+    "update": "עדכון מהמרכז",
+    "newsletter": "עלון",
+    "activity": "פעילות",
+    "event": "הזמנה לאירוע"
+  },
+  "chips": {
+    "confirmReading": "נדרש אישור קריאה",
+    "readConfirmed": "הקריאה אושרה"
+  },
+  "cta": {
+    "read": "לקריאה",
+    "view": "לצפייה",
+    "rsvp": "אישור הגעה",
+    "viewEvent": "לאירוע"
+  },
+  "empty": "אין עדכונים בקטגוריה הזו",
+  "loadingMore": "טוען עוד…",
+  "viewArchive": "לארכיון",
+  "detail": {
+    "title": {
+      "update": "עדכון",
+      "newsletter": "עלון",
+      "activity": "פעילות",
+      "event": "אירוע"
+    },
+    "iRead": "קראתי והבנתי את העלון",
+    "checkFirst": "סמנו את התיבה כדי לאשר שקראתם",
+    "confirm": "אישור שקראתי",
+    "confirmedOn": "אישרתם קריאה ב-<ltr>{{date}}</ltr>",
+    "toast": "הקריאה אושרה",
+    "toastBody": "{{author}} עודכנה שקראתם את העלון",
+    "failed": "לא הצלחנו לאשר. נסו שוב.",
+    "offline": "יש להתחבר לאינטרנט כדי לאשר."
+  },
+  "event": {
+    "title": "הזמנה"
+  },
+  "rsvp": {
+    "title": "אישור הגעה",
+    "willYou": "האם תגיעו?",
+    "options": {
+      "attending": "מגיעים",
+      "not_attending": "לא מגיעים",
+      "undecided": "עוד לא החלטנו"
+    },
+    "statusRequired": "בחרו תשובה אחת",
+    "guests": "מספר אורחים",
+    "less": "פחות",
+    "more": "יותר",
+    "guestHelp_one": "לא כולל את {{name}}. עד אורח אחד לכל דייר.",
+    "guestHelp_two": "לא כולל את {{name}}. עד {{count}} אורחים לכל דייר.",
+    "guestHelp_other": "לא כולל את {{name}}. עד {{count}} אורחים לכל דייר.",
+    "guestNames": "שמות האורחים",
+    "guestN": "אורח {{n}}",
+    "guestPlaceholder": "שם האורח",
+    "guestNameError": "הזינו את שם האורח",
+    "note": "הערה לצוות הפעילויות (לא חובה)",
+    "noteHelp": "צרכים תזונתיים, נגישות או בקשות לגבי מקומות ישיבה.",
+    "save": "שמירת אישור ההגעה",
+    "offline": "יש להתחבר לאינטרנט כדי לשמור את אישור ההגעה.",
+    "changeUntil": "אפשר לשנות את התשובה עד <ltr>{{date}}</ltr>."
+  },
+  "saved": {
+    "chip": "נשמר ב-{{date}}",
+    "title": "אישור ההגעה נשמר",
+    "bodyAttending": "צוות הפעילויות יודע שתגיעו.",
+    "bodyAttendingGuests_one": "צוות הפעילויות יודע שתגיעו עם אורח אחד.",
+    "bodyAttendingGuests_two": "צוות הפעילויות יודע שתגיעו עם {{count}} אורחים.",
+    "bodyAttendingGuests_other": "צוות הפעילויות יודע שתגיעו עם {{count}} אורחים.",
+    "addedToCalendar": "הוספנו את האירוע ליומן שלכם באפליקציה.",
+    "bodyNotAttending": "צוות הפעילויות יודע שלא תוכלו להגיע. תודה שעדכנתם.",
+    "bodyUndecided": "התשובה נשמרה. אפשר לשנות אותה עד {{date}}.",
+    "event": "אירוע",
+    "when": "מתי",
+    "answer": "התשובה שלכם",
+    "back": "חזרה לאירועים",
+    "calendar": "פתיחת היומן"
+  },
+  "archive": {
+    "title": "ארכיון",
+    "search": "חיפוש עדכונים ואירועים קודמים",
+    "searchLabel": "חיפוש בארכיון",
+    "clear": "ניקוי",
+    "noResults": "לא נמצאו תוצאות עבור \"{{q}}\"",
+    "noResultsBody": "נסו מילה אחרת.",
+    "empty": "הארכיון ריק",
+    "kinds": {
+      "update": "עדכון",
+      "newsletter": "עלון",
+      "activity": "פעילות",
+      "event": "אירוע"
+    }
+  }
+}

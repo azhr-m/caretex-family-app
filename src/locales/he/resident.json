@@ -1,0 +1,117 @@
+{
+  "segments": {
+    "label": "אזורי המידע על הדייר",
+    "general": "כללי",
+    "updates": "עדכונים",
+    "medical": "רפואי",
+    "carePlan": "תוכנית טיפול",
+    "day": "היום של {{name}}",
+    "denied": "{{label}}, אין הרשאה",
+    "notShared": "{{label}}, טרם שותף"
+  },
+  "general": {
+    "photoLabel": "תמונה של {{name}}",
+    "details": "פרטים",
+    "dob": "תאריך לידה",
+    "dobValue": "<ltr>{{date}}</ltr> (גיל {{age}})",
+    "ward": "מחלקה",
+    "room": "חדר",
+    "admitted": "תאריך קבלה",
+    "languages": "שפות",
+    "primaryContact": "איש קשר עיקרי",
+    "you": "{{name}} (אתם)",
+    "staffContacts": "אנשי צוות",
+    "inquiry": "פנייה",
+    "inquiryLabel": "שליחת פנייה אל {{name}}",
+    "call": "חיוג",
+    "callLabel": "חיוג אל {{label}}"
+  },
+  "updates": {
+    "intro": "עדכונים אישיים מהצוות על {{name}}, מהחדש לישן.",
+    "dateHeader": "{{weekday}} · <ltr>{{date}}</ltr>",
+    "read": "לקריאת העדכון המלא",
+    "morePhotos": "+{{count}}",
+    "empty": "אין עדכונים עדיין",
+    "emptyBody": "כשהצוות ישתף עדכון על {{name}}, הוא יופיע כאן.",
+    "loadingMore": "טוען עדכונים נוספים…",
+    "end": "אלה כל העדכונים"
+  },
+  "update": {
+    "title": "עדכון",
+    "tapPhoto": "הקישו על תמונה כדי לפתוח במסך מלא",
+    "sharedOn": "שותף על ידי המרכז הסיעודי ב-<ltr>{{date}}</ltr>",
+    "ask": "שאלה לצוות על העדכון",
+    "askSubject": "לגבי העדכון: {{title}}",
+    "openPhoto": "פתיחת תמונה {{index}} מתוך {{count}}"
+  },
+  "category": {
+    "activities": "פעילויות",
+    "health": "בריאות",
+    "social": "חברה",
+    "daily_life": "שגרת יום",
+    "other": "אחר"
+  },
+  "photo": {
+    "viewer": "תמונה {{index}} מתוך {{count}}",
+    "counter": "{{index}} / {{count}}",
+    "save": "שמירה",
+    "previous": "הקודמת",
+    "next": "הבאה",
+    "unavailable": "התמונה אינה זמינה"
+  },
+  "medical": {
+    "intro": "המידע משותף על ידי המרכז הסיעודי לידיעתכם. לכל שאלה, פנו לצוות הרפואי דרך \"פנייה לצוות\".",
+    "category": {
+      "medications": "תרופות",
+      "diagnoses": "אבחנות",
+      "allergies": "אלרגיות ורגישויות",
+      "doctor_visits": "ביקורי רופא",
+      "tests": "תוצאות בדיקות",
+      "nutrition": "תזונה",
+      "physiotherapy": "פיזיותרפיה"
+    },
+    "active_one": "פעילה אחת",
+    "active_two": "{{count}} פעילות",
+    "active_other": "{{count}} פעילות",
+    "last": "אחרון: <ltr>{{date}}</ltr>",
+    "allergy": "אלרגיה",
+    "sharedOn": "שותף על ידי המרכז הסיעודי ב-<ltr>{{date}}</ltr>",
+    "empty": "עדיין לא שותף מידע רפואי",
+    "emptyBody": "כשהצוות הרפואי ישתף מידע על {{name}}, הוא יופיע כאן."
+  },
+  "care": {
+    "title": "תוכנית הטיפול של {{name}}, בקצרה",
+    "sub": "סיכום ידידותי של היעדים שהצוות הרב-מקצועי קבע יחד עם {{name}}.",
+    "reviewed": "נבדקה <ltr>{{date}}</ltr>",
+    "nextReview": "בדיקה הבאה <ltr>{{date}}</ltr>",
+    "goal": "יעד",
+    "team": "מה הצוות עושה",
+    "family": "איך אתם יכולים לעזור",
+    "status": {
+      "on_track": "בהתקדמות טובה",
+      "achieved": "הושג",
+      "monitoring": "במעקב",
+      "needs_attention": "דורש תשומת לב"
+    },
+    "empty": "עדיין לא שותפו יעדים"
+  },
+  "day": {
+    "yesterday": "אתמול",
+    "today": "היום",
+    "tomorrow": "מחר",
+    "dateLabel": "{{weekday}} <ltr>{{date}}</ltr>",
+    "prevLabel": "היום הקודם",
+    "nextLabel": "היום הבא",
+    "note": "השעות עשויות להשתנות לפי הצרכים של {{name}}. עודכן לאחרונה על ידי {{by}} ב-<ltr>{{time}}</ltr>.",
+    "status": {
+      "done": "בוצע",
+      "now": "עכשיו",
+      "upcoming": "בהמשך",
+      "cancelled": "בוטל"
+    },
+    "empty": "אין פעילויות מתוכננות ליום זה"
+  },
+  "permission": {
+    "notSharedMedical": "הצוות הרפואי עדיין לא שיתף את המידע הרפואי של {{name}} באפליקציה. נשלח לכם התראה ברגע שהמידע יהיה זמין."
+  }
+}

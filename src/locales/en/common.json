@@ -1,0 +1,127 @@
+{
+  "brand": "CARETEX",
+  "tabs": {
+    "label": "Main navigation",
+    "home": "Home",
+    "resident": "Resident",
+    "staff": "Contact Staff",
+    "calendar": "Calendar",
+    "more": "More"
+  },
+  "header": {
+    "switch": "Switch",
+    "alerts": "Alerts",
+    "tabBadge_one": "{{count}} new",
+    "tabBadge_other": "{{count}} new",
+    "switchResidentSr": "Switch resident. Current:",
+    "unreadSr_one": "{{count}} unread notification",
+    "unreadSr_other": "{{count}} unread notifications"
+  },
+  "actions": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "done": "Done",
+    "edit": "Edit",
+    "exit": "Exit",
+    "show": "Show",
+    "hide": "Hide",
+    "tryAgain": "Try again",
+    "refresh": "Refresh",
+    "selected": "Selected",
+    "more": "More",
+    "call": "Call"
+  },
+  "toggle": {
+    "on": "On",
+    "off": "Off",
+    "locked": "Locked"
+  },
+  "status": {
+    "new": "New",
+    "not_started": "Not started",
+    "in_progress": "In progress",
+    "needs_action": "Needs action",
+    "waiting_for_you": "Waiting for you",
+    "to_sign": "To sign",
+    "to_confirm": "To confirm",
+    "to_approve": "To approve",
+    "completed": "Completed",
+    "handled": "Handled",
+    "signed": "Signed",
+    "confirmed": "Confirmed",
+    "achieved": "Achieved",
+    "overdue": "Overdue",
+    "blocked": "Blocked",
+    "closed": "Closed",
+    "no_permission": "No permission",
+    "coming_soon": "Coming soon",
+    "not_shared": "Not yet shared",
+    "awaiting_rsvp": "Awaiting RSVP",
+    "draft": "Draft",
+    "read": "Read",
+    "assigned": "Assigned",
+    "waiting_to_send": "Waiting to send"
+  },
+  "field": {
+    "counter": "{{count}} / {{max}}"
+  },
+  "stub": {
+    "comingIn": "Coming in Phase {{phase}}"
+  },
+  "refresh": {
+    "pull": "Pull to refresh",
+    "release": "Release to refresh",
+    "refreshing": "Refreshing…",
+    "failed": "We couldn't refresh. Try again."
+  },
+  "attachment": {
+    "open": "Open"
+  },
+  "more": {
+    "relationOf": "{{relation}} of {{names}}",
+    "version": "App version",
+    "badge": {
+      "toDo_one": "{{count}} to do",
+      "toDo_other": "{{count}} to do",
+      "new_one": "{{count}} new",
+      "new_other": "{{count}} new"
+    },
+    "items": {
+      "documents": {
+        "label": "Documents and Approvals",
+        "desc": "Sign, approve or confirm documents from the center"
+      },
+      "surveys": {
+        "label": "Questionnaires and Surveys",
+        "desc": "Share your feedback with the care center"
+      },
+      "feed": {
+        "label": "Updates and Events",
+        "desc": "Newsletters, activities and invitations"
+      },
+      "services": {
+        "label": "Service Requests",
+        "desc": "Laundry, repairs, hairdresser and more"
+      },
+      "center": {
+        "label": "Center Information",
+        "desc": "Contacts, visiting hours and procedures"
+      },
+      "permissions": {
+        "label": "Family Members and Permissions",
+        "desc": "See what you can view for each resident"
+      },
+      "payments": {
+        "label": "Accounts and Payments",
+        "desc": "Invoices, receipts and balance"
+      },
+      "settings": {
+        "label": "Settings",
+        "desc": "Language, theme, notifications and password"
+      }
+    }
+  }
+}

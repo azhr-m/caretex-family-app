@@ -1,0 +1,23 @@
+{
+  "title": "Notifications",
+  "markAll": "Mark all read",
+  "markFailed": "We couldn't update your notifications. Try again.",
+  "empty": "You're all caught up",
+  "emptyBody": "New notifications will appear here.",
+  "loadingMore": "Loading more notifications…",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "kinds": {
+    "document": "Documents",
+    "inquiry_reply": "Contact Staff",
+    "event": "Events",
+    "calendar_change": "Calendar",
+    "update": "Resident",
+    "service_request": "Service requests",
+    "survey": "Surveys",
+    "newsletter": "Newsletters"
+  },
+  "new": "New",
+  "read": "Read",
+  "notLinked": "You no longer have access to this resident"
+}

@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'feature/**']
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    # Windows, so fonts render like the committed visual baselines (e2e/visual.spec.ts-snapshots/*-win32.png).
+    runs-on: windows-latest
+    timeout-minutes: 45
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.19
+
+      - name: Enable pnpm
+        run: corepack enable
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Locale keys
+        run: pnpm i18n:check
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      # Google Chrome is preinstalled on GitHub's Windows runners; Playwright uses it (channel: 'chrome').
+      - name: End-to-end, visual, accessibility and PWA tests
+        run: pnpm e2e
+
+      - name: Lighthouse (mobile) on the production build
+        run: |
+          pnpm build:prod
+          pnpm lighthouse
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            playwright-report
+            test-results
+            lighthouse-report
+          retention-days: 14

@@ -1,0 +1,87 @@
+{
+  "views": {
+    "label": "תצוגת היומן",
+    "month": "חודש",
+    "week": "שבוע",
+    "list": "רשימה"
+  },
+  "legend": {
+    "personal": "אישי · {{name}}",
+    "center": "אירוע במרכז"
+  },
+  "month": {
+    "prev": "החודש הקודם",
+    "next": "החודש הבא",
+    "cellLabel_one": "{{date}}, פריט אחד",
+    "cellLabel_two": "{{date}}, {{count}} פריטים",
+    "cellLabel_other": "{{date}}, {{count}} פריטים",
+    "today": "היום"
+  },
+  "dayHeader": "{{weekday}} · <ltr>{{date}}</ltr>",
+  "todayHeader": "היום · {{weekday}} · <ltr>{{date}}</ltr>",
+  "nothingDay": "אין פעילויות מתוכננות ביום זה.",
+  "nothing": "אין פעילויות",
+  "week": {
+    "this": "השבוע",
+    "prev": "השבוע הקודם",
+    "next": "השבוע הבא"
+  },
+  "list": {
+    "empty": "אין פעילויות מתוכננות בחודשים הקרובים."
+  },
+  "allDay": "כל היום",
+  "appt": {
+    "title": "תור",
+    "back": "יומן",
+    "needsConfirm": "נדרש אישור שלכם",
+    "confirmed": "אושר",
+    "dateTime": "תאריך ושעה",
+    "dateTimeValue": "{{weekday}}, <ltr>{{when}}</ltr>",
+    "location": "מיקום",
+    "with": "עם",
+    "purpose": "מטרה",
+    "changed": "שינוי",
+    "changedValue": "הוזז מ-<ltr>{{from}}</ltr> ב-<ltr>{{at}}</ltr>",
+    "notes": "הערות",
+    "note": "האישור מעדכן את צוות המחלקה שאתם מתכננים להצטרף לביקור. מומלץ להגיע 10 דקות לפני.",
+    "confirm": "אישור השתתפות",
+    "youConfirmed": "אושר · נתראה שם",
+    "ask": "שאלה לצוות",
+    "askSubject": "לגבי: {{title}}",
+    "addToCalendar": "הוספה ליומן שלי",
+    "downloadFailed": "לא הצלחנו להוריד את קובץ היומן. נסו שוב.",
+    "confirmedToast": "אושר",
+    "confirmedToastBody": "{{ward}} עודכנה שתגיעו לביקור"
+  },
+  "event": {
+    "title": "אירוע במרכז",
+    "rsvp": {
+      "none": "ממתין לאישור הגעה",
+      "attending": "אתם מגיעים",
+      "not_attending": "לא מגיעים",
+      "undecided": "טרם החלטתם"
+    },
+    "dateTime": "תאריך ושעה",
+    "location": "מיקום",
+    "who": "מי מוזמן",
+    "whoValue_one": "דיירים ועד אורח אחד לכל דייר",
+    "whoValue_two": "דיירים ועד {{count}} אורחים לכל דייר",
+    "whoValue_other": "דיירים ועד {{count}} אורחים לכל דייר",
+    "accessibility": "נגישות",
+    "program": "תוכנית",
+    "rsvpButton": "אישור הגעה לאירוע",
+    "changeRsvp": "שינוי אישור ההגעה",
+    "rsvpBy": "נא להשיב עד <ltr>{{date}}</ltr> כדי שנוכל להכין מקומות ישיבה.",
+    "rsvpClosed": "ההרשמה נסגרה ב-<ltr>{{date}}</ltr>.",
+    "invitation": "הזמנה",
+    "yourAnswer": "התשובה שלכם: {{answer}}",
+    "answer": {
+      "attending": "מגיעים",
+      "attendingGuests_one": "מגיעים · אורח אחד",
+      "attendingGuests_two": "מגיעים · {{count}} אורחים",
+      "attendingGuests_other": "מגיעים · {{count}} אורחים",
+      "not_attending": "לא מגיעים",
+      "undecided": "עוד לא החלטנו"
+    }
+  }
+}

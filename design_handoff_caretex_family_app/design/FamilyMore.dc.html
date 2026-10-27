@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;family=Rubik:wght@400;500;600;700;800&amp;family=Caveat:wght@600&amp;display=swap" rel="stylesheet" />
+<script src="./icons.js"></script>
+<style>button{font:inherit;color:inherit}</style>
+</helmet>
+<div dir="{{ dir }}" style="width:410px;height:864px;padding:10px;box-sizing:border-box;background:#0D1017;border-radius:58px;box-shadow:0 30px 60px -24px rgba(20,25,35,.45)">
+<div style="position:relative;width:390px;height:844px;border-radius:48px;overflow:hidden;background:{{ c.bg }};color:{{ c.text }};font-family:{{ font }};font-size:16px;line-height:1.4">
+
+<div dir="ltr" style="position:absolute;top:0;left:0;right:0;height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 36px;z-index:40;color:{{ c.text }};font-family:-apple-system,system-ui,sans-serif;font-weight:600;font-size:16px;pointer-events:none">
+<span>09:41</span>
+<div style="position:absolute;left:50%;top:11px;width:122px;height:35px;margin-left:-61px;border-radius:20px;background:#000"></div>
+<div style="display:flex;gap:6px;align-items:center"><lc-icon name="signal" size="17"></lc-icon><lc-icon name="wifi" size="17"></lc-icon><lc-icon name="battery-full" size="22"></lc-icon></div>
+</div>
+
+<div style="position:absolute;top:47px;left:0;right:0;bottom:0;display:flex;flex-direction:column">
+
+<sc-if value="{{ isMain }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:center;gap:10px;padding:6px 14px 12px;border-bottom:1px solid {{ c.border }};background:{{ c.bg }}">
+<button onClick="{{ go.pickerSheet }}" style="flex:1;min-width:0;display:flex;align-items:center;gap:10px;padding:6px 10px;border:1px solid {{ c.border }};border-radius:16px;background:{{ c.surface }};cursor:pointer;text-align:start;min-height:56px">
+<div style="width:42px;height:42px;border-radius:50%;background:{{ tP.bg }};color:{{ tP.fg }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex-shrink:0">{{ t.resInit }}</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.resName }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ t.resPlace }}</span></div>
+<div style="display:flex;flex-direction:column;align-items:center;color:{{ c.text2 }}"><lc-icon name="chevrons-up-down" size="18"></lc-icon><span style="font-size:11px;font-weight:700">{{ t.switch }}</span></div>
+</button>
+<button onClick="{{ go.notifCenter }}" style="position:relative;width:62px;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid {{ c.border }};border-radius:16px;background:{{ c.surface }};cursor:pointer">
+<div style="position:relative;display:flex"><lc-icon name="bell" size="22"></lc-icon><span style="position:absolute;top:-6px;inset-inline-end:-10px;min-width:19px;height:19px;padding:0 5px;box-sizing:border-box;border-radius:10px;background:{{ c.danger }};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid {{ c.surface }}">5</span></div>
+<span style="font-size:11px;font-weight:700;color:{{ c.text2 }}">{{ t.alerts }}</span>
+</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasTopBar }}">
+<div style="display:flex;align-items:center;gap:8px;padding:4px 12px 10px;border-bottom:1px solid {{ c.border }}">
+<button onClick="{{ backGo }}" style="display:flex;align-items:center;gap:4px;min-height:44px;min-width:96px;padding:0 8px;border:none;background:none;cursor:pointer;font-size:15px;font-weight:700;color:{{ c.link }}"><lc-icon name="{{ backIcon }}" size="20"></lc-icon><span>{{ backLabel }}</span></button>
+<span style="flex:1;text-align:center;font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ topTitle }}</span>
+<div style="min-width:96px;display:flex;justify-content:flex-end">
+<sc-if value="{{ hasDraftBtn }}"><button onClick="{{ go.surveyDraft }}" style="display:flex;align-items:center;gap:5px;min-height:44px;padding:0 6px;border:none;background:none;cursor:pointer;font-size:14px;font-weight:800;color:{{ c.link }}"><lc-icon name="save" size="17"></lc-icon><span>{{ t.saveDraft }}</span></button></sc-if>
+</div>
+</div>
+</sc-if>
+
+<div style="flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none">
+
+<sc-if value="{{ s.moreMenu }}">
+<div style="padding:16px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:18px;background:{{ c.navy }};color:#fff">
+<div style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px">{{ t.dcInit }}</div>
+<div style="flex:1;display:flex;flex-direction:column"><span style="font-size:18px;font-weight:800">{{ t.dana }}</span><span style="font-size:13px;opacity:.8">{{ t.danaRole }}</span></div>
+<span dir="ltr" style="font-size:13px;opacity:.8;font-weight:700">050-123-4127</span>
+</div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};overflow:hidden">
+<sc-for list="{{ menu }}" as="m" hint-placeholder-count="8">
+<button onClick="{{ m.onClick }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:12px 14px;border:none;border-bottom:1px solid {{ c.border }};background:none;cursor:pointer;text-align:start;min-height:72px">
+<div style="width:44px;height:44px;border-radius:12px;background:{{ m.tone.bg }};color:{{ m.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ m.icon }}" size="22"></lc-icon></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:16px;font-weight:800">{{ m.label }}</span><span style="font-size:13px;color:{{ c.text2 }};line-height:1.3">{{ m.desc }}</span></div>
+<sc-if value="{{ m.hasBadge }}"><span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;background:{{ m.badge.bg }};color:{{ m.badge.fg }};border:1px solid {{ m.badge.bd }};font-size:11px;font-weight:800;white-space:nowrap"><lc-icon name="{{ m.badge.icon }}" size="12"></lc-icon>{{ m.badge.label }}</span></sc-if>
+<lc-icon name="{{ ic.chev }}" size="20" style="color:{{ c.text2 }}"></lc-icon>
+</button>
+</sc-for>
+</div>
+<span dir="ltr" style="text-align:center;font-size:12px;color:{{ c.label }}">CARETEX Family App · 2.4.0</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.docsList }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<span style="font-size:14px;color:{{ c.text2 }}">{{ t.docsIntro }}</span>
+<div style="display:flex;padding:4px;border-radius:16px;background:{{ c.surface2 }};gap:4px">
+<sc-for list="{{ docTabs }}" as="v" hint-placeholder-count="3">
+<button onClick="{{ v.onClick }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;height:44px;border-radius:12px;border:none;background:{{ v.bg }};color:{{ v.fg }};font-size:13px;font-weight:800;cursor:pointer;box-shadow:{{ v.sh }}"><lc-icon name="{{ v.icon }}" size="16"></lc-icon><span>{{ v.label }}</span><span style="opacity:.7">{{ v.count }}</span></button>
+</sc-for>
+</div>
+<div style="display:flex;gap:8px">
+<button style="display:flex;align-items:center;gap:6px;height:44px;padding:0 12px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:14px;font-weight:800;cursor:pointer"><lc-icon name="files" size="17"></lc-icon><span>{{ t.allTypes }}</span><lc-icon name="chevron-down" size="16"></lc-icon></button>
+<button style="display:flex;align-items:center;gap:6px;height:44px;padding:0 12px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:14px;font-weight:800;cursor:pointer"><lc-icon name="calendar" size="17"></lc-icon><span>2026</span><lc-icon name="chevron-down" size="16"></lc-icon></button>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ docs }}" as="d" hint-placeholder-count="3">
+<button onClick="{{ d.onClick }}" style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};cursor:pointer;text-align:start;box-shadow:{{ c.shadow }}">
+<div style="display:flex;gap:12px;align-items:flex-start;width:100%">
+<div style="width:44px;height:44px;border-radius:12px;background:{{ d.tone.bg }};color:{{ d.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ d.icon }}" size="22"></lc-icon></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:800;line-height:1.3">{{ d.title }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ d.meta }}</span></div>
+<lc-icon name="{{ ic.chev }}" size="20" style="color:{{ c.text2 }}"></lc-icon>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;width:100%;gap:8px;flex-wrap:wrap">
+<span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ d.chip.bg }};color:{{ d.chip.fg }};border:1px solid {{ d.chip.bd }};font-size:12px;font-weight:800"><lc-icon name="{{ d.chip.icon }}" size="14"></lc-icon>{{ d.chip.label }}</span>
+<span style="display:flex;align-items:center;gap:5px;font-size:13px;font-weight:800;color:{{ d.dueColor }}"><lc-icon name="{{ d.dueIcon }}" size="15"></lc-icon>{{ d.due }}</span>
+</div>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDocView }}">
+<div style="padding:14px 16px 24px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-size:20px;font-weight:800;line-height:1.25">{{ doc.title }}</span>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ doc.chip.bg }};color:{{ doc.chip.fg }};border:1px solid {{ doc.chip.bd }};font-size:12px;font-weight:800"><lc-icon name="{{ doc.chip.icon }}" size="14"></lc-icon>{{ doc.chip.label }}</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ c.surface2 }};font-size:12px;font-weight:700"><lc-icon name="{{ doc.fromIcon }}" size="14"></lc-icon>{{ doc.from }}</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ c.surface2 }};font-size:12px;font-weight:700"><lc-icon name="clock" size="14"></lc-icon>{{ doc.due }}</span></div>
+</div>
+<div style="border-radius:14px;background:{{ c.paper }};color:#1A2233;border:1px solid {{ c.border }};padding:22px 20px;display:flex;flex-direction:column;gap:12px;box-shadow:0 6px 18px -10px rgba(0,0,0,.25)">
+<div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:#6B7180;letter-spacing:.06em"><span>{{ t.centerUpper }}</span><span dir="ltr">{{ doc.code }}</span></div>
+<span style="font-size:18px;font-weight:800">{{ doc.title }}</span>
+<sc-for list="{{ doc.paras }}" as="p" hint-placeholder-count="3"><span style="font-size:14px;line-height:1.6">{{ p }}</span></sc-for>
+<div style="display:flex;gap:16px;margin-top:6px;padding-top:12px;border-top:1px dashed #C9C3B8;font-size:13px"><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="color:#6B7180;font-weight:700">{{ t.residentL }}</span><span style="font-weight:800">{{ t.resName }}</span></div><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="color:#6B7180;font-weight:700">{{ t.familyL }}</span><span style="font-weight:800">{{ t.danaDaughter }}</span></div></div>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+<span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:800;color:{{ c.text2 }}"><lc-icon name="file-text" size="16"></lc-icon>{{ t.page12 }}</span>
+<div style="display:flex;gap:8px"><button style="display:flex;align-items:center;gap:5px;height:44px;padding:0 12px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:13px;font-weight:800;cursor:pointer"><lc-icon name="zoom-in" size="16"></lc-icon><span>{{ t.zoom }}</span></button><button style="display:flex;align-items:center;gap:5px;height:44px;padding:0 12px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:13px;font-weight:800;cursor:pointer"><lc-icon name="download" size="16"></lc-icon><span>PDF</span></button></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isResult }}">
+<div style="min-height:100%;box-sizing:border-box;padding:44px 22px 32px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px">
+<div style="width:96px;height:96px;border-radius:28px;background:{{ tG.bg }};color:{{ tG.fg }};border:1px solid {{ tG.bd }};display:flex;align-items:center;justify-content:center"><lc-icon name="{{ rs.icon }}" size="44"></lc-icon></div>
+<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:{{ tG.bg }};color:{{ tG.fg }};border:1px solid {{ tG.bd }};font-size:13px;font-weight:800"><lc-icon name="circle-check" size="15"></lc-icon>{{ rs.chip }}</span>
+<span style="font-size:26px;font-weight:800;line-height:1.2">{{ rs.title }}</span>
+<span style="font-size:16px;color:{{ c.text2 }}">{{ rs.body }}</span>
+</div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<sc-for list="{{ rs.rows }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid {{ c.border }};min-height:44px"><lc-icon name="{{ r.icon }}" size="19" style="color:{{ c.text2 }}"></lc-icon><span style="flex:1;font-size:14px;color:{{ c.text2 }}">{{ r.label }}</span><span style="font-size:15px;font-weight:800;text-align:end">{{ r.value }}</span></div>
+</sc-for>
+</div>
+<div style="flex:1"></div>
+<button onClick="{{ rs.go1 }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="{{ rs.b1icon }}" size="20"></lc-icon><span>{{ rs.b1 }}</span></button>
+<button onClick="{{ rs.go2 }}" style="height:56px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;margin-top:-8px"><lc-icon name="{{ rs.b2icon }}" size="20"></lc-icon><span>{{ rs.b2 }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.surveyList }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<span style="font-size:14px;color:{{ c.text2 }}">{{ t.svIntro }}</span>
+<div style="display:flex;padding:4px;border-radius:16px;background:{{ c.surface2 }};gap:4px">
+<div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:44px;border-radius:12px;background:{{ c.surface }};font-size:14px;font-weight:800;box-shadow:0 1px 3px rgba(0,0,0,.12)"><lc-icon name="clipboard-pen" size="17"></lc-icon><span>{{ t.active }} 2</span></div>
+<div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;height:44px;border-radius:12px;font-size:14px;font-weight:800;color:{{ c.text2 }}"><lc-icon name="clipboard-check" size="17"></lc-icon><span>{{ t.completed }} 3</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ surveys }}" as="v" hint-placeholder-count="2">
+<button onClick="{{ v.onClick }}" style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};cursor:pointer;text-align:start">
+<div style="display:flex;gap:12px;align-items:flex-start;width:100%"><div style="width:44px;height:44px;border-radius:12px;background:{{ v.tone.bg }};color:{{ v.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ v.icon }}" size="22"></lc-icon></div><div style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:16px;font-weight:800;line-height:1.3">{{ v.title }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ v.meta }}</span></div></div>
+<div style="width:100%;height:8px;border-radius:4px;background:{{ c.surface2 }};overflow:hidden"><div style="width:{{ v.pct }};height:100%;background:{{ v.tone.fg }};border-radius:4px"></div></div>
+<div style="display:flex;align-items:center;justify-content:space-between;width:100%"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ v.chip.bg }};color:{{ v.chip.fg }};border:1px solid {{ v.chip.bd }};font-size:12px;font-weight:800"><lc-icon name="{{ v.chip.icon }}" size="14"></lc-icon>{{ v.chip.label }}</span><span style="display:flex;align-items:center;gap:4px;font-size:14px;font-weight:800;color:{{ c.link }}">{{ v.cta }}<lc-icon name="{{ ic.chev }}" size="17"></lc-icon></span></div>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.surveyIntro }}">
+<div style="padding:20px 18px 28px;display:flex;flex-direction:column;gap:16px">
+<div style="width:64px;height:64px;border-radius:18px;background:{{ tT.bg }};color:{{ tT.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="clipboard-list" size="32"></lc-icon></div>
+<span style="font-size:26px;font-weight:800;line-height:1.2">{{ t.svTitle }}</span>
+<span style="font-size:16px;color:{{ c.text2 }}">{{ t.svDesc }}</span>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+<sc-for list="{{ svFacts }}" as="f" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px;border-radius:14px;background:{{ c.surface }};border:1px solid {{ c.border }};text-align:center"><lc-icon name="{{ f.icon }}" size="20" style="color:{{ c.text2 }}"></lc-icon><span style="font-size:15px;font-weight:800">{{ f.value }}</span><span style="font-size:12px;color:{{ c.text2 }}">{{ f.label }}</span></div></sc-for>
+</div>
+<div style="display:flex;gap:12px;padding:14px;border-radius:16px;background:{{ tB.bg }};border:1px solid {{ tB.bd }}"><lc-icon name="eye-off" size="22" style="color:{{ tB.fg }}"></lc-icon><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:800;color:{{ tB.fg }}">{{ t.anonTitle }}</span><span style="font-size:14px">{{ t.anonBody }}</span></div></div>
+<div style="display:flex;gap:10px;padding:14px;border-radius:14px;background:{{ c.surface2 }};font-size:14px;color:{{ c.text2 }}"><lc-icon name="save" size="18"></lc-icon><span>{{ t.draftNote }}</span></div>
+<button onClick="{{ go.sq1 }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="play" size="20"></lc-icon><span>{{ t.startSurvey }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isQ }}">
+<div style="padding:14px 18px 24px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:800"><span>{{ q.progress }}</span><span style="color:{{ c.text2 }};display:flex;gap:5px;align-items:center"><lc-icon name="timer" size="14"></lc-icon>{{ q.left }}</span></div>
+<div style="height:8px;border-radius:4px;background:{{ c.surface2 }};overflow:hidden"><div style="width:{{ q.pct }};height:100%;border-radius:4px;background:{{ tT.fg }}"></div></div>
+</div>
+<sc-if value="{{ q.isFollow }}"><span style="align-self:flex-start;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ tV.bg }};color:{{ tV.fg }};border:1px solid {{ tV.bd }};font-size:12px;font-weight:800"><lc-icon name="git-branch" size="14"></lc-icon>{{ t.becauseNo }}</span></sc-if>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:22px;font-weight:800;line-height:1.3">{{ q.title }}</span><span style="font-size:14px;color:{{ c.text2 }};display:flex;gap:6px;align-items:center"><lc-icon name="{{ q.helpIcon }}" size="15"></lc-icon>{{ q.help }}</span></div>
+
+<sc-if value="{{ q.isChoice }}">
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ q.opts }}" as="o" hint-placeholder-count="4">
+<button style="display:flex;align-items:center;gap:12px;padding:0 14px;min-height:58px;border-radius:16px;border:2px solid {{ o.bd }};background:{{ o.bg }};cursor:pointer;text-align:start"><lc-icon name="{{ o.icon }}" size="24" style="color:{{ o.mark }}"></lc-icon><span style="flex:1;font-size:16px;font-weight:{{ o.weight }}">{{ o.label }}</span><sc-if value="{{ o.hasIcon2 }}"><lc-icon name="{{ o.icon2 }}" size="22" style="color:{{ o.mark2 }}"></lc-icon></sc-if></button>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ q.isYesNo }}">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<sc-for list="{{ q.opts }}" as="o" hint-placeholder-count="2">
+<button style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:120px;border-radius:18px;border:2px solid {{ o.bd }};background:{{ o.bg }};cursor:pointer"><lc-icon name="{{ o.icon }}" size="34" style="color:{{ o.mark }}"></lc-icon><span style="font-size:18px;font-weight:800">{{ o.label }}</span><span style="font-size:12px;font-weight:800;color:{{ o.mark }}">{{ o.state }}</span></button>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ q.isText }}">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="min-height:160px;padding:14px;box-sizing:border-box;border-radius:16px;border:2px solid {{ q.textBd }};background:{{ c.surface }};font-size:16px;line-height:1.5;color:{{ q.textColor }}">{{ q.textVal }}</div><div style="display:flex;justify-content:space-between;font-size:13px;color:{{ c.text2 }}"><span>{{ q.textHelp }}</span><span dir="ltr">{{ q.count }}</span></div></div>
+</sc-if>
+
+<sc-if value="{{ q.isNumber }}">
+<div style="display:flex;flex-direction:column;gap:10px">
+<div dir="ltr" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px">
+<sc-for list="{{ q.nums }}" as="n" hint-placeholder-count="11"><button style="height:52px;border-radius:14px;border:2px solid {{ n.bd }};background:{{ n.bg }};color:{{ n.fg }};font-size:18px;font-weight:800;cursor:pointer">{{ n.v }}</button></sc-for>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:{{ c.text2 }}"><span>{{ t.notLikely }}</span><span>{{ t.veryLikely }}</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ q.isStars }}">
+<div style="display:flex;flex-direction:column;align-items:center;gap:12px;padding:20px 0;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<div dir="ltr" style="display:flex;gap:6px">
+<sc-for list="{{ q.stars }}" as="st" hint-placeholder-count="5"><button style="display:flex;flex-direction:column;align-items:center;gap:2px;width:58px;min-height:64px;border:none;background:none;cursor:pointer;color:{{ st.fg }}"><lc-icon name="star" size="40" style="fill:{{ st.fill }}"></lc-icon><span style="font-size:12px;font-weight:800;color:{{ c.text2 }}">{{ st.n }}</span></button></sc-for>
+</div>
+<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:{{ tA.bg }};color:{{ tA.fg }};font-size:14px;font-weight:800"><lc-icon name="star" size="15"></lc-icon>{{ t.starLabel }}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ q.isDate }}">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:10px;height:56px;padding:0 14px;border-radius:16px;border:2px solid {{ c.primary }};background:{{ c.surface }}"><lc-icon name="calendar" size="20" style="color:{{ c.text2 }}"></lc-icon><span dir="ltr" style="flex:1;font-size:17px;font-weight:800;text-align:start">24.09.2026</span><span style="font-size:13px;font-weight:800;color:{{ c.link }}">{{ t.change }}</span></div>
+<span style="font-size:13px;color:{{ c.text2 }}">{{ t.dateHelp }}</span>
+<button style="display:flex;align-items:center;gap:12px;padding:0 14px;min-height:56px;border-radius:16px;border:1.5px solid {{ c.border }};background:{{ c.surface }};cursor:pointer;text-align:start"><lc-icon name="square" size="22" style="color:{{ c.text2 }}"></lc-icon><span style="font-size:15px;font-weight:700">{{ t.neverAttended }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ q.isDropdown }}">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:10px;height:56px;padding:0 14px;border-radius:16px;border:2px solid {{ c.primary }};background:{{ c.surface }}"><lc-icon name="repeat" size="20" style="color:{{ c.text2 }}"></lc-icon><span style="flex:1;font-size:16px;font-weight:800">{{ t.ddSel }}</span><lc-icon name="chevron-up" size="20"></lc-icon></div>
+<div style="border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }};overflow:hidden;box-shadow:0 10px 24px -12px rgba(0,0,0,.25)">
+<sc-for list="{{ q.opts }}" as="o" hint-placeholder-count="5"><div style="display:flex;align-items:center;gap:10px;padding:0 14px;min-height:50px;border-bottom:1px solid {{ c.border }};background:{{ o.bg }}"><span style="flex:1;font-size:15px;font-weight:{{ o.weight }}">{{ o.label }}</span><lc-icon name="{{ o.icon }}" size="18" style="color:{{ o.mark }}"></lc-icon></div></sc-for>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.surveyReview }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:12px">
+<span style="font-size:22px;font-weight:800">{{ t.reviewTitle }}</span>
+<span style="font-size:14px;color:{{ c.text2 }}">{{ t.reviewSub }}</span>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};overflow:hidden">
+<sc-for list="{{ review }}" as="r" hint-placeholder-count="9">
+<div style="display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-bottom:1px solid {{ c.border }}">
+<span style="width:26px;height:26px;border-radius:8px;background:{{ c.surface2 }};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0">{{ r.n }}</span>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:13px;color:{{ c.text2 }}">{{ r.q }}</span><span style="font-size:15px;font-weight:800">{{ r.a }}</span></div>
+<button style="display:flex;flex-direction:column;align-items:center;min-width:44px;min-height:44px;justify-content:center;border:none;background:none;color:{{ c.link }};cursor:pointer"><lc-icon name="pencil" size="16"></lc-icon><span style="font-size:11px;font-weight:800">{{ t.edit }}</span></button>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;gap:10px;padding:12px 14px;border-radius:14px;background:{{ tB.bg }};font-size:14px"><lc-icon name="eye-off" size="18" style="color:{{ tB.fg }}"></lc-icon><span>{{ t.anonShort }}</span></div>
+<button onClick="{{ go.surveyThanks }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="send" size="20"></lc-icon><span>{{ t.submit }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.feed }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px">
+<sc-for list="{{ feedChips }}" as="f" hint-placeholder-count="5"><button onClick="{{ f.onClick }}" style="display:flex;align-items:center;gap:6px;height:42px;padding:0 13px;border-radius:21px;border:1px solid {{ f.bd }};background:{{ f.bg }};color:{{ f.fg }};font-size:13px;font-weight:800;white-space:nowrap;cursor:pointer;flex-shrink:0"><lc-icon name="{{ f.icon }}" size="15"></lc-icon><span>{{ f.label }}</span></button></sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ feedItems }}" as="f" hint-placeholder-count="4">
+<button onClick="{{ f.onClick }}" style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};cursor:pointer;text-align:start">
+<div style="display:flex;gap:12px;align-items:flex-start;width:100%"><div style="width:44px;height:44px;border-radius:12px;background:{{ f.tone.bg }};color:{{ f.tone.fg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="{{ f.icon }}" size="22"></lc-icon></div><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:12px;font-weight:800;color:{{ f.tone.fg }}">{{ f.kind }}</span><span style="font-size:16px;font-weight:800;line-height:1.3">{{ f.title }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ f.meta }}</span></div></div>
+<span style="font-size:14px;color:{{ c.text2 }};width:100%">{{ f.body }}</span>
+<div style="display:flex;align-items:center;justify-content:space-between;width:100%;gap:8px"><sc-if value="{{ f.hasChip }}"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ f.chip.bg }};color:{{ f.chip.fg }};border:1px solid {{ f.chip.bd }};font-size:12px;font-weight:800"><lc-icon name="{{ f.chip.icon }}" size="14"></lc-icon>{{ f.chip.label }}</span></sc-if><span style="flex:1"></span><span style="display:flex;align-items:center;gap:4px;font-size:14px;font-weight:800;color:{{ c.link }}">{{ f.cta }}<lc-icon name="{{ ic.chev }}" size="17"></lc-icon></span></div>
+</button>
+</sc-for>
+</div>
+<button onClick="{{ go.archive }}" style="height:52px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><lc-icon name="archive" size="18"></lc-icon><span>{{ t.viewArchive }}</span></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isNews }}">
+<div style="padding:16px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ tV.bg }};color:{{ tV.fg }};border:1px solid {{ tV.bd }};font-size:12px;font-weight:800"><lc-icon name="newspaper" size="14"></lc-icon>{{ t.newsletter }}</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ newsChip.bg }};color:{{ newsChip.fg }};border:1px solid {{ newsChip.bd }};font-size:12px;font-weight:800"><lc-icon name="{{ newsChip.icon }}" size="14"></lc-icon>{{ newsChip.label }}</span></div>
+<span style="font-size:24px;font-weight:800;line-height:1.2">{{ t.newsTitle }}</span>
+<span style="font-size:14px;color:{{ c.text2 }};display:flex;gap:6px;align-items:center"><lc-icon name="building-2" size="15"></lc-icon>{{ t.newsMeta }}</span>
+<div style="height:150px;border-radius:16px;background:repeating-linear-gradient(135deg,{{ c.stA }} 0 10px,{{ c.stB }} 10px 20px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:{{ c.text2 }}">newsletter cover image</div>
+<span style="font-size:16px;line-height:1.55">{{ t.newsBody }}</span>
+<div style="display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{ newsPoints }}" as="p" hint-placeholder-count="3"><div style="display:flex;gap:10px;align-items:flex-start;font-size:15px"><lc-icon name="{{ p.icon }}" size="19" style="color:{{ tT.fg }}"></lc-icon><span>{{ p.text }}</span></div></sc-for>
+</div>
+<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }}"><div style="width:44px;height:44px;border-radius:12px;background:{{ tR.bg }};color:{{ tR.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="file-text" size="22"></lc-icon></div><div style="flex:1;min-width:0;display:flex;flex-direction:column"><span dir="ltr" style="font-size:15px;font-weight:800;text-align:start">beit-hadar-newsletter-10-2026.pdf</span><span dir="ltr" style="font-size:12px;color:{{ c.text2 }};text-align:start">PDF · 8 pages · 2.1 MB</span></div><button style="display:flex;align-items:center;gap:5px;height:44px;padding:0 12px;border-radius:12px;border:none;background:{{ c.surface2 }};font-size:13px;font-weight:800;cursor:pointer"><lc-icon name="external-link" size="16"></lc-icon><span>{{ t.open }}</span></button></div>
+<sc-if value="{{ s.newsletter }}">
+<div style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:16px;background:{{ tV.bg }};border:1px solid {{ tV.bd }}">
+<div style="display:flex;gap:10px;align-items:flex-start"><lc-icon name="square-check" size="24" style="color:{{ tV.fg }}"></lc-icon><span style="font-size:15px;font-weight:700">{{ t.iRead }}</span></div>
+<button onClick="{{ go.newsletterOk }}" style="height:54px;border-radius:14px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><lc-icon name="file-check" size="19"></lc-icon><span>{{ t.confirmRead }}</span></button>
+</div>
+</sc-if>
+<sc-if value="{{ s.newsletterOk }}"><div style="display:flex;gap:10px;align-items:center;padding:14px;border-radius:16px;background:{{ tG.bg }};border:1px solid {{ tG.bd }};color:{{ tG.fg }};font-weight:800"><lc-icon name="circle-check" size="22"></lc-icon><span>{{ t.readConfirmed }}</span></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.eventInvite }}">
+<div style="padding:0 0 28px;display:flex;flex-direction:column;gap:16px">
+<div style="height:190px;background:repeating-linear-gradient(135deg,{{ c.stA }} 0 12px,{{ c.stB }} 12px 24px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:{{ c.text2 }}">event photo · Hanukkah candles in the courtyard</div>
+<div style="padding:0 16px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ tP.bg }};color:{{ tP.fg }};border:1px solid {{ tP.bd }};font-size:12px;font-weight:800"><lc-icon name="mail-open" size="14"></lc-icon>{{ t.invitation }}</span><span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:{{ tA.bg }};color:{{ tA.fg }};border:1px solid {{ tA.bd }};font-size:12px;font-weight:800"><lc-icon name="hourglass" size="14"></lc-icon>{{ t.awaitRsvp }}</span></div>
+<span style="font-size:24px;font-weight:800;line-height:1.2">{{ t.hanTitle }}</span>
+<span style="font-size:16px;line-height:1.55">{{ t.hanBody }}</span>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }}">
+<sc-for list="{{ hanRows }}" as="r" hint-placeholder-count="4"><div style="display:flex;gap:12px;padding:12px 14px;border-bottom:1px solid {{ c.border }}"><lc-icon name="{{ r.icon }}" size="20" style="color:{{ c.text2 }}"></lc-icon><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:12px;font-weight:700;color:{{ c.text2 }}">{{ r.label }}</span><span style="font-size:15px;font-weight:700">{{ r.value }}</span></div></div></sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="list-ordered" size="16"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ t.program }}</span></div>
+<sc-for list="{{ program }}" as="p" hint-placeholder-count="3"><div style="display:flex;gap:12px;align-items:center;min-height:40px"><span dir="ltr" style="width:46px;font-size:14px;font-weight:800;text-align:start">{{ p.time }}</span><lc-icon name="{{ p.icon }}" size="18" style="color:{{ tP.fg }}"></lc-icon><span style="font-size:15px">{{ p.text }}</span></div></sc-for></div>
+<button onClick="{{ go.rsvp }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="calendar-check" size="20"></lc-icon><span>{{ t.rsvpBtn }}</span></button>
+<span style="font-size:13px;color:{{ c.text2 }};text-align:center;margin-top:-6px">{{ t.rsvpBy }}</span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.rsvp }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:12px;align-items:center;padding:12px;border-radius:16px;background:{{ c.surface }};border:1px solid {{ c.border }}"><div style="width:52px;border-radius:12px;background:{{ tP.bg }};color:{{ tP.fg }};display:flex;flex-direction:column;align-items:center;padding:6px 0"><span style="font-size:11px;font-weight:800">{{ t.decShort }}</span><span style="font-size:20px;font-weight:900;line-height:1.1">10</span></div><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:16px;font-weight:800">{{ t.hanTitle }}</span><span style="font-size:13px;color:{{ c.text2 }}">{{ t.hanWhen }}</span></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:15px;font-weight:800">{{ t.willYou }}</span>
+<sc-for list="{{ rsvpOpts }}" as="o" hint-placeholder-count="3"><button style="display:flex;align-items:center;gap:12px;padding:0 14px;min-height:58px;border-radius:16px;border:2px solid {{ o.bd }};background:{{ o.bg }};cursor:pointer;text-align:start"><lc-icon name="{{ o.icon }}" size="22" style="color:{{ o.fg }}"></lc-icon><span style="flex:1;font-size:16px;font-weight:{{ o.weight }}">{{ o.label }}</span><lc-icon name="{{ o.mark }}" size="22" style="color:{{ o.markFg }}"></lc-icon></button></sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:15px;font-weight:800">{{ t.guests }}</span>
+<div style="display:flex;align-items:center;gap:12px"><button onClick="{{ guestDec }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px;height:56px;border-radius:14px;border:1px solid {{ c.border }};background:{{ c.surface }};cursor:pointer"><lc-icon name="minus" size="20"></lc-icon><span style="font-size:10px;font-weight:800">{{ t.less }}</span></button><span style="flex:1;text-align:center;font-size:28px;font-weight:900">{{ guestN }}</span><button onClick="{{ guestInc }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px;height:56px;border-radius:14px;border:1px solid {{ c.border }};background:{{ c.surface }};cursor:pointer"><lc-icon name="plus" size="20"></lc-icon><span style="font-size:10px;font-weight:800">{{ t.more }}</span></button></div>
+<span style="font-size:13px;color:{{ c.text2 }}">{{ t.guestHelp }}</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:15px;font-weight:800">{{ t.guestNames }}</span>
+<sc-for list="{{ guestRows }}" as="g" hint-placeholder-count="2"><div style="display:flex;align-items:center;gap:10px;height:52px;padding:0 14px;border-radius:14px;border:1.5px solid {{ c.border }};background:{{ c.surface }}"><lc-icon name="user-round" size="19" style="color:{{ c.text2 }}"></lc-icon><span style="font-size:13px;font-weight:800;color:{{ c.text2 }}">{{ g.n }}</span><span style="flex:1;font-size:16px">{{ g.name }}</span></div></sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:15px;font-weight:800">{{ t.noteL }}</span><div style="min-height:84px;padding:12px 14px;box-sizing:border-box;border-radius:14px;border:1.5px solid {{ c.border }};background:{{ c.surface }};font-size:15px;line-height:1.5">{{ t.noteVal }}</div><span style="font-size:13px;color:{{ c.text2 }}">{{ t.noteHelp }}</span></div>
+<button onClick="{{ go.rsvpSaved }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="save" size="20"></lc-icon><span>{{ t.saveRsvp }}</span></button>
+<span style="font-size:13px;color:{{ c.text2 }};text-align:center;margin-top:-6px">{{ t.changeUntil }}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.archive }}">
+<div style="padding:14px 16px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:10px;height:52px;padding:0 14px;border-radius:14px;border:1.5px solid {{ c.border }};background:{{ c.surface }}"><lc-icon name="search" size="20" style="color:{{ c.text2 }}"></lc-icon><span style="font-size:16px;color:{{ c.text2 }}">{{ t.searchArchive }}</span></div>
+<sc-for list="{{ archive }}" as="g" hint-placeholder-count="2">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px;color:{{ c.label }}"><lc-icon name="calendar" size="15"></lc-icon><span style="font-size:12px;font-weight:800;letter-spacing:.06em">{{ g.label }}</span></div>
+<div style="border-radius:18px;background:{{ c.surface }};border:1px solid {{ c.border }};overflow:hidden">
+<sc-for list="{{ g.items }}" as="a" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid {{ c.border }};min-height:56px"><lc-icon name="{{ a.icon }}" size="20" style="color:{{ a.tone.fg }}"></lc-icon><div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:700">{{ a.title }}</span><span style="font-size:12px;color:{{ c.text2 }}">{{ a.kind }} · <span dir="ltr">{{ a.date }}</span></span></div><lc-icon name="{{ ic.chev }}" size="18" style="color:{{ c.text2 }}"></lc-icon></div></sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ hasDocBar }}">
+<div style="padding:12px 16px 30px;border-top:1px solid {{ c.border }};background:{{ c.surface }};display:flex;flex-direction:column;gap:10px">
+<sc-if value="{{ s.docView }}"><div style="display:flex;gap:10px"><button onClick="{{ go.inqNew1 }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:72px;height:56px;border-radius:14px;border:1px solid {{ c.border }};background:{{ c.surface2 }};cursor:pointer"><lc-icon name="message-circle-question" size="19"></lc-icon><span style="font-size:11px;font-weight:800">{{ t.askQ }}</span></button><button onClick="{{ go.docSign }}" style="flex:1;height:56px;border-radius:14px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><lc-icon name="signature" size="20"></lc-icon><span>{{ t.signDoc }}</span></button></div></sc-if>
+<sc-if value="{{ s.docConfirm }}"><div style="display:flex;flex-direction:column;gap:10px"><div style="display:flex;gap:10px;align-items:center;font-size:14px;font-weight:700"><lc-icon name="square-check" size="22" style="color:{{ c.primary }}"></lc-icon><span>{{ t.iReadDoc }}</span></div><button onClick="{{ go.docConfirmed }}" style="height:56px;border-radius:14px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><lc-icon name="file-check" size="20"></lc-icon><span>{{ t.confirmReadDoc }}</span></button></div></sc-if>
+<sc-if value="{{ s.docConfirmed }}"><div style="height:56px;border-radius:14px;background:{{ tG.bg }};border:1px solid {{ tG.bd }};color:{{ tG.fg }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px"><lc-icon name="circle-check" size="20"></lc-icon><span>{{ t.readConfirmedShort }}</span></div></sc-if>
+<sc-if value="{{ s.docApprove }}"><div style="display:flex;gap:10px"><button style="flex:1;height:56px;border-radius:14px;border:1.5px solid {{ tR.bd }};background:{{ tR.bg }};color:{{ tR.fg }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><lc-icon name="circle-x" size="20"></lc-icon><span>{{ t.decline }}</span></button><button onClick="{{ go.docApproved }}" style="flex:1.4;height:56px;border-radius:14px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer"><lc-icon name="circle-check" size="20"></lc-icon><span>{{ t.approve }}</span></button></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isQ }}">
+<div style="display:flex;gap:10px;padding:12px 16px 30px;border-top:1px solid {{ c.border }};background:{{ c.surface }}">
+<button onClick="{{ q.prev }}" style="flex:1;height:56px;border-radius:14px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><lc-icon name="{{ ic.back }}" size="19"></lc-icon><span>{{ t.previous }}</span></button>
+<button onClick="{{ q.next }}" style="flex:1.5;height:56px;border-radius:14px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><span>{{ q.nextLabel }}</span><lc-icon name="{{ ic.fwd }}" size="19"></lc-icon></button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMain }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;padding:6px 4px 26px;border-top:1px solid {{ c.border }};background:{{ c.surface }}">
+<sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="5">
+<button onClick="{{ tb.onClick }}" style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:54px;padding:4px 0;background:none;border:none;color:{{ tb.color }};cursor:pointer">
+<div style="position:relative;display:flex;align-items:center;justify-content:center;width:52px;height:30px;border-radius:15px;background:{{ tb.pill }}"><lc-icon name="{{ tb.icon }}" size="22"></lc-icon><sc-if value="{{ tb.hasBadge }}"><span style="position:absolute;top:-4px;inset-inline-end:2px;min-width:18px;height:18px;padding:0 4px;box-sizing:border-box;border-radius:9px;background:{{ c.danger }};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid {{ c.surface }}">{{ tb.badge }}</span></sc-if></div>
+<span style="font-size:12px;font-weight:{{ tb.weight }};white-space:nowrap">{{ tb.label }}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
+<sc-if value="{{ hasSheet }}">
+<div style="position:absolute;inset:0;z-index:25;background:rgba(10,14,22,.5);display:flex;flex-direction:column;justify-content:flex-end">
+<div style="background:{{ c.bg }};border-radius:28px 28px 0 0;padding:10px 20px 34px;display:flex;flex-direction:column;gap:14px">
+<div style="align-self:center;width:44px;height:5px;border-radius:3px;background:{{ c.border }}"></div>
+<sc-if value="{{ s.docSign }}">
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:10px"><div style="flex:1;display:flex;flex-direction:column"><span style="font-size:20px;font-weight:800">{{ t.signHere }}</span><span style="font-size:14px;color:{{ c.text2 }}">{{ t.signSub }}</span></div><button onClick="{{ go.docView }}" style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:56px;min-height:52px;justify-content:center;border:1px solid {{ c.border }};border-radius:14px;background:{{ c.surface }};cursor:pointer"><lc-icon name="x" size="20"></lc-icon><span style="font-size:11px;font-weight:800">{{ t.cancel }}</span></button></div>
+<div style="position:relative;height:180px;border-radius:16px;border:2px dashed {{ c.border }};background:#FFFFFF;color:#1A2233;overflow:hidden">
+<span style="position:absolute;left:50%;top:44px;transform:translateX(-50%) rotate(-4deg);font-family:'Caveat',cursive;font-size:56px;color:#1F3B8F;white-space:nowrap">Dana Cohen</span>
+<div style="position:absolute;left:24px;right:24px;bottom:44px;height:2px;background:#C9C3B8"></div>
+<span style="position:absolute;left:24px;bottom:50px;font-size:18px;font-weight:800;color:#8F96A2">×</span>
+<span style="position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:12px;font-weight:700;color:#6B7180">{{ t.signWithFinger }}</span>
+</div>
+<div style="display:flex;gap:10px"><button style="display:flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:14px;font-weight:800;cursor:pointer"><lc-icon name="eraser" size="17"></lc-icon><span>{{ t.clearSig }}</span></button><button style="display:flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:14px;font-weight:800;cursor:pointer"><lc-icon name="undo-2" size="17"></lc-icon><span>{{ t.undo }}</span></button></div>
+<div style="display:flex;gap:10px;align-items:flex-start;font-size:14px"><lc-icon name="square-check" size="22" style="color:{{ c.primary }}"></lc-icon><span>{{ t.signConsent }}</span></div>
+<button onClick="{{ go.docSigned }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="pen-line" size="20"></lc-icon><span>{{ t.signSend }}</span></button>
+</div>
+</sc-if>
+<sc-if value="{{ s.surveyDraft }}">
+<div style="display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center">
+<div style="width:64px;height:64px;border-radius:20px;background:{{ tG.bg }};color:{{ tG.fg }};display:flex;align-items:center;justify-content:center"><lc-icon name="save" size="30"></lc-icon></div>
+<span style="font-size:22px;font-weight:800">{{ t.draftSaved }}</span>
+<span style="font-size:15px;color:{{ c.text2 }}">{{ t.draftBody }}</span>
+<div style="width:100%;height:8px;border-radius:4px;background:{{ c.surface2 }};overflow:hidden"><div style="width:44%;height:100%;border-radius:4px;background:{{ tT.fg }}"></div></div>
+<div style="width:100%;display:flex;flex-direction:column;gap:10px">
+<button onClick="{{ go.sq5 }}" style="height:56px;border-radius:16px;border:none;background:{{ c.primary }};color:{{ c.onPrimary }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="play" size="20"></lc-icon><span>{{ t.keepGoing }}</span></button>
+<button onClick="{{ go.surveyList }}" style="height:56px;border-radius:16px;border:1px solid {{ c.border }};background:{{ c.surface }};font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer"><lc-icon name="log-out" size="20"></lc-icon><span>{{ t.exitLater }}</span></button>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}">
+<div style="position:absolute;left:16px;right:16px;bottom:{{ toastBottom }};z-index:30;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:{{ c.toastBg }};color:{{ c.toastFg }};box-shadow:0 14px 30px -10px rgba(10,14,22,.5)">
+<div style="width:34px;height:34px;border-radius:50%;background:{{ tG.fg }};color:{{ c.toastBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><lc-icon name="check" size="19" stroke="3"></lc-icon></div>
+<div style="flex:1;display:flex;flex-direction:column"><span style="font-size:15px;font-weight:800">{{ toast.title }}</span><span style="font-size:13px;opacity:.8">{{ toast.body }}</span></div>
+</div>
+</sc-if>
+
+<div style="position:absolute;bottom:8px;left:50%;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:{{ c.text }};z-index:45;pointer-events:none"></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:410,&quot;height&quot;:864},&quot;screen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;moreMenu&quot;,&quot;docsList&quot;,&quot;docView&quot;,&quot;docSign&quot;,&quot;docSigned&quot;,&quot;docConfirm&quot;,&quot;docConfirmed&quot;,&quot;docApprove&quot;,&quot;docApproved&quot;,&quot;surveyList&quot;,&quot;surveyIntro&quot;,&quot;sq1&quot;,&quot;sq2&quot;,&quot;sq3&quot;,&quot;sq3b&quot;,&quot;sq4&quot;,&quot;sq5&quot;,&quot;sq6&quot;,&quot;sq7&quot;,&quot;sq8&quot;,&quot;sq9&quot;,&quot;surveyDraft&quot;,&quot;surveyReview&quot;,&quot;surveyThanks&quot;,&quot;feed&quot;,&quot;newsletter&quot;,&quot;newsletterOk&quot;,&quot;eventInvite&quot;,&quot;rsvp&quot;,&quot;rsvpSaved&quot;,&quot;archive&quot;],&quot;default&quot;:&quot;moreMenu&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;he&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;interactive&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onNav&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(screen: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { cur: null, docTab: 'sign', feed: 'all', guests: 2 };
+  componentDidUpdate(pp) { if (pp.screen !== this.props.screen && this.state.cur) this.setState({ cur: null }); }
+  renderVals() {
+    const P = this.props, S = this.state, I = !!P.interactive;
+    const he = (P.lang || 'en') === 'he', dark = (P.theme || 'light') === 'dark';
+    const L = (e, h) => he ? h : e;
+    const scr = S.cur || P.screen || 'moreMenu';
+    const c = dark ? {
+      bg: '#10141C', surface: '#1A202B', surface2: '#242B38', border: '#2D3544', text: '#ECEEF2', text2: '#A9B0BC', label: '#929AA8', paper: '#F4F1EA',
+      navy: '#26314D', primary: '#B9C7F2', onPrimary: '#10141C', link: '#9DB4FF', danger: '#FF6B71', tabActive: '#E4E9F7', tabIdle: '#8E95A3', pill: '#2B3550',
+      stA: '#232A36', stB: '#1D232E', shadow: 'none', toastBg: '#ECEEF2', toastFg: '#10141C'
+    } : {
+      bg: '#FCF8F1', surface: '#FFFFFF', surface2: '#F4EFE6', border: '#E6E1D7', text: '#1A2233', text2: '#5C6474', label: '#6B7180', paper: '#FFFFFF',
+      navy: '#1F2A44', primary: '#1F2A44', onPrimary: '#FFFFFF', link: '#2A4FB8', danger: '#D63A40', tabActive: '#1F2A44', tabIdle: '#737985', pill: '#E9EDF6',
+      stA: '#EFEAE1', stB: '#F7F3EC', shadow: '0 1px 2px rgba(26,34,51,.05)', toastBg: '#1F2A44', toastFg: '#FFFFFF'
+    };
+    const TONES = {
+      blue: [['#1F5FD1', '#EAF1FE', '#C5D8FB'], ['#8DB4FF', '#1A2742', '#2C4370']], amber: [['#935800', '#FFF4E0', '#F3D296'], ['#F5C46B', '#33280F', '#5A4518']],
+      violet: [['#6B3FC9', '#F2ECFE', '#D9CBFA'], ['#C3A8FF', '#2A2142', '#45366B']], green: [['#157347', '#E7F6EE', '#BCE5CF'], ['#6FD6A0', '#15291F', '#24503A']],
+      red: [['#C42B32', '#FDECEC', '#F6C3C5'], ['#FF8E92', '#3A1A1C', '#64292D']], slate: [['#4B5563', '#F0F1F4', '#D6D9E0'], ['#B4BAC6', '#252A33', '#3B424F']],
+      teal: [['#0F766E', '#E3F5F2', '#B5E3DB'], ['#5ED3C2', '#11302C', '#1F514A']], pink: [['#B8195A', '#FDEBF2', '#F6C4D7'], ['#FF8FB8', '#3A1926', '#62293F']],
+    };
+    const tn = k => { const [fg, bg, bd] = TONES[k][dark ? 1 : 0]; return { fg, bg, bd }; };
+    const ch = (k, icon, label) => ({ ...tn(k), icon, label });
+    const ic = { chev: he ? 'chevron-left' : 'chevron-right', back: he ? 'arrow-right' : 'arrow-left', fwd: he ? 'arrow-left' : 'arrow-right' };
+    const SQ = ['sq1', 'sq2', 'sq3', 'sq3b', 'sq4', 'sq5', 'sq6', 'sq7', 'sq8', 'sq9'];
+    const OWN = ['moreMenu', 'docsList', 'docView', 'docSign', 'docSigned', 'docConfirm', 'docConfirmed', 'docApprove', 'docApproved', 'surveyList', 'surveyIntro', 'surveyDraft', 'surveyReview', 'surveyThanks', 'feed', 'newsletter', 'newsletterOk', 'eventInvite', 'rsvp', 'rsvpSaved', 'archive'].concat(SQ);
+    const FOREIGN = ['home', 'resGeneral', 'inqList', 'inqNew1', 'calMonth', 'calList', 'notifCenter', 'pickerSheet', 'serviceList', 'centerInfo', 'permissions', 'payments', 'settings'];
+    const go = {}, s = {};
+    OWN.concat(FOREIGN).forEach(k => { go[k] = !I ? undefined : OWN.includes(k) ? () => this.setState({ cur: k }) : (P.onNav ? () => P.onNav(k) : undefined); });
+    OWN.forEach(k => s[k] = scr === k);
+    go.more = go.moreMenu;
+
+    const t = {
+      switch: L('Switch', 'החלפה'), alerts: L('Alerts', 'התראות'), resInit: L('ML', 'מל'), resName: L('Miriam Levi', 'מרים לוי'), resPlace: L('Ward B · Room 12', 'מחלקה ב׳ · חדר 12'),
+      dcInit: L('DC', 'דכ'), dana: L('Dana Cohen', 'דנה כהן'), danaRole: L('Daughter of Miriam Levi and Avraham Cohen', 'בת של מרים לוי ואברהם כהן'), danaDaughter: L('Dana Cohen, daughter', 'דנה כהן, בת'),
+      docsIntro: L('Documents the care center sent you to sign, approve or confirm. Completed documents stay here for your records.', 'מסמכים שהמרכז הסיעודי שלח לכם לחתימה, לאישור או לאישור קריאה. מסמכים שהושלמו נשמרים כאן לעיונכם.'),
+      allTypes: L('All types', 'כל הסוגים'), centerUpper: L('BEIT HADAR CARE CENTER', 'מרכז סיעודי בית הדר'), residentL: L('Resident', 'דיירת'), familyL: L('Family member', 'בן משפחה'),
+      page12: L('Page 1 of 2', 'עמוד 1 מתוך 2'), zoom: L('Zoom', 'הגדלה'), askQ: L('Ask', 'שאלה'), signDoc: L('Sign document', 'חתימה על המסמך'),
+      iReadDoc: L('I have read and understood this document', 'קראתי והבנתי את המסמך'), confirmReadDoc: L('Confirm I have read this', 'אישור שקראתי'), readConfirmedShort: L('Read confirmed on 14.10.2026 09:44', 'הקריאה אושרה ב-14.10.2026 09:44'),
+      decline: L('Decline', 'דחייה'), approve: L('Approve outing', 'אישור היציאה'),
+      signHere: L('Sign the consent form', 'חתימה על טופס ההסכמה'), signSub: L('Your signature is attached to this document only.', 'החתימה תצורף למסמך זה בלבד.'), cancel: L('Cancel', 'ביטול'),
+      signWithFinger: L('Sign with your finger inside the box', 'חתמו עם האצבע בתוך המסגרת'), clearSig: L('Clear', 'ניקוי'), undo: L('Undo', 'ביטול פעולה'),
+      signConsent: L('I, Dana Cohen, confirm that I am authorized to sign on behalf of Miriam Levi.', 'אני, דנה כהן, מאשרת שאני מורשית לחתום בשם מרים לוי.'), signSend: L('Sign and send', 'חתימה ושליחה'),
+      svIntro: L('Your feedback helps the care center improve. Some surveys are anonymous; each one tells you before you start.', 'המשוב שלכם עוזר למרכז להשתפר. חלק מהסקרים אנונימיים, וכל סקר מציין זאת לפני שמתחילים.'),
+      active: L('Active', 'פעילים'), completed: L('Completed', 'הושלמו'),
+      svTitle: L('Family satisfaction survey 2026', 'סקר שביעות רצון משפחות 2026'),
+      svDesc: L('Once a year we ask families how we are doing. Your answers help us plan improvements for 2027.', 'פעם בשנה אנחנו שואלים את המשפחות איך אנחנו עושים את העבודה. התשובות יעזרו לנו לתכנן שיפורים לשנת 2027.'),
+      anonTitle: L('This survey is anonymous', 'הסקר אנונימי'), anonBody: L('The care center sees your answers without your name or Miriam\'s name.', 'המרכז הסיעודי רואה את התשובות ללא השם שלכם וללא השם של מרים.'),
+      anonShort: L('Anonymous: your name is not sent with your answers.', 'אנונימי: השם שלכם לא נשלח עם התשובות.'),
+      draftNote: L('You can save a draft at any time and continue later, until 31.10.2026.', 'אפשר לשמור טיוטה בכל שלב ולהמשיך מאוחר יותר, עד 31.10.2026.'), startSurvey: L('Start survey', 'התחלת הסקר'),
+      saveDraft: L('Save draft', 'שמירת טיוטה'), previous: L('Back', 'הקודמת'), becauseNo: L('Follow-up · because you answered "No"', 'שאלת המשך · כי עניתם "לא"'),
+      notLikely: L('0 · Not likely', '0 · לא סביר'), veryLikely: L('10 · Very likely', '10 · סביר מאוד'), starLabel: L('4 of 5 · Good', '4 מתוך 5 · טוב'), change: L('Change', 'שינוי'),
+      dateHelp: L('Format: DD.MM.YYYY', 'פורמט: DD.MM.YYYY'), neverAttended: L('I haven\'t attended an event yet', 'עדיין לא השתתפתי באירוע'), ddSel: L('Several times a week', 'כמה פעמים בשבוע'),
+      reviewTitle: L('Review your answers', 'בדיקת התשובות'), reviewSub: L('Tap Edit to change an answer before you submit. After submitting, answers can\'t be changed.', 'הקישו על "עריכה" כדי לשנות תשובה לפני השליחה. לאחר השליחה אי אפשר לשנות את התשובות.'),
+      edit: L('Edit', 'עריכה'), submit: L('Submit survey', 'שליחת הסקר'),
+      draftSaved: L('Draft saved', 'הטיוטה נשמרה'), draftBody: L('You answered 4 of 9 questions. Continue any time from Questionnaires and Surveys, until 31.10.2026.', 'עניתם על 4 מתוך 9 שאלות. אפשר להמשיך בכל עת דרך שאלונים וסקרים, עד 31.10.2026.'),
+      keepGoing: L('Continue now', 'המשך עכשיו'), exitLater: L('Exit and continue later', 'יציאה והמשך מאוחר יותר'),
+      viewArchive: L('View archive', 'לארכיון'), newsletter: L('Newsletter', 'עלון'), newsTitle: L('October family newsletter', 'עלון המשפחות לאוקטובר'), newsMeta: L('Management · Published 12.10.2026 08:00', 'הנהלה · פורסם 12.10.2026 08:00'),
+      newsBody: L('A summary of what\'s happening at Beit Hadar this month. The full newsletter is attached as a PDF.', 'סיכום של מה שקורה בבית הדר החודש. העלון המלא מצורף כקובץ PDF.'),
+      open: L('Open', 'פתיחה'), iRead: L('I have read the October newsletter, including the new visiting hours', 'קראתי את עלון אוקטובר, כולל שעות הביקור החדשות'), confirmRead: L('Confirm I have read this', 'אישור שקראתי'),
+      readConfirmed: L('You confirmed reading on 14.10.2026 09:45', 'אישרתם קריאה ב-14.10.2026 09:45'),
+      invitation: L('Invitation', 'הזמנה'), awaitRsvp: L('Awaiting your RSVP', 'ממתין לאישור הגעה'), hanTitle: L('Hanukkah family evening', 'ערב חנוכה למשפחות'),
+      hanBody: L('Join us to light the fifth candle together with the residents, followed by a performance by the residents\' choir and sufganiyot in the courtyard.', 'הצטרפו אלינו להדלקת הנר החמישי יחד עם הדיירים, ולאחר מכן הופעה של מקהלת הדיירים וסופגניות בחצר.'),
+      hanWhen: L('Thursday 10.12.2026 · 17:00 · Center courtyard', 'יום חמישי 10.12.2026 · 17:00 · חצר המרכז'), program: L('PROGRAM', 'תוכנית הערב'),
+      rsvpBtn: L('RSVP', 'אישור הגעה'), rsvpBy: L('Please reply by 06.12.2026.', 'נא להשיב עד 06.12.2026.'), decShort: L('DEC', 'דצמ׳'),
+      willYou: L('Will you attend?', 'האם תגיעו?'), guests: L('Number of guests', 'מספר אורחים'), less: L('Less', 'פחות'), more: L('More', 'יותר'),
+      guestHelp: L('Not including Miriam. Up to 4 guests per resident.', 'לא כולל את מרים. עד 4 אורחים לכל דייר.'), guestNames: L('Guest names', 'שמות האורחים'),
+      noteL: L('Note to the activities team (optional)', 'הערה לצוות הפעילויות (לא חובה)'), noteVal: L('Noam uses a wheelchair. Could we sit near the entrance, next to Miriam\'s friend Rivka?', 'נועם בכיסא גלגלים. אפשר לשבת קרוב לכניסה, ליד רבקה, החברה של מרים?'),
+      noteHelp: L('Dietary needs, accessibility or seating requests.', 'צרכים תזונתיים, נגישות או בקשות לגבי מקומות ישיבה.'), saveRsvp: L('Save my RSVP', 'שמירת אישור ההגעה'),
+      changeUntil: L('You can change your answer until 06.12.2026.', 'אפשר לשנות את התשובה עד 06.12.2026.'), searchArchive: L('Search past updates and events', 'חיפוש עדכונים ואירועים קודמים'),
+    };
+
+    const menu = [
+      ['docsList', 'folder-open', 'violet', L('Documents and Approvals', 'מסמכים ואישורים'), L('Sign, approve or confirm documents from the center', 'חתימה, אישור ואישור קריאה של מסמכים מהמרכז'), ch('violet', 'pen-line', L('3 to do', '3 לביצוע'))],
+      ['surveyList', 'clipboard-list', 'teal', L('Questionnaires and Surveys', 'שאלונים וסקרים'), L('Share your feedback with the care center', 'שתפו משוב עם המרכז הסיעודי'), ch('blue', 'sparkles', L('1 new', '1 חדש'))],
+      ['feed', 'newspaper', 'pink', L('Updates and Events', 'עדכונים ואירועים'), L('Newsletters, activities and invitations', 'עלונים, פעילויות והזמנות'), ch('blue', 'sparkles', L('2 new', '2 חדשים'))],
+      ['serviceList', 'wrench', 'amber', L('Service Requests', 'בקשות שירות'), L('Laundry, repairs, hairdresser and more', 'כביסה, תיקונים, מספרה ועוד'), ch('amber', 'loader', L('1 open', '1 פתוחה'))],
+      ['centerInfo', 'building-2', 'blue', L('Center Information', 'מידע על המרכז'), L('Contacts, visiting hours and procedures', 'אנשי קשר, שעות ביקור ונהלים'), null],
+      ['permissions', 'shield-check', 'green', L('Family Members and Permissions', 'בני משפחה והרשאות'), L('See what you can view for each resident', 'מה אתם יכולים לראות עבור כל דייר'), null],
+      ['payments', 'wallet', 'slate', L('Accounts and Payments', 'חשבונות ותשלומים'), L('Invoices, receipts and balance', 'חשבוניות, קבלות ויתרה'), ch('slate', 'clock', L('Coming soon', 'בקרוב'))],
+      ['settings', 'settings', 'slate', L('Settings', 'הגדרות'), L('Language, theme, notifications and password', 'שפה, ערכת נושא, התראות וסיסמה'), null],
+    ].map(([k, icon, tk, label, desc, badge]) => ({ icon, tone: tn(tk), label, desc, hasBadge: !!badge, badge: badge || {}, onClick: go[k] }));
+
+    const DOCS = {
+      sign: [{ k: 'docView', icon: 'signature', tk: 'violet', title: L('Flu vaccine consent form 2026', 'טופס הסכמה לחיסון שפעת 2026'), meta: L('Nursing · Sent 13.10.2026', 'סיעוד · נשלח 13.10.2026'), chip: ch('violet', 'pen-line', L('To sign', 'לחתימה')), due: L('Due 15.10.2026', 'עד 15.10.2026'), dueIcon: 'clock-alert', dueTone: 'amber' },
+        { k: 'docApprove', icon: 'bus', tk: 'blue', title: L('Outing approval: Tel Aviv Museum of Art', 'אישור יציאה: מוזיאון תל אביב לאמנות'), meta: L('Activities · Sent 12.10.2026', 'פעילויות · נשלח 12.10.2026'), chip: ch('violet', 'circle-check', L('To approve', 'לאישור')), due: L('Due 20.10.2026', 'עד 20.10.2026'), dueIcon: 'clock', dueTone: 'slate' }],
+      confirm: [{ k: 'docConfirm', icon: 'file-check', tk: 'teal', title: L('Updated visiting policy', 'נוהל ביקורים מעודכן'), meta: L('Management · Sent 11.10.2026', 'הנהלה · נשלח 11.10.2026'), chip: ch('violet', 'eye', L('To confirm', 'לאישור קריאה')), due: L('Overdue since 13.10.2026', 'באיחור מאז 13.10.2026'), dueIcon: 'clock-alert', dueTone: 'red' }],
+      done: [{ k: 'docSigned', icon: 'file-signature', tk: 'green', title: L('Admission agreement addendum', 'נספח להסכם הקבלה'), meta: L('Finance', 'כספים'), chip: ch('green', 'circle-check', L('Signed', 'נחתם')), due: '10.10.2026 18:34', dueIcon: 'check', dueTone: 'green' }],
+    };
+    const docs = DOCS[S.docTab].map(d => ({ ...d, tone: tn(d.tk), dueColor: tn(d.dueTone).fg, onClick: go[d.k] }));
+    const docTabs = [['sign', 'pen-line', L('To sign', 'לחתימה'), 2], ['confirm', 'eye', L('To confirm', 'לאישור'), 1], ['done', 'circle-check', L('Completed', 'הושלמו'), 4]].map(([k, icon, label, n]) => { const a = S.docTab === k; return { icon, label, count: String(n), bg: a ? c.surface : 'transparent', fg: a ? c.text : c.text2, sh: a ? '0 1px 3px rgba(0,0,0,.12)' : 'none', onClick: I ? () => this.setState({ docTab: k }) : undefined }; });
+
+    const DV = {
+      sign: { title: L('Flu vaccine consent form 2026', 'טופס הסכמה לחיסון שפעת 2026'), chip: ch('violet', 'pen-line', L('To sign', 'לחתימה')), from: L('Nursing', 'סיעוד'), fromIcon: 'stethoscope', due: L('Due 15.10.2026', 'עד 15.10.2026'), code: 'NUR-FLU-2026',
+        paras: [L('The Ministry of Health recommends a yearly flu vaccine for adults over 65. The vaccination day at Beit Hadar will take place on 20.10.2026 at 09:00 and will be given by the ward nurses.', 'משרד הבריאות ממליץ על חיסון שפעת שנתי לבני 65 ומעלה. יום החיסונים בבית הדר יתקיים ב-20.10.2026 בשעה 09:00, והחיסון יינתן על ידי אחיות המחלקה.'),
+          L('Common side effects are mild: soreness at the injection site, slight fever or tiredness for one to two days. The staff will monitor Miriam for 30 minutes after the vaccine.', 'תופעות הלוואי השכיחות קלות: כאב במקום הזריקה, חום קל או עייפות למשך יום או יומיים. הצוות ישגיח על מרים במשך 30 דקות לאחר החיסון.'),
+          L('By signing, you consent to Miriam Levi receiving the 2026 seasonal flu vaccine.', 'בחתימתך את מאשרת שמרים לוי תקבל את חיסון השפעת העונתי לשנת 2026.')] },
+      confirm: { title: L('Updated visiting policy', 'נוהל ביקורים מעודכן'), chip: ch('red', 'clock-alert', L('Overdue', 'באיחור')), from: L('Management', 'הנהלה'), fromIcon: 'building-2', due: L('Was due 13.10.2026', 'היה עד 13.10.2026'), code: 'MGT-VIS-1026',
+        paras: [L('From 01.11.2026, visiting hours are 09:00–20:00 every day. Quiet hours are 14:00–16:00, when visits take place in the lobby or garden only.', 'החל מ-01.11.2026 שעות הביקור הן 09:00–20:00 בכל יום. שעות המנוחה הן 14:00–16:00, ובהן הביקורים מתקיימים רק בלובי או בגן.'),
+          L('Please sign in at reception on every visit. Children under 12 must be accompanied by an adult at all times.', 'נא להירשם בקבלה בכל ביקור. ילדים מתחת לגיל 12 חייבים להיות בליווי מבוגר בכל עת.')] },
+      approve: { title: L('Outing approval: Tel Aviv Museum of Art', 'אישור יציאה: מוזיאון תל אביב לאמנות'), chip: ch('violet', 'circle-check', L('To approve', 'לאישור')), from: L('Activities', 'פעילויות'), fromIcon: 'palette', due: L('Due 20.10.2026', 'עד 20.10.2026'), code: 'ACT-OUT-2610',
+        paras: [L('A group of 8 residents will visit the Tel Aviv Museum of Art on 26.10.2026, leaving at 09:30 and returning by 13:30, in an accessible minibus.', 'קבוצה של 8 דיירים תבקר במוזיאון תל אביב לאמנות ב-26.10.2026. היציאה ב-09:30 והחזרה עד 13:30, במיניבוס נגיש.'),
+          L('Two caregivers and a nurse will accompany the group. Miriam will take her walker and her usual medications. There is no cost to the family.', 'שתי מטפלות ואחות ילוו את הקבוצה. מרים תיקח את ההליכון ואת התרופות הקבועות שלה. אין עלות למשפחה.')] },
+    };
+    const doc = s.docApprove ? DV.approve : (s.docConfirm || s.docConfirmed) ? DV.confirm : DV.sign;
+    if (s.docConfirmed) doc.chip = ch('green', 'circle-check', L('Read confirmed', 'הקריאה אושרה'));
+
+    const RS = {
+      docSigned: { icon: 'file-signature', chip: L('Signed on 10.10.2026 18:34', 'נחתם ב-10.10.2026 18:34'), title: L('Document signed', 'המסמך נחתם'), body: L('The signed consent form was sent to the Ward B nursing team. A copy is saved in Documents → Completed.', 'טופס ההסכמה החתום נשלח לצוות הסיעוד במחלקה ב׳. עותק נשמר במסמכים ← הושלמו.'),
+        rows: [{ icon: 'file-text', label: L('Document', 'מסמך'), value: L('Flu vaccine consent 2026', 'הסכמה לחיסון שפעת 2026') }, { icon: 'user-round', label: L('Signed by', 'נחתם על ידי'), value: t.danaDaughter }, { icon: 'hash', label: L('Confirmation', 'אישור'), value: 'SIG-88214' }],
+        b1: L('Back to documents', 'חזרה למסמכים'), b1icon: 'folder-open', go1: go.docsList, b2: L('Download signed copy', 'הורדת העותק החתום'), b2icon: 'download' },
+      docApproved: { icon: 'circle-check', chip: L('Approved on 14.10.2026 09:46', 'אושר ב-14.10.2026 09:46'), title: L('Outing approved', 'היציאה אושרה'), body: L('The activities team was notified that Miriam can join the museum outing on 26.10.2026.', 'צוות הפעילויות עודכן שמרים יכולה להצטרף ליציאה למוזיאון ב-26.10.2026.'),
+        rows: [{ icon: 'bus', label: L('Outing', 'יציאה'), value: L('Tel Aviv Museum of Art', 'מוזיאון תל אביב לאמנות') }, { icon: 'calendar', label: L('Date', 'תאריך'), value: '26.10.2026 09:30' }, { icon: 'hash', label: L('Confirmation', 'אישור'), value: 'APR-40317' }],
+        b1: L('Back to documents', 'חזרה למסמכים'), b1icon: 'folder-open', go1: go.docsList, b2: L('Add to my calendar', 'הוספה ליומן שלי'), b2icon: 'calendar-plus' },
+      surveyThanks: { icon: 'heart-handshake', chip: L('Submitted on 14.10.2026 09:52', 'נשלח ב-14.10.2026 09:52'), title: L('Thank you, Dana', 'תודה רבה, דנה'), body: L('Your answers were sent anonymously to the Beit Hadar management. A summary of the results will be shared in the January newsletter.', 'התשובות נשלחו באופן אנונימי להנהלת בית הדר. סיכום התוצאות יפורסם בעלון של ינואר.'),
+        rows: [{ icon: 'clipboard-list', label: L('Survey', 'סקר'), value: L('Family satisfaction 2026', 'שביעות רצון משפחות 2026') }, { icon: 'list-checks', label: L('Answered', 'נענו'), value: L('9 of 9 questions', '9 מתוך 9 שאלות') }, { icon: 'eye-off', label: L('Identity', 'זהות'), value: L('Anonymous', 'אנונימי') }],
+        b1: L('Back to surveys', 'חזרה לסקרים'), b1icon: 'clipboard-list', go1: go.surveyList, b2: L('Go to Home', 'למסך הבית'), b2icon: 'house', go2: go.home },
+      rsvpSaved: { icon: 'calendar-check', chip: L('Saved on 14.10.2026 09:50', 'נשמר ב-14.10.2026 09:50'), title: L('Your RSVP was saved', 'אישור ההגעה נשמר'), body: L('The activities team knows you\'re coming with 2 guests. We added the event to your calendar in the app.', 'צוות הפעילויות יודע שתגיעו עם 2 אורחים. הוספנו את האירוע ליומן שלכם באפליקציה.'),
+        rows: [{ icon: 'party-popper', label: L('Event', 'אירוע'), value: t.hanTitle }, { icon: 'calendar', label: L('When', 'מתי'), value: '10.12.2026 17:00' }, { icon: 'circle-check', label: L('Your answer', 'התשובה שלכם'), value: L('Attending · 2 guests', 'מגיעים · 2 אורחים') }],
+        b1: L('Back to events', 'חזרה לאירועים'), b1icon: 'newspaper', go1: go.feed, b2: L('Open calendar', 'פתיחת היומן'), b2icon: 'calendar-days', go2: go.calList },
+    };
+    const rsKey = ['docSigned', 'docApproved', 'surveyThanks', 'rsvpSaved'].find(k => s[k]);
+    const rs = RS[rsKey] || RS.docSigned;
+
+    const surveys = [
+      { icon: 'clipboard-list', tone: tn('teal'), title: t.svTitle, meta: L('About 5 minutes · 9 questions · Closes 31.10.2026', 'כ-5 דקות · 9 שאלות · נסגר ב-31.10.2026'), pct: '0%', chip: ch('blue', 'sparkles', L('Not started', 'טרם התחיל')), cta: L('Start', 'התחלה'), onClick: go.surveyIntro },
+      { icon: 'party-popper', tone: tn('amber'), title: L('Holiday activities feedback', 'משוב על פעילויות החגים'), meta: L('Identified · 6 questions · Closes 20.10.2026', 'מזוהה · 6 שאלות · נסגר ב-20.10.2026'), pct: '66%', chip: ch('amber', 'save', L('Draft · 4 of 6 answered', 'טיוטה · 4 מתוך 6')), cta: L('Continue', 'המשך'), onClick: go.surveyIntro },
+    ];
+    const svFacts = [{ icon: 'timer', value: L('5 min', '5 דק׳'), label: L('Estimated', 'משך משוער') }, { icon: 'list-checks', value: '9', label: L('Questions', 'שאלות') }, { icon: 'calendar-x', value: '31.10', label: L('Closes', 'נסגר') }];
+
+    const radio = (label, sel) => ({ label, icon: sel ? 'circle-dot' : 'circle', mark: sel ? c.primary : c.text2, bd: sel ? c.primary : c.border, bg: sel ? c.pill : c.surface, weight: sel ? 800 : 600 });
+    const check = (label, sel) => ({ label, icon: sel ? 'square-check' : 'square', mark: sel ? c.primary : c.text2, bd: sel ? c.primary : c.border, bg: sel ? c.pill : c.surface, weight: sel ? 800 : 600 });
+    const Q = {
+      sq1: { n: 1, type: 'choice', title: L('How do you usually stay updated about Miriam?', 'איך אתם בדרך כלל מתעדכנים לגבי מרים?'), help: L('Choose one answer', 'בחרו תשובה אחת'), helpIcon: 'circle-dot',
+        opts: [radio(L('The Family App', 'אפליקציית המשפחה'), 1), radio(L('Phone calls with the staff', 'שיחות טלפון עם הצוות'), 0), radio(L('During my visits', 'בזמן הביקורים'), 0), radio(L('Through other family members', 'דרך בני משפחה אחרים'), 0)] },
+      sq2: { n: 2, type: 'choice', title: L('Which services did you use this year?', 'באילו שירותים השתמשתם השנה?'), help: L('Choose all that apply', 'בחרו את כל התשובות המתאימות'), helpIcon: 'list-checks',
+        opts: [check(L('Contact Staff inquiries', 'פניות לצוות'), 1), check(L('Service requests', 'בקשות שירות'), 1), check(L('Family events', 'אירועים למשפחות'), 1), check(L('Documents and approvals', 'מסמכים ואישורים'), 0), check(L('Social worker meetings', 'פגישות עם העובדת הסוציאלית'), 0)] },
+      sq3: { n: 3, type: 'yesno', title: L('Does the staff reply to your inquiries within a reasonable time?', 'האם הצוות משיב לפניות שלכם בזמן סביר?'), help: L('Choose Yes or No', 'בחרו כן או לא'), helpIcon: 'circle-help' },
+      sq3b: { n: 3, follow: true, type: 'text', title: L('What can we improve?', 'מה אפשר לשפר?'), help: L('Optional · up to 500 characters', 'לא חובה · עד 500 תווים'), helpIcon: 'pencil',
+        textVal: L('Replies from Finance sometimes take more than a week. A short "we received it" message would help.', 'התשובות ממחלקת הכספים לוקחות לפעמים יותר משבוע. הודעה קצרה של "קיבלנו" הייתה עוזרת.'), count: '104 / 500' },
+      sq4: { n: 4, type: 'number', title: L('How likely are you to recommend Beit Hadar to a friend?', 'עד כמה סביר שתמליצו על בית הדר לחברים?'), help: L('0 is not likely, 10 is very likely', '0 לא סביר, 10 סביר מאוד'), helpIcon: 'gauge' },
+      sq5: { n: 5, type: 'stars', title: L('How would you rate the cleanliness of Miriam\'s room?', 'איך הייתם מדרגים את הניקיון בחדר של מרים?'), help: L('Tap a star to rate', 'הקישו על כוכב כדי לדרג'), helpIcon: 'star' },
+      sq6: { n: 6, type: 'choice', title: L('How satisfied are you with the food Miriam receives?', 'עד כמה אתם מרוצים מהאוכל שמרים מקבלת?'), help: L('Choose one answer', 'בחרו תשובה אחת'), helpIcon: 'circle-dot' },
+      sq7: { n: 7, type: 'text', title: L('Is there anything else you would like to tell the management?', 'יש עוד משהו שתרצו לספר להנהלה?'), help: L('Optional', 'לא חובה'), helpIcon: 'pencil', textVal: L('Write your answer here…', 'כתבו כאן את התשובה…'), count: '0 / 500', empty: true },
+      sq8: { n: 8, type: 'date', title: L('When did you last attend a family event at the center?', 'מתי השתתפתם לאחרונה באירוע משפחות במרכז?'), help: L('Choose a date', 'בחרו תאריך'), helpIcon: 'calendar' },
+      sq9: { n: 9, type: 'dropdown', title: L('How often do you visit Miriam?', 'באיזו תדירות אתם מבקרים את מרים?'), help: L('Choose from the list', 'בחרו מהרשימה'), helpIcon: 'list' },
+    };
+    const SAT = [['angry', L('Very dissatisfied', 'לא מרוצים בכלל')], ['frown', L('Dissatisfied', 'לא מרוצים')], ['meh', L('Neutral', 'ניטרלי')], ['smile', L('Satisfied', 'מרוצים')], ['laugh', L('Very satisfied', 'מרוצים מאוד')]];
+    Q.sq6.opts = SAT.map(([icon2, label], i) => ({ ...radio(label, i === 3), hasIcon2: true, icon2, mark2: i === 3 ? tn('green').fg : c.text2 }));
+    Q.sq3.opts = [[L('Yes', 'כן'), 'thumbs-up', 0], [L('No', 'לא'), 'thumbs-down', 1]].map(([label, icon, sel]) => ({ label, icon, mark: sel ? c.primary : c.text2, bd: sel ? c.primary : c.border, bg: sel ? c.pill : c.surface, state: sel ? L('Selected', 'נבחר') : '' }));
+    Q.sq9.opts = [L('Several times a week', 'כמה פעמים בשבוע'), L('Once a week', 'פעם בשבוע'), L('A few times a month', 'כמה פעמים בחודש'), L('Once a month or less', 'פעם בחודש או פחות')].map((label, i) => ({ label, bg: i === 0 ? c.pill : 'transparent', weight: i === 0 ? 800 : 600, icon: i === 0 ? 'check' : 'circle', mark: i === 0 ? c.primary : 'transparent' }));
+    const qKey = SQ.find(k => s[k]) || (s.surveyDraft ? 'sq4' : 'sq1'), qd = Q[qKey], qi = SQ.indexOf(qKey);
+    const nextK = qKey === 'sq3' ? 'sq3b' : qKey === 'sq9' ? 'surveyReview' : SQ[qi + 1] === 'sq3b' ? 'sq4' : SQ[qi + 1];
+    const prevK = qKey === 'sq1' ? 'surveyIntro' : qKey === 'sq4' ? 'sq3b' : SQ[qi - 1];
+    const q = {
+      ...qd, isFollow: !!qd.follow, isChoice: qd.type === 'choice', isYesNo: qd.type === 'yesno', isText: qd.type === 'text', isNumber: qd.type === 'number', isStars: qd.type === 'stars', isDate: qd.type === 'date', isDropdown: qd.type === 'dropdown',
+      progress: qd.follow ? L('Question 3 of 9 · follow-up', 'שאלה 3 מתוך 9 · שאלת המשך') : L('Question ' + qd.n + ' of 9', 'שאלה ' + qd.n + ' מתוך 9'), pct: Math.round(qd.n / 9 * 100) + '%',
+      left: L('About ' + Math.max(1, Math.ceil((9 - qd.n) * 0.5)) + ' min left', 'נותרו כ-' + Math.max(1, Math.ceil((9 - qd.n) * 0.5)) + ' דק׳'),
+      textBd: qd.empty ? c.border : c.primary, textColor: qd.empty ? c.text2 : c.text, textHelp: L('Please don\'t include names of staff or residents.', 'נא לא לכלול שמות של אנשי צוות או דיירים.'),
+      nums: Array.from({ length: 11 }, (_, i) => ({ v: String(i), bd: i === 8 ? c.primary : c.border, bg: i === 8 ? c.primary : c.surface, fg: i === 8 ? c.onPrimary : c.text })),
+      stars: [1, 2, 3, 4, 5].map(n => ({ n: String(n), fg: n <= 4 ? tn('amber').fg : c.border, fill: n <= 4 ? tn('amber').fg : 'none' })),
+      next: go[nextK], prev: go[prevK], nextLabel: qKey === 'sq9' ? L('Review answers', 'לבדיקת התשובות') : L('Next', 'הבאה'),
+    };
+    const review = [
+      [Q.sq1.title, Q.sq1.opts[0].label], [Q.sq2.title, L('Inquiries, service requests, family events', 'פניות, בקשות שירות, אירועים')], [Q.sq3.title, L('No', 'לא')], [Q.sq3b.title, Q.sq3b.textVal],
+      [Q.sq4.title, '8 / 10'], [Q.sq5.title, L('4 of 5 stars', '4 מתוך 5 כוכבים')], [Q.sq6.title, L('Satisfied', 'מרוצים')], [Q.sq7.title, L('No answer', 'ללא תשובה')], [Q.sq8.title, '24.09.2026'], [Q.sq9.title, t.ddSel],
+    ].map(([qq, a], i) => ({ n: i === 3 ? '3a' : String(i < 3 ? i + 1 : i), q: qq, a }));
+
+    const FEED = [
+      { cat: 'news', icon: 'newspaper', tk: 'violet', kind: L('Newsletter', 'עלון'), title: t.newsTitle, meta: L('Management · 12.10.2026', 'הנהלה · 12.10.2026'), body: L('New visiting hours, the holiday program and a welcome to our new dietitian.', 'שעות ביקור חדשות, תוכנית החגים וברכות לדיאטנית החדשה שלנו.'), chip: ch('violet', 'eye', L('Confirm reading', 'נדרש אישור קריאה')), cta: L('Read', 'לקריאה'), k: 'newsletter' },
+      { cat: 'events', icon: 'party-popper', tk: 'pink', kind: L('Event invitation', 'הזמנה לאירוע'), title: t.hanTitle, meta: L('Thursday 10.12.2026 · 17:00', 'יום חמישי 10.12.2026 · 17:00'), body: L('Candle lighting, the residents\' choir and sufganiyot in the courtyard.', 'הדלקת נרות, מקהלת הדיירים וסופגניות בחצר.'), chip: ch('amber', 'hourglass', L('Awaiting RSVP', 'ממתין לאישור הגעה')), cta: 'RSVP', k: 'eventInvite' },
+      { cat: 'activities', icon: 'palette', tk: 'amber', kind: L('Activity', 'פעילות'), title: L('Pumpkin painting workshop', 'סדנת ציור על דלעות'), meta: L('Activities · 09.10.2026', 'פעילויות · 09.10.2026'), body: L('14 residents took part. Photos from the workshop are in the gallery.', '14 דיירים השתתפו. תמונות מהסדנה נמצאות בגלריה.'), cta: L('View photos', 'לתמונות') },
+      { cat: 'updates', icon: 'megaphone', tk: 'blue', kind: L('Center update', 'עדכון מהמרכז'), title: L('New parking arrangement from 01.11.2026', 'הסדר חניה חדש החל מ-01.11.2026'), meta: L('Management · 08.10.2026', 'הנהלה · 08.10.2026'), body: L('Visitor parking moves to the north gate on HaRimon St.', 'חניית המבקרים עוברת לשער הצפוני ברחוב הרימון.'), cta: L('Read', 'לקריאה') },
+    ];
+    const FC = [['all', 'layout-list', L('All', 'הכל')], ['updates', 'megaphone', L('Updates', 'עדכונים')], ['news', 'newspaper', L('Newsletters', 'עלונים')], ['activities', 'palette', L('Activities', 'פעילויות')], ['events', 'party-popper', L('Events and invitations', 'אירועים והזמנות')]];
+    const feedChips = FC.map(([k, icon, label]) => { const a = S.feed === k; return { icon, label, bg: a ? c.primary : c.surface, fg: a ? c.onPrimary : c.text, bd: a ? c.primary : c.border, onClick: I ? () => this.setState({ feed: k }) : undefined }; });
+    const feedItems = FEED.filter(f => S.feed === 'all' || f.cat === S.feed).map(f => ({ ...f, tone: tn(f.tk), hasChip: !!f.chip, chip: f.chip || {}, onClick: f.k ? go[f.k] : undefined }));
+    const newsPoints = [{ icon: 'clock', text: L('New visiting hours from 01.11.2026: every day 09:00–20:00', 'שעות ביקור חדשות החל מ-01.11.2026: בכל יום 09:00–20:00') }, { icon: 'party-popper', text: L('Hanukkah family evening on 10.12.2026', 'ערב חנוכה למשפחות ב-10.12.2026') }, { icon: 'salad', text: L('Meet Michal, our new dietitian', 'הכירו את מיכל, הדיאטנית החדשה שלנו') }];
+    const newsChip = s.newsletterOk ? ch('green', 'circle-check', L('Read confirmed', 'הקריאה אושרה')) : ch('violet', 'eye', L('Read confirmation needed', 'נדרש אישור קריאה'));
+    const hanRows = [{ icon: 'calendar', label: L('Date and time', 'תאריך ושעה'), value: L('Thursday 10.12.2026 · 17:00–19:00', 'יום חמישי 10.12.2026 · 17:00–19:00') }, { icon: 'map-pin', label: L('Location', 'מיקום'), value: L('Center courtyard (main hall if it rains)', 'חצר המרכז (באולם הראשי במקרה של גשם)') }, { icon: 'users', label: L('Guests', 'אורחים'), value: L('Up to 4 guests per resident', 'עד 4 אורחים לכל דייר') }, { icon: 'accessibility', label: L('Accessibility', 'נגישות'), value: L('Wheelchair accessible', 'נגיש לכיסאות גלגלים') }];
+    const program = [{ time: '17:00', icon: 'flame', text: L('Candle lighting with the residents', 'הדלקת נרות עם הדיירים') }, { time: '17:20', icon: 'mic-vocal', text: L('Residents\' choir performance', 'הופעה של מקהלת הדיירים') }, { time: '18:00', icon: 'cookie', text: L('Sufganiyot and hot drinks', 'סופגניות ושתייה חמה') }];
+    const rsvpOpts = [['circle-check', 'green', L('Attending', 'מגיעים'), 1], ['circle-x', 'red', L('Not attending', 'לא מגיעים'), 0], ['circle-help', 'amber', L('Not decided yet', 'עוד לא החלטנו'), 0]].map(([icon, tk, label, sel]) => ({ icon, label, fg: tn(tk).fg, bd: sel ? c.primary : c.border, bg: sel ? c.pill : c.surface, weight: sel ? 800 : 600, mark: sel ? 'circle-dot' : 'circle', markFg: sel ? c.primary : c.text2 }));
+    const gN = S.guests;
+    const names = [L('Dana Cohen', 'דנה כהן'), L('Noam Cohen', 'נועם כהן'), L('Guest name', 'שם האורח'), L('Guest name', 'שם האורח')];
+    const guestRows = Array.from({ length: gN }, (_, i) => ({ n: String(i + 1), name: names[i] }));
+    const archive = [
+      { label: L('SEPTEMBER 2026', 'ספטמבר 2026'), items: [{ icon: 'party-popper', tone: tn('pink'), title: L('Rosh Hashanah family event', 'אירוע ראש השנה למשפחות'), kind: L('Event', 'אירוע'), date: '10.09.2026' }, { icon: 'newspaper', tone: tn('violet'), title: L('September family newsletter', 'עלון המשפחות לספטמבר'), kind: L('Newsletter', 'עלון'), date: '01.09.2026' }, { icon: 'palette', tone: tn('amber'), title: L('Honey cake baking with grandchildren', 'אפיית עוגות דבש עם הנכדים'), kind: L('Activity', 'פעילות'), date: '08.09.2026' }] },
+      { label: L('AUGUST 2026', 'אוגוסט 2026'), items: [{ icon: 'megaphone', tone: tn('blue'), title: L('Air conditioning upgrade in Ward B', 'שדרוג מיזוג האוויר במחלקה ב׳'), kind: L('Update', 'עדכון'), date: '18.08.2026' }, { icon: 'newspaper', tone: tn('violet'), title: L('August family newsletter', 'עלון המשפחות לאוגוסט'), kind: L('Newsletter', 'עלון'), date: '01.08.2026' }] },
+    ];
+
+    const TOP = {
+      docsList: [L('Documents', 'מסמכים'), go.moreMenu, L('More', 'עוד')], docView: [L('Document', 'מסמך'), go.docsList, L('Documents', 'מסמכים')], docSign: [L('Document', 'מסמך'), go.docsList, L('Documents', 'מסמכים')],
+      docConfirm: [L('Document', 'מסמך'), go.docsList, L('Documents', 'מסמכים')], docConfirmed: [L('Document', 'מסמך'), go.docsList, L('Documents', 'מסמכים')], docApprove: [L('Document', 'מסמך'), go.docsList, L('Documents', 'מסמכים')],
+      surveyList: [L('Surveys', 'סקרים'), go.moreMenu, L('More', 'עוד')], surveyIntro: [L('Survey', 'סקר'), go.surveyList, L('Surveys', 'סקרים')], surveyReview: [L('Review', 'בדיקה'), go.sq9, L('Back', 'חזרה')],
+      feed: [L('Updates and Events', 'עדכונים ואירועים'), go.moreMenu, L('More', 'עוד')], newsletter: [L('Newsletter', 'עלון'), go.feed, L('Back', 'חזרה')], newsletterOk: [L('Newsletter', 'עלון'), go.feed, L('Back', 'חזרה')],
+      eventInvite: [L('Invitation', 'הזמנה'), go.feed, L('Back', 'חזרה')], rsvp: [L('RSVP', 'אישור הגעה'), go.eventInvite, L('Cancel', 'ביטול')], archive: [L('Archive', 'ארכיון'), go.feed, L('Back', 'חזרה')],
+    };
+    const isQ = SQ.some(k => s[k]) || s.surveyDraft;
+    if (isQ) TOP[scr] = [L('Survey', 'סקר'), go.surveyDraft, L('Exit', 'יציאה')];
+    const top = TOP[scr];
+    const isMain = s.moreMenu;
+    const tabs = [['home', 'house', L('Home', 'בית'), 0, go.home], ['res', 'user-round', L('Resident', 'הדייר'), 2, go.resGeneral], ['staff', 'messages-square', L('Contact Staff', 'פנייה לצוות'), 2, go.inqList], ['cal', 'calendar-days', L('Calendar', 'יומן'), 1, go.calMonth], ['more', 'layout-grid', L('More', 'עוד'), 0, go.moreMenu]]
+      .map(([k, icon, label, badge, onClick]) => { const a = k === 'more'; return { icon, label, hasBadge: !!badge, badge, onClick, color: a ? c.tabActive : c.tabIdle, pill: a ? c.pill : 'transparent', weight: a ? 800 : 600 }; });
+    const toast = s.newsletterOk ? { title: L('Read confirmed', 'הקריאה אושרה'), body: L('Management was notified that you read the newsletter', 'ההנהלה עודכנה שקראתם את העלון') } : { title: L('Read confirmed', 'הקריאה אושרה'), body: L('Your read confirmation was sent to Management', 'אישור הקריאה נשלח להנהלה') };
+
+    return {
+      c, t, s, go, ic, tP: tn('pink'), tR: tn('red'), tB: tn('blue'), tG: tn('green'), tA: tn('amber'), tT: tn('teal'), tV: tn('violet'),
+      dir: he ? 'rtl' : 'ltr', font: he ? "'Rubik',system-ui,sans-serif" : "'Nunito',system-ui,sans-serif",
+      isMain, hasTopBar: !!top, topTitle: top ? top[0] : '', backGo: top ? top[1] : undefined, backLabel: top ? top[2] : '', backIcon: isQ ? 'x' : ic.back, hasDraftBtn: isQ,
+      menu, docs, docTabs, doc, isDocView: s.docView || s.docSign || s.docConfirm || s.docConfirmed || s.docApprove, hasDocBar: s.docView || s.docConfirm || s.docConfirmed || s.docApprove,
+      isResult: !!rsKey, rs, surveys, svFacts, isQ, q, review, feedChips, feedItems, newsPoints, newsChip, isNews: s.newsletter || s.newsletterOk,
+      hanRows, program, rsvpOpts, guestN: String(gN), guestRows, guestInc: () => this.setState({ guests: Math.min(4, gN + 1) }), guestDec: () => this.setState({ guests: Math.max(0, gN - 1) }), archive,
+      tabs, hasSheet: s.docSign || s.surveyDraft, hasToast: s.newsletterOk || s.docConfirmed, toast, toastBottom: s.docConfirmed ? '120px' : '34px',
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+{
+  "brand": "CARETEX",
+  "tabs": {
+    "label": "ניווט ראשי",
+    "home": "בית",
+    "resident": "הדייר",
+    "staff": "פנייה לצוות",
+    "calendar": "יומן",
+    "more": "עוד"
+  },
+  "header": {
+    "switch": "החלפה",
+    "alerts": "התראות",
+    "tabBadge_one": "{{count}} חדש",
+    "tabBadge_two": "{{count}} חדשים",
+    "tabBadge_other": "{{count}} חדשים",
+    "switchResidentSr": "החלפת דייר. נוכחי:",
+    "unreadSr_one": "התראה אחת שלא נקראה",
+    "unreadSr_two": "{{count}} התראות שלא נקראו",
+    "unreadSr_other": "{{count}} התראות שלא נקראו"
+  },
+  "actions": {
+    "back": "חזרה",
+    "cancel": "ביטול",
+    "close": "סגירה",
+    "next": "הבאה",
+    "previous": "הקודמת",
+    "done": "בוצע",
+    "edit": "עריכה",
+    "exit": "יציאה",
+    "show": "הצגה",
+    "hide": "הסתרה",
+    "tryAgain": "ניסיון חוזר",
+    "refresh": "רענון",
+    "selected": "נבחר",
+    "more": "עוד",
+    "call": "חיוג"
+  },
+  "toggle": {
+    "on": "פועל",
+    "off": "כבוי",
+    "locked": "נעול"
+  },
+  "status": {
+    "new": "חדש",
+    "not_started": "טרם התחיל",
+    "in_progress": "בטיפול",
+    "needs_action": "נדרשת פעולה",
+    "waiting_for_you": "ממתין לכם",
+    "to_sign": "לחתימה",
+    "to_confirm": "לאישור קריאה",
+    "to_approve": "לאישור",
+    "completed": "הושלם",
+    "handled": "טופל",
+    "signed": "נחתם",
+    "confirmed": "אושר",
+    "achieved": "הושג",
+    "overdue": "באיחור",
+    "blocked": "חסום",
+    "closed": "סגור",
+    "no_permission": "אין הרשאה",
+    "coming_soon": "בקרוב",
+    "not_shared": "טרם שותף",
+    "awaiting_rsvp": "ממתין לאישור הגעה",
+    "draft": "טיוטה",
+    "read": "נקרא",
+    "assigned": "שובצה",
+    "waiting_to_send": "ממתין לשליחה"
+  },
+  "field": {
+    "counter": "{{count}} / {{max}}"
+  },
+  "stub": {
+    "comingIn": "יגיע בשלב {{phase}}"
+  },
+  "refresh": {
+    "pull": "משכו לרענון",
+    "release": "שחררו לרענון",
+    "refreshing": "מרענן…",
+    "failed": "לא הצלחנו לרענן. נסו שוב."
+  },
+  "attachment": {
+    "open": "פתיחה"
+  },
+  "more": {
+    "relationOf": "{{relation}} של {{names}}",
+    "version": "גרסת האפליקציה",
+    "badge": {
+      "toDo_one": "משימה אחת",
+      "toDo_two": "{{count}} לביצוע",
+      "toDo_other": "{{count}} לביצוע",
+      "new_one": "חדש אחד",
+      "new_two": "{{count}} חדשים",
+      "new_other": "{{count}} חדשים"
+    },
+    "items": {
+      "documents": {
+        "label": "מסמכים ואישורים",
+        "desc": "חתימה, אישור ואישור קריאה של מסמכים מהמרכז"
+      },
+      "surveys": {
+        "label": "שאלונים וסקרים",
+        "desc": "שתפו משוב עם המרכז הסיעודי"
+      },
+      "feed": {
+        "label": "עדכונים ואירועים",
+        "desc": "עלונים, פעילויות והזמנות"
+      },
+      "services": {
+        "label": "בקשות שירות",
+        "desc": "כביסה, תיקונים, מספרה ועוד"
+      },
+      "center": {
+        "label": "מידע על המרכז",
+        "desc": "אנשי קשר, שעות ביקור ונהלים"
+      },
+      "permissions": {
+        "label": "בני משפחה והרשאות",
+        "desc": "מה אתם יכולים לראות עבור כל דייר"
+      },
+      "payments": {
+        "label": "חשבונות ותשלומים",
+        "desc": "חשבוניות, קבלות ויתרה"
+      },
+      "settings": {
+        "label": "הגדרות",
+        "desc": "שפה, ערכת נושא, התראות וסיסמה"
+      }
+    }
+  }
+}

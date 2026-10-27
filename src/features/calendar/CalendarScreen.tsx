@@ -31,6 +31,7 @@ import {
   addDays,
   addMonths,
   date,
+  dayMonth,
   dayInstant,
   isoDay,
   monthGrid,
@@ -197,7 +198,7 @@ function MonthView({
                       role="gridcell"
                       aria-selected={isSelected}
                       aria-current={isToday ? 'date' : undefined}
-                      aria-label={t('month.cellLabel', { date: date(dayInstant(d)), count: list.length })}
+                      aria-label={t('month.cellLabel', { date: Object.values(dayMonth(dayInstant(d), lang)).join(' '), count: list.length })}
                       onClick={() => onSelect(d)}
                       className={cn(
                         'flex h-12 flex-col items-center justify-center gap-[3px] rounded-[12px] border-2',

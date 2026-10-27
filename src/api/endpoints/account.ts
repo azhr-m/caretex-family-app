@@ -3,6 +3,7 @@ import { api } from '../client'
 import {
   billingSchema,
   centerSchema,
+  notificationSchema,
   notificationsPageSchema,
   serviceDetailSchema,
   serviceLogEntrySchema,
@@ -62,6 +63,9 @@ export const getCenter = (signal?: AbortSignal) => api('/center', { schema: cent
 
 export const getNotifications = (cursor: string | undefined, signal?: AbortSignal) =>
   api(`/notifications${cursor ? `?cursor=${enc(cursor)}` : ''}`, { schema: notificationsPageSchema, signal })
+
+export const getNotification = (id: string, signal?: AbortSignal) =>
+  api(`/notifications/${enc(id)}`, { schema: notificationSchema, signal })
 
 export const markNotificationRead = (id: string) =>
   api(`/notifications/${enc(id)}/read`, { method: 'POST', schema: z.unknown() })

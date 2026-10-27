@@ -59,10 +59,10 @@ function DaySwitcher({ rid, day, tomorrow }: { rid: string; day: string; tomorro
         params={{ rid }}
         search={{ date: prev }}
         replace
-        aria-label={t('day.prevLabel')}
         className={btn}
       >
         <DirIcon icon={ChevronLeft} size={18} />
+        <span className="sr-only">{t('day.prevLabel')}, </span>
         <span>{label(prev)}</span>
       </Link>
       <div className="flex min-w-0 flex-1 flex-col items-center text-center" aria-live="polite">
@@ -86,14 +86,15 @@ function DaySwitcher({ rid, day, tomorrow }: { rid: string; day: string; tomorro
           params={{ rid }}
           search={{ date: next }}
           replace
-          aria-label={t('day.nextLabel')}
           className={btn}
         >
+          <span className="sr-only">{t('day.nextLabel')}, </span>
           <span>{label(next)}</span>
           <DirIcon icon={ChevronRight} size={18} />
         </Link>
       ) : (
-        <span aria-disabled="true" aria-label={t('day.nextLabel')} className={cn(btn, 'text-disabled-text')}>
+        <span aria-disabled="true" className={cn(btn, 'text-disabled-text')}>
+          <span className="sr-only">{t('day.nextLabel')}, </span>
           <span>{label(next)}</span>
           <DirIcon icon={ChevronRight} size={18} />
         </span>
@@ -183,7 +184,7 @@ function Timeline({ items, autoScroll }: { items: ScheduleItem[]; autoScroll: bo
               className={cn(
                 'bg-surface my-1 flex min-h-11 min-w-0 flex-1 items-center gap-2.5 rounded-[14px] px-3 py-2.5',
                 d.status === 'now' ? 'border-amber-fg border-2' : 'border-border border',
-                d.status === 'cancelled' && 'opacity-60',
+                d.status === 'cancelled' && 'border-dashed',
               )}
             >
               <IconTile icon={m.icon} tone={m.tone} size={36} />

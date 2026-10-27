@@ -9,6 +9,8 @@ export default tseslint.config(
   {
     ignores: [
       'dist',
+      'dist-prod',
+      'lighthouse-report',
       'design_handoff_caretex_family_app',
       'public/mockServiceWorker.js',
       'src/routeTree.gen.ts',
@@ -51,5 +53,9 @@ export default tseslint.config(
     files: ['**/*.{js,mjs}'],
     extends: [js.configs.recommended],
     languageOptions: { ecmaVersion: 2023, sourceType: 'module', globals: { ...globals.node } },
+  },
+  {
+    files: ['pwa/sw.js'],
+    languageOptions: { sourceType: 'script', globals: { ...globals.serviceworker } },
   },
 )

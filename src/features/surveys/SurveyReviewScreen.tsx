@@ -168,11 +168,13 @@ function AnswerList({
                 to="/r/$rid/more/surveys/$surveyId/q/$questionId"
                 params={{ rid, surveyId: s.id, questionId: q.id }}
                 search={{ review: true }}
-                aria-label={t('review.editLabel', { n: i + 1 })}
                 className="text-link flex min-h-11 min-w-11 shrink-0 flex-col items-center justify-center gap-0.5"
               >
                 <Pencil aria-hidden size={17} />
-                <span className="text-micro font-extrabold">{t('review.edit')}</span>
+                <span className="text-micro font-extrabold">
+                  {t('review.edit')}
+                  <span className="sr-only">, {t('review.editSr', { n: i + 1 })}</span>
+                </span>
               </Link>
             )}
           </li>

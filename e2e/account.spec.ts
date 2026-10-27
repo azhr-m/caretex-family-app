@@ -23,7 +23,7 @@ async function signedIn(page: Page, lang: 'en' | 'he' = 'en', theme: 'light' | '
 /** Opens the notification center from Miriam's Home via the bell, staying inside the app. */
 async function openNotifications(page: Page) {
   await page.goto('/r/res_miriam/home')
-  await page.getByRole('button', { name: /Notifications, \d+ unread/ }).click()
+  await page.getByRole('button', { name: /Alerts ?, \d+ unread notifications?/ }).click()
   await expect(page.getByRole('heading', { name: 'Notifications' })).toBeVisible()
 }
 
@@ -67,7 +67,7 @@ test('opening a notification marks it read; mark all read clears the bell', asyn
   await expect(page.getByText('All notifications were marked as read')).toBeVisible()
   await expect(page.getByRole('button', { name: 'Mark all read' })).toHaveCount(0)
   await page.getByRole('button', { name: 'Back' }).click()
-  await expect(page.getByRole('button', { name: 'Notifications, 0 unread' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Alerts', exact: true })).toBeVisible()
 })
 
 test('theme "System" follows OS changes live', async ({ page }) => {
@@ -212,6 +212,7 @@ test('payments: coming soon with a notify-me toggle', async ({ page }) => {
 
 for (const width of [320, 430]) {
   test(`no horizontal overflow on Phase 5 screens at ${width}px (he)`, async ({ page }) => {
+    test.setTimeout(90_000)
     test.setTimeout(120_000)
     await page.setViewportSize({ width, height: 800 })
     await signedIn(page, 'he')
@@ -233,3 +234,17 @@ for (const width of [320, 430]) {
     }
   })
 }
+
+test('a tapped push opens after sign-in and deep-links to its notification, switching resident', async ({ page }) => {
+  await page.addInitScript(() => {
+    if (sessionStorage.getItem('e2e.init')) return
+    sessionStorage.setItem('e2e.init', '1')
+    localStorage.setItem('caretex.prefs', JSON.stringify({ state: { language: 'en', theme: 'light' }, version: 0 }))
+  })
+  await page.goto('/open/notification/n_103')
+  await expect(page).toHaveURL(/\/login\?redirect=/)
+  await page.getByLabel('Phone number or username').fill('050-123-4127')
+  await page.getByLabel('Password', { exact: true }).fill('Dana!2026')
+  await page.getByRole('button', { name: 'Sign in' }).click()
+  await expect(page).toHaveURL(/\/r\/res_avraham\/resident\/updates\/upd_garden/)
+})

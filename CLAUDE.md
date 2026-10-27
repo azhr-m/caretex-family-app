@@ -12,7 +12,7 @@ You are building the CARETEX Family App: a mobile-first React web app for famili
 
 ## Stack (fixed)
 
-React 19 + TypeScript (strict) + Vite · TanStack Router (file-based, typed search params) · TanStack Query v5 · TanStack Form + Zod · Zustand (with `persist` where specified) · i18next + react-i18next · Tailwind CSS v4 · shadcn/ui (Radix) restyled to our tokens · vaul (bottom sheets, via shadcn Drawer) · sonner (toasts) · lucide-react · framer-motion (light motion only) · MSW v2 (mock API) · Vitest + Testing Library · Playwright (visual and e2e). Package manager: pnpm.
+React 19 + TypeScript (strict) + Vite · TanStack Router (file-based, typed search params) · TanStack Query v5 · TanStack Form + Zod · Zustand (with `persist` where specified) · i18next + react-i18next · Tailwind CSS v4 · shadcn/ui (Radix) restyled to our tokens · vaul (bottom sheets, via shadcn Drawer) · sonner (toasts) · lucide-react · CSS-only motion (framer-motion was removed in Phase 6 to cut the first-load bundle) · MSW v2 (mock API) · Vitest + Testing Library · Playwright (visual and e2e). Package manager: pnpm.
 
 Do not add other UI kits or CSS-in-JS. Ask before adding any dependency not listed.
 
@@ -35,7 +35,7 @@ Do not add other UI kits or CSS-in-JS. Ask before adding any dependency not list
 
 ## Commands
 
-`pnpm dev` · `pnpm build` · `pnpm typecheck` · `pnpm lint` · `pnpm test` · `pnpm e2e` · `pnpm i18n:check` (fails if en/he keys differ)
+`pnpm dev` · `pnpm build` · `pnpm typecheck` · `pnpm lint` · `pnpm test` · `pnpm e2e` · `pnpm i18n:check` (fails if en/he keys differ) · `pnpm build:prod` + `pnpm lighthouse` · `pnpm e2e:update e2e/visual.spec.ts` (refresh visual baselines after an intended UI change)
 
 ## Dev tools (build in Phase 0, keep forever in dev builds)
 
@@ -49,3 +49,6 @@ A floating **Dev panel** (only when `import.meta.env.DEV`) to switch language, t
 - Physical-direction classes are blocked by the local ESLint rule `eslint-rules/no-physical-direction.js` (checks `className` and `cn/cva/clsx` args).
 - Custom font-size tokens are registered with tailwind-merge in `src/lib/utils.ts`; add new `--text-*` tokens there too, or `cn()` will drop text colors.
 - Never name a font-size token like a color token: `text-label` is the label **color**; the 12px size is `text-tag` (a shared name made Tailwind emit only the color).
+- When a control has visible text plus extra spoken info (badge counts, "Previous day"), add the extra as a `sr-only` span inside the text, not an `aria-label`: axe fails labels that don't contain the visible text.
+- Don't fade content with `opacity-*`: faded text fails the 4.5:1 contrast check. Use a background, border or chip to show a done or cancelled state.
+- New routes go in `APP_ROUTES` in `e2e/helpers.ts` so the axe, smoke-shot and long-strings passes cover them.

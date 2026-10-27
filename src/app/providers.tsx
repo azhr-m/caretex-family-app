@@ -1,6 +1,5 @@
 import { QueryClientProvider, type QueryClient } from '@tanstack/react-query'
 import { RouterProvider } from '@tanstack/react-router'
-import { MotionConfig } from 'framer-motion'
 import { Direction } from 'radix-ui'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -53,10 +52,8 @@ export function App({ router, queryClient }: { router: Router; queryClient: Quer
   return (
     <QueryClientProvider client={queryClient}>
       <Direction.Provider dir={dirOf(i18n.language)}>
-        <MotionConfig reducedMotion="user">
-          <RouterProvider router={router} />
-          <Toaster />
-        </MotionConfig>
+        <RouterProvider router={router} />
+        <Toaster />
       </Direction.Provider>
     </QueryClientProvider>
   )

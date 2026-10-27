@@ -60,6 +60,8 @@ export function appTarget(opts: { redirect?: string; preferLast?: boolean } = {}
   const { member, activeResidentId, mustChangePassword, setActiveResident } = useSessionStore.getState()
   if (mustChangePassword) return { to: '/login/first-password' }
   if (opts.redirect && isLinked(member, ridOf(opts.redirect))) return storedPath(opts.redirect)
+  // A tapped push: the route itself checks the notification's resident.
+  if (opts.redirect && /^\/open\/notification\/[^/?#]+$/.test(opts.redirect)) return storedPath(opts.redirect)
   if (opts.preferLast) {
     const last = sessionRaw.getItem(LAST_ROUTE_KEY)
     if (last && isLinked(member, ridOf(last))) return storedPath(last)

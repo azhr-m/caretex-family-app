@@ -56,7 +56,7 @@ export function SegmentBar({ rid }: { rid: string }) {
               <Icon aria-hidden size={17} className="shrink-0" />
               <span>{label}</span>
               {count > 0 && (
-                <span className="bg-danger text-micro flex h-[18px] min-w-[18px] items-center justify-center rounded-[9px] px-1 text-white">
+                <span className="bg-danger text-micro flex h-[18px] min-w-[18px] items-center justify-center rounded-[9px] px-1 text-white dark:text-bg">
                   <Ltr>{fmtCount(count)}</Ltr>
                 </span>
               )}

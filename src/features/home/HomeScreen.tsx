@@ -140,11 +140,13 @@ function ResidentCard({
       <Link
         to="/r/$rid/resident/general"
         params={{ rid }}
-        aria-label={t('residentCard.profileLabel', { name: resident.name })}
         className="flex min-h-14 min-w-14 shrink-0 flex-col items-center justify-center gap-0.5 rounded-[14px] border border-white/20 bg-white/[.08] px-1"
       >
         <DirIcon icon={ChevronRight} size={20} />
-        <span className="text-micro font-bold">{t('residentCard.profile')}</span>
+        <span className="text-micro font-bold">
+          {t('residentCard.profile')}
+          <span className="sr-only">, {resident.name}</span>
+        </span>
       </Link>
     </NavyCard>
   )

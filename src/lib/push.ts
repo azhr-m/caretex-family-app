@@ -1,13 +1,14 @@
 import type { NotificationKind } from '@/api/schemas/account'
 import { api } from '@/api/client'
 import { z } from 'zod'
+import { PUSH_BODIES, type PushBodyKind } from './pushBodies'
+
+export { PUSH_BODIES, type PushBodyKind }
 
 /**
  * Lock-screen push (`04-api-contracts.md` §13). The body is always one of a fixed set of generic
  * sentences per kind, so a push can never carry names, medical terms, subjects or message text.
  */
-export type PushBodyKind = 'message' | 'document' | 'event' | 'update' | 'request'
-
 export const PUSH_BODY_KIND: Record<NotificationKind, PushBodyKind> = {
   inquiry_reply: 'message',
   document: 'document',
@@ -17,23 +18,6 @@ export const PUSH_BODY_KIND: Record<NotificationKind, PushBodyKind> = {
   update: 'update',
   survey: 'update',
   service_request: 'request',
-}
-
-export const PUSH_BODIES: Record<'en' | 'he', Record<PushBodyKind, string>> = {
-  en: {
-    message: 'You have a new message',
-    document: 'You have a new document waiting',
-    event: 'You have a new event',
-    update: 'You have a new update',
-    request: 'There is an update on your request',
-  },
-  he: {
-    message: 'יש לכם הודעה חדשה',
-    document: 'יש לכם מסמך חדש שממתין',
-    event: 'יש לכם אירוע חדש',
-    update: 'יש לכם עדכון חדש',
-    request: 'יש עדכון בבקשה שלכם',
-  },
 }
 
 export type PushPayload = {
@@ -64,8 +48,8 @@ function base64UrlToBytes(b64: string) {
 }
 
 /**
- * Web Push subscription stub: does nothing until a VAPID key is configured and the app's own
- * service worker exists (Phase 6 PWA). Then it subscribes and registers the device with the API.
+ * Web Push subscription: does nothing until VITE_VAPID_PUBLIC_KEY is set, or while mocks own the
+ * service worker scope. Then it subscribes through the app-shell worker and registers the device.
  */
 export async function subscribeToPush(lang: 'en' | 'he'): Promise<PushSubscribeResult> {
   if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) return 'unsupported'

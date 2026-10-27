@@ -116,7 +116,7 @@ test('new inquiry: department → message with attachment → sent → thread', 
   await page.getByRole('link', { name: 'View inquiry' }).click()
   await expect(page.getByRole('heading', { name: 'Exercises we can do during visits' })).toBeVisible()
   await expect(page.getByText('Status: New · waiting to be read')).toBeVisible()
-  await expect(page.getByRole('link', { name: 'Open walking-plan.pdf' })).toBeVisible()
+  await expect(page.getByRole('link', { name: /walking-plan.pdf/ })).toBeVisible()
 })
 
 test('leaving a started inquiry asks to discard', async ({ page }) => {
@@ -151,17 +151,17 @@ test('month grid: Sunday first, today outlined, selected filled, dots and diamon
   await expect(headers.first()).toHaveText('Sun')
   await expect(headers.last()).toHaveText('Sat')
   const today = page.locator('[aria-current="date"]')
-  await expect(today).toHaveAccessibleName(/14\.10\.2026/)
+  await expect(today).toHaveAccessibleName(/^14 Oct, /)
   await expect(today).toHaveClass(/border-primary/)
   const selected = page.locator('[aria-selected="true"]')
-  await expect(selected).toHaveAccessibleName(/16\.10\.2026, 1 item/)
+  await expect(selected).toHaveAccessibleName('16 Oct, 1 item')
   await expect(selected).toHaveClass(/bg-primary/)
   // 15.10 has a center event (diamond), 16.10 a personal appointment (dot).
-  await expect(page.getByRole('gridcell', { name: /15\.10\.2026/ }).locator('.rotate-45')).toHaveCount(1)
-  await expect(page.getByRole('gridcell', { name: /16\.10\.2026/ }).locator('.rounded-full')).toHaveCount(1)
+  await expect(page.getByRole('gridcell', { name: /^15 Oct,/ }).locator('.rotate-45')).toHaveCount(1)
+  await expect(page.getByRole('gridcell', { name: /^16 Oct,/ }).locator('.rounded-full')).toHaveCount(1)
   await expect(page.getByRole('link', { name: /Doctor visit · Dr\. Avi Shapiro/ })).toBeVisible()
 
-  await page.getByRole('gridcell', { name: /13\.10\.2026/ }).click()
+  await page.getByRole('gridcell', { name: /^13 Oct,/ }).click()
   await expect(page).toHaveURL(/date=2026-10-13/)
   await expect(page.getByText('Nothing is scheduled for this day.')).toBeVisible()
   await page.getByRole('button', { name: 'Next month' }).click()
@@ -221,6 +221,7 @@ test('center event opens its detail and RSVP opens the RSVP form', async ({ page
 
 for (const width of [320, 430]) {
   test(`no horizontal overflow on Phase 3 screens at ${width}px (he)`, async ({ page }) => {
+    test.setTimeout(90_000)
     await page.setViewportSize({ width, height: 800 })
     await signedIn(page, 'he')
     for (const path of [

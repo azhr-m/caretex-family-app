@@ -11,13 +11,13 @@
   "header": {
     "switch": "החלפה",
     "alerts": "התראות",
-    "notificationsLabel_one": "התראות, {{count}} שלא נקראה",
-    "notificationsLabel_two": "התראות, {{count}} שלא נקראו",
-    "notificationsLabel_other": "התראות, {{count}} שלא נקראו",
-    "switchResidentLabel": "החלפת דייר. נוכחי: {{name}}",
     "tabBadge_one": "{{count}} חדש",
     "tabBadge_two": "{{count}} חדשים",
-    "tabBadge_other": "{{count}} חדשים"
+    "tabBadge_other": "{{count}} חדשים",
+    "switchResidentSr": "החלפת דייר. נוכחי:",
+    "unreadSr_one": "התראה אחת שלא נקראה",
+    "unreadSr_two": "{{count}} התראות שלא נקראו",
+    "unreadSr_other": "{{count}} התראות שלא נקראו"
   },
   "actions": {
     "back": "חזרה",
@@ -80,8 +80,7 @@
     "failed": "לא הצלחנו לרענן. נסו שוב."
   },
   "attachment": {
-    "open": "פתיחה",
-    "openLabel": "פתיחת {{name}}"
+    "open": "פתיחה"
   },
   "more": {
     "relationOf": "{{relation}} של {{names}}",

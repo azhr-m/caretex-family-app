@@ -8,12 +8,12 @@ export function DetailRows({ rows }: { rows: DetailRow[] }) {
   return (
     <dl className="rounded-card border-border bg-surface m-0 flex flex-col border">
       {rows.map((r) => (
-        <div key={r.label} className="border-border flex items-start gap-3 border-b px-3.5 py-3 last:border-b-0">
-          <r.icon aria-hidden size={20} className="text-text-2 mt-0.5 shrink-0" />
-          <div className="flex min-w-0 flex-1 flex-col">
-            <dt className="text-tag text-text-2 font-bold">{r.label}</dt>
-            <dd className="text-body-sm m-0 font-bold wrap-break-word">{r.value}</dd>
-          </div>
+        <div key={r.label} className="border-border relative flex flex-col border-b py-3 ps-[46px] pe-3.5 last:border-b-0">
+          <dt className="text-tag text-text-2 font-bold">
+            <r.icon aria-hidden size={20} className="text-text-2 absolute start-3.5 top-3.5" />
+            {r.label}
+          </dt>
+          <dd className="text-body-sm m-0 font-bold wrap-break-word">{r.value}</dd>
         </div>
       ))}
     </dl>

@@ -21,6 +21,7 @@ import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as LoginFirstPasswordRouteImport } from './routes/login/first-password'
 import { Route as WelcomeLanguageRouteImport } from './routes/welcome/language'
 import { Route as AuthRRidRouteImport } from './routes/_auth/r/$rid'
+import { Route as AuthOpenNotificationNotificationIdRouteImport } from './routes/_auth/open.notification.$notificationId'
 import { Route as AuthRRidHomeRouteImport } from './routes/_auth/r/$rid/home'
 import { Route as AuthRRidNotificationsRouteImport } from './routes/_auth/r/$rid/notifications'
 import { Route as AuthRRidResidentRouteRouteImport } from './routes/_auth/r/$rid/resident/route'
@@ -122,6 +123,12 @@ const AuthRRidRoute = AuthRRidRouteImport.update({
   path: '/r/$rid',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthOpenNotificationNotificationIdRoute =
+  AuthOpenNotificationNotificationIdRouteImport.update({
+    id: '/open/notification/$notificationId',
+    path: '/open/notification/$notificationId',
+    getParentRoute: () => AuthRoute,
+  } as any)
 const AuthRRidHomeRoute = AuthRRidHomeRouteImport.update({
   id: '/home',
   path: '/home',
@@ -360,6 +367,7 @@ export interface FileRoutesByFullPath {
   '/login/': typeof LoginIndexRoute
   '/r/$rid': typeof AuthRRidRouteWithChildren
   '/r/$rid/resident': typeof AuthRRidResidentRouteRouteWithChildren
+  '/open/notification/$notificationId': typeof AuthOpenNotificationNotificationIdRoute
   '/r/$rid/home': typeof AuthRRidHomeRoute
   '/r/$rid/notifications': typeof AuthRRidNotificationsRoute
   '/r/$rid/calendar/$itemId': typeof AuthRRidCalendarItemIdRoute
@@ -413,6 +421,7 @@ export interface FileRoutesByTo {
   '/welcome/language': typeof WelcomeLanguageRoute
   '/login': typeof LoginIndexRoute
   '/r/$rid': typeof AuthRRidRouteWithChildren
+  '/open/notification/$notificationId': typeof AuthOpenNotificationNotificationIdRoute
   '/r/$rid/home': typeof AuthRRidHomeRoute
   '/r/$rid/notifications': typeof AuthRRidNotificationsRoute
   '/r/$rid/calendar/$itemId': typeof AuthRRidCalendarItemIdRoute
@@ -469,6 +478,7 @@ export interface FileRoutesById {
   '/login/': typeof LoginIndexRoute
   '/_auth/r/$rid': typeof AuthRRidRouteWithChildren
   '/_auth/r/$rid/resident': typeof AuthRRidResidentRouteRouteWithChildren
+  '/_auth/open/notification/$notificationId': typeof AuthOpenNotificationNotificationIdRoute
   '/_auth/r/$rid/home': typeof AuthRRidHomeRoute
   '/_auth/r/$rid/notifications': typeof AuthRRidNotificationsRoute
   '/_auth/r/$rid/calendar/$itemId': typeof AuthRRidCalendarItemIdRoute
@@ -525,6 +535,7 @@ export interface FileRouteTypes {
     | '/login/'
     | '/r/$rid'
     | '/r/$rid/resident'
+    | '/open/notification/$notificationId'
     | '/r/$rid/home'
     | '/r/$rid/notifications'
     | '/r/$rid/calendar/$itemId'
@@ -578,6 +589,7 @@ export interface FileRouteTypes {
     | '/welcome/language'
     | '/login'
     | '/r/$rid'
+    | '/open/notification/$notificationId'
     | '/r/$rid/home'
     | '/r/$rid/notifications'
     | '/r/$rid/calendar/$itemId'
@@ -633,6 +645,7 @@ export interface FileRouteTypes {
     | '/login/'
     | '/_auth/r/$rid'
     | '/_auth/r/$rid/resident'
+    | '/_auth/open/notification/$notificationId'
     | '/_auth/r/$rid/home'
     | '/_auth/r/$rid/notifications'
     | '/_auth/r/$rid/calendar/$itemId'
@@ -772,6 +785,13 @@ declare module '@tanstack/react-router' {
       path: '/r/$rid'
       fullPath: '/r/$rid'
       preLoaderRoute: typeof AuthRRidRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/open/notification/$notificationId': {
+      id: '/_auth/open/notification/$notificationId'
+      path: '/open/notification/$notificationId'
+      fullPath: '/open/notification/$notificationId'
+      preLoaderRoute: typeof AuthOpenNotificationNotificationIdRouteImport
       parentRoute: typeof AuthRoute
     }
     '/_auth/r/$rid/home': {
@@ -1177,11 +1197,14 @@ const AuthRRidRouteWithChildren = AuthRRidRoute._addFileChildren(
 interface AuthRouteChildren {
   AuthSelectResidentRoute: typeof AuthSelectResidentRoute
   AuthRRidRoute: typeof AuthRRidRouteWithChildren
+  AuthOpenNotificationNotificationIdRoute: typeof AuthOpenNotificationNotificationIdRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthSelectResidentRoute: AuthSelectResidentRoute,
   AuthRRidRoute: AuthRRidRouteWithChildren,
+  AuthOpenNotificationNotificationIdRoute:
+    AuthOpenNotificationNotificationIdRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)

@@ -39,7 +39,7 @@ const SCENARIO_LABEL: Record<Scenario, string> = {
 function Group({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="flex flex-col gap-2">
-      <h3 className="text-tag text-label text-tag text-label m-0 font-extrabold tracking-[.06em] uppercase">{title}</h3>
+      <h3 className="text-tag text-label m-0 font-extrabold tracking-[.06em] uppercase">{title}</h3>
       {children}
     </section>
   )
@@ -62,6 +62,8 @@ export function DevPanel() {
 
   const idleSeconds = useDevStore((s) => s.idleSeconds)
   const setIdleSeconds = useDevStore((s) => s.setIdleSeconds)
+  const longStrings = useDevStore((s) => s.longStrings)
+  const setLongStrings = useDevStore((s) => s.setLongStrings)
   const logout = useLogout()
 
   return (
@@ -101,6 +103,18 @@ export function DevPanel() {
                 { value: 'light', label: 'Light' },
                 { value: 'dark', label: 'Dark' },
                 { value: 'system', label: 'System' },
+              ]}
+            />
+          </Group>
+
+          <Group title="Layout stress">
+            <SegmentedControl<'off' | 'on'>
+              label="Long strings"
+              value={longStrings ? 'on' : 'off'}
+              onChange={(v) => setLongStrings(v === 'on')}
+              options={[
+                { value: 'off', label: 'Normal strings' },
+                { value: 'on', label: '⟦Long strings⟧' },
               ]}
             />
           </Group>

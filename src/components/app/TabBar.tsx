@@ -36,7 +36,6 @@ export function TabBar({ rid, badges = {} }: { rid: string; badges?: Partial<Rec
             to={to}
             params={{ rid }}
             aria-current={isActive ? 'page' : undefined}
-            aria-label={badge > 0 ? `${label}, ${t('header.tabBadge', { count: badge })}` : undefined}
             className={cn(
               'flex min-h-[54px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5',
               isActive ? 'text-tab-active' : 'text-tab-idle',
@@ -51,18 +50,19 @@ export function TabBar({ rid, badges = {} }: { rid: string; badges?: Partial<Rec
             >
               <Icon size={22} strokeWidth={isActive ? 2.4 : 2} />
               {badge > 0 && (
-                <span className="border-surface bg-danger text-micro absolute end-0.5 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-[9px] border-2 px-1 font-extrabold text-white">
+                <span className="border-surface bg-danger text-micro absolute end-0.5 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-[9px] border-2 px-1 font-extrabold text-white dark:text-bg">
                   <Ltr>{fmtCount(badge)}</Ltr>
                 </span>
               )}
             </span>
             <span
               className={cn(
-                'text-tag text-label line-clamp-2 max-w-full text-center leading-[1.15] text-balance',
+                'text-tag line-clamp-2 max-w-full text-center leading-[1.15] text-balance',
                 isActive ? 'font-extrabold' : 'font-semibold',
               )}
             >
               {label}
+              {badge > 0 && <span className="sr-only">, {t('header.tabBadge', { count: badge })}</span>}
             </span>
           </Link>
         )

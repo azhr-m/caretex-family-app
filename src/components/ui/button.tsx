@@ -1,5 +1,4 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import { motion } from 'framer-motion'
 import { LoaderCircle, type LucideIcon } from 'lucide-react'
 import { Slot } from 'radix-ui'
 import type { ComponentProps, ReactNode } from 'react'
@@ -7,7 +6,7 @@ import { DirIcon } from '@/components/common/DirIcon'
 import { cn } from '@/lib/utils'
 
 export const buttonVariants = cva(
-  'inline-flex items-center justify-center font-extrabold transition-[background-color,filter,color] select-none active:brightness-[.94] disabled:pointer-events-none aria-busy:pointer-events-none',
+  'inline-flex items-center justify-center font-extrabold transition-[background-color,filter,color,scale] duration-[120ms] ease-out select-none active:scale-[.98] active:brightness-[.94] disabled:pointer-events-none aria-busy:pointer-events-none',
   {
     variants: {
       variant: {
@@ -75,18 +74,15 @@ export function Button({
     )
   }
 
-  const { onAnimationStart: _a, onDrag: _d, onDragStart: _ds, onDragEnd: _de, ...rest } = props
   return (
-    <motion.button
-      whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.12, ease: 'easeOut' }}
+    <button
       type={type}
       className={classes}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
-      {...rest}
+      {...props}
     >
       {content}
-    </motion.button>
+    </button>
   )
 }

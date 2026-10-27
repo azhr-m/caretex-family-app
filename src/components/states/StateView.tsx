@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import type { LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { IconTile } from '@/components/common/IconTile'
@@ -46,13 +45,9 @@ export function StateView({
         className,
       )}
     >
-      <motion.div
-        initial={animate ? { scale: 0.9, opacity: 0 } : false}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.25, ease: 'easeOut' }}
-      >
+      <div className={cn(animate && 'animate-pop')}>
         <IconTile icon={icon} tone={tone} size={screen ? 96 : 88} bordered />
-      </motion.div>
+      </div>
       {(status || statusLabel) && (
         <StatusChip
           status={status}

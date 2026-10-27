@@ -6,3 +6,5 @@ dist
 /playwright-report
 /playwright/.cache
 .tanstack
+dist-prod
+lighthouse-report

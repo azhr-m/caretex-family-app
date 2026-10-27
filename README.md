@@ -14,7 +14,7 @@ pnpm install
 pnpm dev                 # http://localhost:5175
 ```
 
-All data is mocked by MSW (`VITE_USE_MOCKS=true` in `.env`). Point `VITE_API_BASE_URL` at CARETEX and set `VITE_USE_MOCKS=false` to use a real backend.
+All data is mocked by MSW (`VITE_USE_MOCKS=true` in `.env`). To use the real CARETEX API, see [docs/BACKEND_INTEGRATION.md](docs/BACKEND_INTEGRATION.md).
 
 ## Scripts
 
@@ -25,12 +25,15 @@ All data is mocked by MSW (`VITE_USE_MOCKS=true` in `.env`). Point `VITE_API_BAS
 | `pnpm typecheck`  | `tsc -b`                                                                             |
 | `pnpm lint`       | ESLint, including the RTL rule that blocks `ml-/mr-/pl-/pr-/left-/right-/text-left…` |
 | `pnpm test`       | Vitest unit tests                                                                    |
-| `pnpm e2e`        | Playwright smoke tests (uses local Chrome)                                           |
+| `pnpm e2e`        | Playwright: journeys, visual snapshots, axe, layout and PWA tests (uses local Chrome) |
+| `pnpm e2e:update` | Refresh visual baselines after an intended UI change                                 |
+| `pnpm build:prod` | Production build with mocks off, into `dist-prod/`                                   |
+| `pnpm lighthouse` | Lighthouse mobile on `dist-prod/`: fails below 90 performance / 100 accessibility    |
 | `pnpm i18n:check` | Fails if `en` and `he` locale keys differ                                            |
 
 ## Dev tools
 
-In dev builds a **Dev** button (bottom-start) opens the Dev panel: language, theme, mock scenario, demo sign-in, and the network simulator (Normal, Slow 3G, Very slow, Offline, Random errors, Force 401, Force 403). `/dev/components` shows every shared component.
+In dev builds a **Dev** button (bottom-start) opens the Dev panel: language, theme, mock scenario, demo sign-in, and the network simulator (Normal, Slow 3G, Very slow, Offline, Random errors, Force 401, Force 403), and **Long strings**, which doubles every translation to stress layouts. `/dev/components` shows every shared component.
 
 ## Layout
 

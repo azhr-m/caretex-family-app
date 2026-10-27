@@ -159,6 +159,12 @@ export const accountHandlers = [
     return HttpResponse.json({ unreadCount: 0 })
   }),
 
+  http.get(url('/notifications/:id'), ({ request, params }) => {
+    if (!authed(request)) return unauth()
+    const r = notificationRecords().find((x) => x.id === String(params.id))
+    return r ? HttpResponse.json(toNotification(r, langOf(request))) : apiError(404, 'NOT_FOUND', 'Notification not found')
+  }),
+
   http.post(url('/notifications/:id/read'), ({ request, params }) => {
     if (!authed(request)) return unauth()
     const r = notificationRecords().find((x) => x.id === String(params.id))

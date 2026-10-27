@@ -119,7 +119,7 @@ function Plan({ plan, name }: { plan: Plan; name: string }) {
 
 function NavyChip({ icon: Icon, children }: { icon: LucideIcon; children: ReactNode }) {
   return (
-    <span className="rounded-pill text-tag text-label inline-flex items-center gap-[5px] bg-white/12 px-2.5 py-1 font-bold">
+    <span className="rounded-pill text-tag inline-flex items-center gap-[5px] bg-white/12 px-2.5 py-1 font-bold">
       <Icon aria-hidden size={14} className="shrink-0" />
       <span>{children}</span>
     </span>

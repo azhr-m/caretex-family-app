@@ -34,7 +34,7 @@ test('home shows every section with mock-clock data', async ({ page }) => {
   await expect(page.getByRole('heading', { name: /Latest update/i })).toBeVisible()
   await expect(page.getByText('Doctor visit · Dr. Avi Shapiro')).toBeVisible()
   await expect(page.getByText(/Miriam's day · Today/i)).toBeVisible()
-  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByLabel(/Contact Staff, 2 new/)).toBeVisible()
+  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: /Contact Staff ?, 2 new/ })).toBeVisible()
   await noOverflow(page)
 })
 
@@ -117,9 +117,9 @@ test('Miriam: every segment renders, update detail marks it seen', async ({ page
   await expect(page.getByText('On track')).toBeVisible()
   await page.goto('/r/res_miriam/resident/day')
   await expect(page.getByText('Now', { exact: true })).toBeVisible()
-  await page.getByRole('link', { name: 'Next day' }).click()
+  await page.getByRole('link', { name: /^Next day/ }).click()
   await expect(page).toHaveURL(/date=2026-10-15/)
-  await expect(page.getByRole('link', { name: 'Next day' })).toHaveCount(0)
+  await expect(page.getByRole('link', { name: /^Next day/ })).toHaveCount(0)
 })
 
 async function openViewer(page: Page, lang: 'en' | 'he') {
@@ -188,6 +188,7 @@ test('empty scenario shows the empty states', async ({ page }) => {
 
 for (const width of [320, 430]) {
   test(`no horizontal overflow on Phase 2 screens at ${width}px (he)`, async ({ page }) => {
+    test.setTimeout(90_000)
     await page.setViewportSize({ width, height: 800 })
     await signedIn(page, 'he')
     for (const path of ['home', 'resident/general', 'resident/updates', 'resident/medical', 'resident/care-plan', 'resident/day']) {

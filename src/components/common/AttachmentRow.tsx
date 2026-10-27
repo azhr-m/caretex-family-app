@@ -14,7 +14,6 @@ export function AttachmentRow({ attachment: a }: { attachment: Attachment }) {
       href={a.url}
       target="_blank"
       rel="noreferrer"
-      aria-label={t('attachment.openLabel', { name: a.name })}
       className="rounded-tile bg-surface-2 flex min-h-14 items-center gap-3 px-3 py-2"
     >
       <Icon aria-hidden size={20} className="text-text-2 shrink-0" />

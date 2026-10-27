@@ -89,7 +89,6 @@
     "sub": "Tap Edit to change an answer before you submit. After submitting, answers can't be changed.",
     "missing": "Some required questions still need an answer",
     "edit": "Edit",
-    "editLabel": "Edit answer {{n}}",
     "noAnswer": "No answer",
     "numberAnswer": "{{n}} / {{max}}",
     "starsAnswer": "{{n}} of {{max}} stars",
@@ -97,7 +96,8 @@
     "identReminder": "Identified: your name is sent with your answers.",
     "submit": "Submit survey",
     "offline": "Connect to the internet to submit.",
-    "submittedOn": "Submitted on <ltr>{{date}}</ltr>"
+    "submittedOn": "Submitted on <ltr>{{date}}</ltr>",
+    "editSr": "answer {{n}}"
   },
   "thanks": {
     "chip": "Submitted on {{date}}",

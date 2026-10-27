@@ -63,11 +63,13 @@ export function SurveysListScreen({ rid, tab }: { rid: string; tab: SurveysTab }
             }
           >
             {(d) => (
-              <div className="flex flex-col gap-2.5">
+              <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
                 {d.items.map((s) => (
-                  <SurveyCard key={s.id} survey={s} rid={rid} />
+                  <li key={s.id}>
+                    <SurveyCard survey={s} rid={rid} />
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
           </QueryBoundary>
         </PullToRefresh>

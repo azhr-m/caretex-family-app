@@ -1,5 +1,6 @@
-import i18n, { type Resource } from 'i18next'
+import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+import { useDevStore } from '@/stores/dev'
 import { usePrefsStore, type Language } from '@/stores/prefs'
 
 export const NAMESPACES = [
@@ -20,18 +21,28 @@ export const NAMESPACES = [
   'validation',
 ] as const
 
-const files = import.meta.glob<Record<string, unknown>>('../locales/*/*.json', {
-  eager: true,
-  import: 'default',
-})
-
-const resources: Resource = {}
-for (const [path, data] of Object.entries(files)) {
-  const [, lang, ns] = path.match(/locales\/(\w+)\/(\w+)\.json$/) ?? []
-  if (!lang || !ns) continue
-  resources[lang] ??= {}
-  resources[lang][ns] = data
+const BUNDLES: Record<Language, () => Promise<{ default: Record<string, Record<string, unknown>> }>> = {
+  en: () => import('../locales/en'),
+  he: () => import('../locales/he'),
 }
+
+/** Adds a language's namespaces to i18next (once). The app waits for this before rendering or switching. */
+export async function loadLanguage(lang: Language) {
+  if (i18n.hasResourceBundle(lang, 'common')) return
+  const { default: files } = await BUNDLES[lang]()
+  for (const [path, data] of Object.entries(files)) {
+    const ns = path.match(/(\w+)\.json$/)?.[1]
+    if (ns) i18n.addResourceBundle(lang, ns, data, true, true)
+  }
+}
+
+export async function setAppLanguage(lang: Language) {
+  await loadLanguage(lang)
+  await i18n.changeLanguage(lang)
+}
+
+/** Loads the detected language before the first render. */
+export const i18nReady = () => setAppLanguage(detectLanguage())
 
 export function detectLanguage(): Language {
   const stored = usePrefsStore.getState().language
@@ -50,8 +61,22 @@ function applyToDocument(lang: string) {
   document.documentElement.dir = dirOf(lang)
 }
 
+export const longString = (value: string) => `⟦${value} ${value}⟧`
+
+if (import.meta.env.DEV) {
+  i18n.use({
+    type: 'postProcessor',
+    name: 'longStrings',
+    process: (value: string) => (useDevStore.getState().longStrings && value ? longString(value) : value),
+  })
+  useDevStore.subscribe((s, prev) => {
+    if (s.longStrings !== prev.longStrings) void i18n.changeLanguage(i18n.language)
+  })
+}
+
 i18n.use(initReactI18next).init({
-  resources,
+  resources: {},
+  partialBundledLanguages: true,
   lng: detectLanguage(),
   fallbackLng: 'en',
   supportedLngs: ['en', 'he'],
@@ -59,13 +84,14 @@ i18n.use(initReactI18next).init({
   defaultNS: 'common',
   interpolation: { escapeValue: false },
   returnNull: false,
+  postProcess: import.meta.env.DEV ? ['longStrings'] : false,
 })
 
 applyToDocument(i18n.language)
 i18n.on('languageChanged', applyToDocument)
 
 usePrefsStore.subscribe((s, prev) => {
-  if (s.language && s.language !== prev.language) void i18n.changeLanguage(s.language)
+  if (s.language && s.language !== prev.language) void setAppLanguage(s.language)
 })
 
 export default i18n

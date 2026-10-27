@@ -11,11 +11,11 @@
   "header": {
     "switch": "Switch",
     "alerts": "Alerts",
-    "notificationsLabel_one": "Notifications, {{count}} unread",
-    "notificationsLabel_other": "Notifications, {{count}} unread",
-    "switchResidentLabel": "Switch resident. Current: {{name}}",
     "tabBadge_one": "{{count}} new",
-    "tabBadge_other": "{{count}} new"
+    "tabBadge_other": "{{count}} new",
+    "switchResidentSr": "Switch resident. Current:",
+    "unreadSr_one": "{{count}} unread notification",
+    "unreadSr_other": "{{count}} unread notifications"
   },
   "actions": {
     "back": "Back",
@@ -78,8 +78,7 @@
     "failed": "We couldn't refresh. Try again."
   },
   "attachment": {
-    "open": "Open",
-    "openLabel": "Open {{name}}"
+    "open": "Open"
   },
   "more": {
     "relationOf": "{{relation}} of {{names}}",

@@ -220,7 +220,7 @@ function InquiryCard({ inquiry: q, rid }: { inquiry: InquirySummary; rid: string
           </span>
         </div>
         {q.hasUnreadReply && (
-          <span className="rounded-pill bg-danger text-tag flex shrink-0 items-center gap-1 px-2 py-0.5 font-extrabold whitespace-nowrap text-white">
+          <span className="rounded-pill bg-danger text-tag flex shrink-0 items-center gap-1 px-2 py-0.5 font-extrabold whitespace-nowrap text-white dark:text-bg">
             <MessageSquareDot aria-hidden size={13} />
             {t('list.newReply')}
           </span>

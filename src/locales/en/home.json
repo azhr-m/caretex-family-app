@@ -7,8 +7,7 @@
   },
   "dateLine": "{{weekday}}, <ltr>{{date}}</ltr>",
   "residentCard": {
-    "profile": "Profile",
-    "profileLabel": "Open {{name}}'s profile"
+    "profile": "Profile"
   },
   "since": {
     "title": "Since your last visit · <ltr>{{date}}</ltr>",

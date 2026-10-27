@@ -121,7 +121,7 @@ function ServiceCard({ service: s, rid }: { service: ServiceSummary; rid: string
     <Link
       to="/r/$rid/more/services/$requestId"
       params={{ rid, requestId: s.id }}
-      className={cn('rounded-card border-border bg-surface shadow-card flex flex-col gap-2.5 border p-3.5 text-start', done && 'opacity-80')}
+      className={cn('rounded-card border-border bg-surface shadow-card flex flex-col gap-2.5 border p-3.5 text-start', done && 'bg-surface-2 shadow-none')}
     >
       <div className="flex items-start gap-3">
         <IconTile icon={meta.icon} tone={meta.tone} size={44} />

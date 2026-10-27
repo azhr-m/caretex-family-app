@@ -113,7 +113,7 @@ test('save draft sheet, then full survey: review, edit, submit, thank you', asyn
 
   await expect(page.getByRole('heading', { name: 'Review your answers' })).toBeVisible()
   await expect(page.getByText('No answer')).toBeVisible()
-  await page.getByRole('link', { name: 'Edit answer 9' }).click()
+  await page.getByRole('link', { name: /^Edit ?, answer 9$/ }).click()
   await page.locator('[aria-haspopup="listbox"]').click()
   await page.getByRole('option', { name: 'Several times a week' }).click()
   await page.getByRole('button', { name: 'Review answers' }).click()
@@ -209,7 +209,7 @@ test('feed: categories, newsletter confirm read, archive search', async ({ page 
   await expect(page.getByRole('link', { name: /Pumpkin painting/ })).toHaveCount(0)
   await page.getByRole('link', { name: /October family newsletter/ }).click()
   await expect(page.getByText('Read confirmation needed').or(page.getByText('Confirm reading'))).toBeVisible()
-  await expect(page.getByRole('link', { name: 'Open october-newsletter.pdf' })).toBeVisible()
+  await expect(page.getByRole('link', { name: /october-newsletter.pdf/ })).toBeVisible()
   await page.getByRole('checkbox', { name: 'I have read and understood this newsletter' }).click()
   await page.getByRole('button', { name: 'Confirm I have read this' }).click()
   await expect(page.getByText(/You confirmed reading on/)).toBeVisible()
@@ -266,6 +266,7 @@ test('More menu shows live badges and opens each area', async ({ page }) => {
 
 for (const width of [320, 430]) {
   test(`no horizontal overflow on Phase 4 screens at ${width}px (he)`, async ({ page }) => {
+    test.setTimeout(90_000)
     test.setTimeout(120_000) // 15 full page loads
     await page.setViewportSize({ width, height: 800 })
     await signedIn(page, 'he')

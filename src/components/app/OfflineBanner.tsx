@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from 'framer-motion'
 import { Wifi, WifiOff } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
@@ -34,16 +33,9 @@ export function OfflineBanner() {
   const savedAt = time(lastSuccessAt ?? mountedAt)
 
   return (
-    <AnimatePresence initial={false}>
-      {(!online || showOnline) && (
-        <motion.div
-          key={online ? 'online' : 'offline'}
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="overflow-hidden"
-        >
+    (!online || showOnline) && (
+      <div key={online ? 'online' : 'offline'} className="animate-reveal grid grid-rows-[1fr]">
+        <div className="min-h-0 overflow-hidden">
           {online ? (
             <Banner variant="online" icon={Wifi} title={t('backOnline')} />
           ) : (
@@ -61,8 +53,8 @@ export function OfflineBanner() {
               }
             />
           )}
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+      </div>
+    )
   )
 }

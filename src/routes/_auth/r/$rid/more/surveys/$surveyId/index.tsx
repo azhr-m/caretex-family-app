@@ -1,6 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { SurveyIntroScreen } from '@/features/surveys/SurveyIntroScreen'
 
 export const Route = createFileRoute('/_auth/r/$rid/more/surveys/$surveyId/')({
-  component: () => <StubScreen phase={4} route="/r/$rid/more/surveys/$surveyId" />,
+  component: function SurveyIntroScreenRoute() {
+    const { rid, surveyId } = Route.useParams()
+    return <SurveyIntroScreen rid={rid} surveyId={surveyId} />
+  },
 })

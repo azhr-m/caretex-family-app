@@ -72,6 +72,16 @@
     "rsvpButton": "אישור הגעה לאירוע",
     "changeRsvp": "שינוי אישור ההגעה",
     "rsvpBy": "נא להשיב עד <ltr>{{date}}</ltr> כדי שנוכל להכין מקומות ישיבה.",
-    "rsvpClosed": "ההרשמה נסגרה ב-<ltr>{{date}}</ltr>."
+    "rsvpClosed": "ההרשמה נסגרה ב-<ltr>{{date}}</ltr>.",
+    "invitation": "הזמנה",
+    "yourAnswer": "התשובה שלכם: {{answer}}",
+    "answer": {
+      "attending": "מגיעים",
+      "attendingGuests_one": "מגיעים · אורח אחד",
+      "attendingGuests_two": "מגיעים · {{count}} אורחים",
+      "attendingGuests_other": "מגיעים · {{count}} אורחים",
+      "not_attending": "לא מגיעים",
+      "undecided": "עוד לא החלטנו"
+    }
   }
 }

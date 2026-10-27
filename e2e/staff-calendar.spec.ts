@@ -207,7 +207,7 @@ test('appointment: confirm, then confirmed bar and toast', async ({ page }) => {
   expect((await download).suggestedFilename()).toBe('cal_dr_shapiro.ics')
 })
 
-test('center event opens its detail and RSVP goes to the Phase 4 route', async ({ page }) => {
+test('center event opens its detail and RSVP opens the RSVP form', async ({ page }) => {
   await signedIn(page)
   await page.goto('/r/res_miriam/calendar?view=list')
   await page.getByRole('link', { name: /Family music afternoon/ }).click()
@@ -216,7 +216,7 @@ test('center event opens its detail and RSVP goes to the Phase 4 route', async (
   await expect(page.getByText('Residents and up to 4 guests each')).toBeVisible()
   await page.getByRole('link', { name: 'RSVP to this event' }).click()
   await expect(page).toHaveURL(/\/more\/events\/ev_music\/rsvp$/)
-  await expect(page.getByText(/Coming in Phase 4/)).toBeVisible()
+  await expect(page.getByText('Will you attend?')).toBeVisible()
 })
 
 for (const width of [320, 430]) {

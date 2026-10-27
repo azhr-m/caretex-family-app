@@ -1,6 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { EventScreen } from '@/features/feed/EventScreens'
 
 export const Route = createFileRoute('/_auth/r/$rid/more/events/$eventId/')({
-  component: () => <StubScreen phase={4} route="/r/$rid/more/events/$eventId" />,
+  component: function EventScreenRoute() {
+    const { rid, eventId } = Route.useParams()
+    return <EventScreen key={eventId} rid={rid} eventId={eventId} />
+  },
 })

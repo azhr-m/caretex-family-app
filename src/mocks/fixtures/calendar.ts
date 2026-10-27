@@ -1,4 +1,4 @@
-import type { CalendarItemDetail, CalendarItemSummary, EventDetail } from '@/api/schemas/calendar'
+import type { CalendarItemDetail, CalendarItemSummary, EventDetail, Rsvp } from '@/api/schemas/calendar'
 import type { MockLang } from '../http'
 import { at } from '../time'
 import type { L } from './staff'
@@ -67,6 +67,9 @@ const ITEMS: ItemFixture[] = [
 /** Appointments confirmed this session. */
 export const confirmed = new Set<string>()
 
+/** RSVPs saved this session, per event. */
+export const rsvps = new Map<string, Rsvp>()
+
 const pick = (l: L | null, lang: MockLang) => (l ? l[lang] : null)
 
 function toSummary(f: ItemFixture, lang: MockLang): CalendarItemSummary {
@@ -81,7 +84,7 @@ function toSummary(f: ItemFixture, lang: MockLang): CalendarItemSummary {
     location: f.location[lang],
     requiresConfirmation: f.requiresConfirmation,
     confirmation: f.requiresConfirmation ? (confirmed.has(f.id) ? 'confirmed' : 'pending') : null,
-    rsvp: null,
+    rsvp: f.eventId ? (rsvps.get(f.eventId)?.status ?? null) : null,
     eventId: f.eventId,
     changed: f.changed,
   }
@@ -145,16 +148,23 @@ const EVENTS: Record<string, { body: L; maxGuests: number; accessibility: L; dea
     program: [],
   },
   ev_hanukkah: {
-    body: { en: 'Candle lighting, sufganiyot and a performance by the residents.', he: 'הדלקת נרות, סופגניות והופעה של הדיירים.' },
+    body: {
+      en: "Join us to light the fifth candle together with the residents, followed by a performance by the residents' choir and sufganiyot in the courtyard.",
+      he: 'הצטרפו אלינו להדלקת הנר החמישי יחד עם הדיירים, ולאחר מכן הופעה של מקהלת הדיירים וסופגניות בחצר.',
+    },
     maxGuests: 4,
-    accessibility: { en: 'Wheelchair accessible, seating provided', he: 'נגיש לכיסאות גלגלים, יש מקומות ישיבה' },
+    accessibility: { en: 'Wheelchair accessible', he: 'נגיש לכיסאות גלגלים' },
     deadline: '2026-12-06T23:59:00+02:00',
     program: [
-      { time: '17:00', title: { en: 'Candle lighting', he: 'הדלקת נרות' }, icon: 'flame' },
-      { time: '17:30', title: { en: 'Residents’ performance', he: 'הופעת הדיירים' }, icon: 'music' },
+      { time: '17:00', title: { en: 'Candle lighting with the residents', he: 'הדלקת נרות עם הדיירים' }, icon: 'flame' },
+      { time: '17:20', title: { en: "Residents' choir performance", he: 'הופעה של מקהלת הדיירים' }, icon: 'mic-vocal' },
+      { time: '18:00', title: { en: 'Sufganiyot and hot drinks', he: 'סופגניות ושתייה חמה' }, icon: 'cookie' },
     ],
   },
 }
+
+export const eventMaxGuests = (id: string) => EVENTS[id]?.maxGuests ?? 0
+export const eventDeadline = (id: string) => EVENTS[id]?.deadline ?? null
 
 export function eventFixture(id: string, lang: MockLang): EventDetail | null {
   const e = EVENTS[id]
@@ -172,7 +182,7 @@ export function eventFixture(id: string, lang: MockLang): EventDetail | null {
     accessibility: e.accessibility[lang],
     program: e.program.map((p) => ({ time: p.time, title: p.title[lang], icon: p.icon })),
     rsvpDeadline: e.deadline,
-    myRsvp: null,
+    myRsvp: rsvps.get(id) ?? null,
     version: 1,
   }
 }

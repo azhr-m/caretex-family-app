@@ -94,8 +94,6 @@
       "closed": "This inquiry is closed and kept for your records."
     },
     "you": "{{name}} (you)",
-    "open": "Open",
-    "openLabel": "Open {{name}}",
     "eventRead": "Read by {{dept}}",
     "eventNew": "Status: New · waiting to be read",
     "eventClosed": "Closed",

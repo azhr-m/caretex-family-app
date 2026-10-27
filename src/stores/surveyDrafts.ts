@@ -1,8 +1,9 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import type { Answer } from '@/api/schemas/surveys'
 import { localJSON } from './storage'
 
-export type SurveyAnswer = string | number | boolean | string[] | null
+export type SurveyAnswer = Answer
 
 export type SurveyDraft = {
   answers: Record<string, SurveyAnswer>

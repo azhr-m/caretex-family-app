@@ -174,7 +174,7 @@ export function UploadList({
           <div className="flex min-w-0 flex-1 flex-col gap-1">
             <Ltr className="text-secondary truncate text-start font-bold">{item.file.name}</Ltr>
             {item.status === 'uploading' ? (
-              <ProgressBar value={Math.round(item.progress * 100)} label={item.file.name} />
+              <ProgressBar value={item.progress} label={item.file.name} />
             ) : item.status === 'error' ? (
               <span className="text-meta text-danger font-bold">
                 {item.errorKey ? t(item.errorKey, { name: item.file.name }) : t('new.uploadFailed')}

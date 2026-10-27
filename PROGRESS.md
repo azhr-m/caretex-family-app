@@ -8,8 +8,8 @@ What each phase delivered, how to try it and what's still open. The plan itself 
 | 1 | Onboarding, auth and security | ✅ Done (2026-10-27) |
 | 2 | Home and Resident tab | ✅ Done (2026-10-27) |
 | 3 | Contact Staff and Calendar | ✅ Done (2026-10-27) |
-| 4 | Documents, Surveys, Updates & Events | ⏳ Next |
-| 5 | Services, Center, Permissions, Payments, Settings, Notifications | — |
+| 4 | Documents, Surveys, Updates & Events | ✅ Done (2026-10-27) |
+| 5 | Services, Center, Permissions, Payments, Settings, Notifications | ⏳ Next |
 | 6 | Hardening (visual/e2e/a11y/perf/PWA, backend integration doc) | — |
 
 All data is mocked (MSW). Connecting to `caretex-api` comes later.
@@ -271,6 +271,73 @@ Home makes one `GET /dashboard` call, and each section is validated separately. 
 
 ---
 
+## Phase 4 — Documents, Surveys, Updates & Events
+
+### What's built
+
+**More tab** — `/more` ([src/features/more/](src/features/more/)): navy profile card ("Daughter of Miriam Levi and Avraham Cohen", phone), 8 destinations with icon, description and live badges ("3 to do", "1 new", "Coming soon"), app version. Services, Center, Permissions, Payments and Settings open their Phase 5 placeholders.
+
+**Documents** — [src/features/documents/](src/features/documents/)
+
+| Screen | Route | Highlights |
+|---|---|---|
+| List | `/more/documents?tab=&type=&year=` | To sign / To confirm / Completed with counts, Type and Year filters (sheets), cards with status chip and due line (amber "Due …", red "Overdue since …", green completed date). Empty: "There are currently no documents awaiting action" + "View completed documents" |
+| Viewer | `/more/documents/$id` | Chips (status, department, due), a light "paper" page in both themes (center name, code, text, resident / family footer), "Page 1 of 2", Zoom, PDF. The action bar depends on the document: **sign** (Ask + Sign document), **confirm read** (required checkbox + Confirm → toast + green "Read confirmed on …"), **approve** (Decline → reason sheet, 5–300 characters; Approve → result). Completed documents show "Signed on …" and "Download signed copy" |
+| Sign sheet | (sheet) | Signature pad (`signature_pad`): white 180px box with baseline and "×", Clear, Undo; consent text from the API; "Sign and send" stays disabled until there is a real signature (at least 40×15 px; a dot says "Please sign inside the box") **and** the consent box is ticked. The sheet can't be swiped away while sending. The PNG is trimmed to the signature |
+| Result | `/more/documents/$id/done` | "Signed on DD.MM.YYYY HH:mm" / "Approved on …", rows (document, signed by, confirmation code), Back to documents, Download signed copy |
+
+**Surveys** — [src/features/surveys/](src/features/surveys/), engine in [src/lib/survey.ts](src/lib/survey.ts)
+
+| Screen | Route | Highlights |
+|---|---|---|
+| List | `/more/surveys?tab=active\|completed` | Cards with anonymous / identified · questions · closes, progress bar, chip (Not started / Draft · 4 of 6 answered / Submitted), Start / Continue / View |
+| Intro | `/more/surveys/$id` | Description, 3 fact tiles, anonymous / identified box, draft note, "Start survey" or "Continue survey" (resumes at the first unanswered question after the last answer) |
+| Question | `/more/surveys/$id/q/$questionId` | All 9 types: single, multiple (min/max), yes/no cards, 0–10 grid, 5 stars with label, satisfaction faces, text with counter, date (shows DD.MM.YYYY, optional "none"), dropdown. "Question 3 of 9", minutes left, progress bar. Follow-ups appear only when their condition holds, with "Follow-up · because you answered "No""; changing the answer removes the follow-up **and its answer**. Required questions show "Answer this question to continue" on Next. Exit / Save draft → "Draft saved" sheet |
+| Drafts | (all survey screens) | Saved locally on every change (survives closing the tab) and synced to the server 1 s after the last change, or when the connection returns. The newer copy wins when the survey opens |
+| Review | `/more/surveys/$id/review` | Numbered answers, "No answer" for skipped optional ones, Edit → that question → back to review, anonymity reminder, Submit (only online). Missing required answers are highlighted. Submitted surveys open a read-only version |
+| Thank you | `/more/surveys/$id/done` | "Submitted on …", "Thank you, Dana", rows (survey, answered x of y, identity), Back to surveys / Go to Home |
+
+**Updates and Events** — [src/features/feed/](src/features/feed/)
+
+| Screen | Route | Highlights |
+|---|---|---|
+| Feed | `/more/feed?cat=` | Category chips (All, Updates, Newsletters, Activities, Events and invitations), cards with colored kind, status chip (Confirm reading / Awaiting RSVP / your answer) and action, infinite scroll, "View archive" |
+| Newsletter / update | `/more/feed/$id` | Chips, title, author · date, text, highlights, PDF attachment (Open), confirm box (required checkbox) → toast + "You confirmed reading on …" |
+| Invitation | `/more/events/$id` | The shared event detail with an "Invitation" chip; after you answer: "Your answer: Attending · 2 guests" + "Change my RSVP" |
+| RSVP | `/more/events/$id/rsvp` | Event summary, Attending / Not attending / Not decided yet, guests stepper (Less / More, up to the event's limit), one name field per guest (2–60 characters), note (300), "You can change your answer until …". Guests are hidden unless attending. Closed after the deadline |
+| RSVP saved | `/more/events/$id/rsvp/done` | "Saved on …", text by answer, rows (event, when, your answer), Back to events / Open calendar |
+| Archive | `/more/feed/archive?q=` | Search (in the URL), grouped by month, compact rows, "Nothing matches …" |
+
+**Mock backend**
+- Documents (sign / approve / confirm read with `If-Match`, deadlines, 422 rules), surveys (the 9-question family survey with the Q3 follow-up, a draft and a submitted one; drafts and submit with required checks), feed (current and archive, search), newsletter read confirmation, RSVP with all form rules.
+- Home follows it: signed / approved documents, confirmed reads, submitted surveys and saved RSVPs leave "Needs your attention"; a started survey shows "Draft"; the More badge and "2 waiting for you" count open documents.
+
+### Acceptance
+- ✅ Survey: "No" on Q3 inserts Q3a; changing to "Yes" removes Q3a and its answer (checked in the saved draft); progress reflects the visible question count (e2e).
+- ✅ Closing the tab mid-survey and reopening (new tab, sign in again) resumes at the next unanswered question (e2e).
+- ✅ The signature can't be sent empty, as a dot, or without the consent box; the signed document shows "Signed on DD.MM.YYYY HH:mm" on the result screen and in the viewer (e2e).
+- ✅ Also tested: required question message, save-draft sheet, full survey with Edit from review and submit, confirm read and decline with reason, approve result, feed categories, newsletter confirmation, archive search and no results, RSVP with guest-name validation and the saved answer on the invitation, More badges, no horizontal overflow at 320 / 430 px in Hebrew.
+- ✅ Network simulator: Offline disables Sign with "Connect to the internet to sign.", Force 403 → no-permission state, Very slow → slow note then data (scripted run).
+- Totals: typecheck, lint, i18n check and build pass; 48 unit tests and 56 e2e tests pass.
+
+### Fixed during checks
+- **Upload progress bar always showed 100% (Phase 3):** `ProgressBar` takes a fraction by default and was given a percentage.
+- The result screen after approving could read the cached "pending" document and bounce back; the app now waits for the document to refresh before showing the result.
+- Earlier tests that expected "Coming in Phase 4" placeholders now check the real screens.
+
+### Decisions (where the spec didn't say)
+- **Progress counts the visible questions**, so when Q3a appears the survey shows "of 10" (the docs say progress follows the visible count; the design kept "of 9").
+- **Legal actions never queue offline** (sign, approve, confirm read, survey submit, RSVP): their buttons are disabled with a short "Connect to the internet to …" note, as the spec requires.
+- **Next on a required question** looks disabled but still responds to a tap with the message (the spec asks for both).
+- **Read-only survey answers:** the contract has no "my submitted answers" endpoint, so the mock returns them from `GET /surveys/:id/draft` after submit (see open questions).
+- **More menu badges** are worked out in the app from the documents counts, the active surveys and the first feed page; there is no menu summary endpoint. "New" in Updates and Events counts items that still need a read confirmation or an RSVP.
+- **Declining** shows a toast and a "Declined on …" bar instead of a result screen (none was designed).
+- **Year filter** offers this year and the two before.
+- **The document preview** is turned into plain paragraphs; the app never inserts HTML from the API into the page.
+- **Mock bundle size:** the build warns about a 512 KB chunk; that's the MSW mock bundle with all fixtures, which is only loaded in mock mode.
+
+---
+
 ## New copy added (not in the design files)
 All added in both languages; **the Hebrew needs a native-speaker review.**
 
@@ -293,6 +360,11 @@ All added in both languages; **the Hebrew needs a native-speaker review.**
   - Thread: Read / Handled descriptions, "closed meanwhile" and "couldn't send" messages, "Closed on …" without a name.
   - Calendar: "Today ·" headers, previous / next month and week labels, "All day", empty list, day-cell screen-reader labels, notes, download failed.
   - Events: RSVP chips (attending / not attending / undecided), "Change my RSVP", "Replies closed on …", program.
+- **Phase 4:**
+  - More menu: "{relation} of {names}", "App version", badge texts.
+  - Documents: type names, "All years", empty "No completed documents yet", "Was due …", "Zoom out", "checkbox first" messages, declined / read-confirmed status and dates, offline notes, decline sheet (title, body, reason, error, Send decline), generic result titles and bodies ("Approval sent", "View the document"), "Please sign inside the box", "Sign the document".
+  - Surveys: "Identified" body, closed note, validation messages (choose at least / up to, date range, too long), per-type help texts, date / dropdown placeholders, "Your answers", "Submitted on …", identified reminder, missing-answers alert, thank-you body for identified surveys.
+  - Feed: "View" / "View event" actions, detail titles, newsletter confirmation texts and errors, invitation answer lines, RSVP validation and offline texts, RSVP-saved bodies per answer, archive search label, no results and empty texts.
 
 ## Open questions
 1. **Shared status labels in Hebrew:** they use one grammatical form; the design uses different forms per item type (סגור / סגורה). Each screen can override the label. OK?
@@ -304,6 +376,9 @@ All added in both languages; **the Hebrew needs a native-speaker review.**
 7. **Since your last visit:** how do `POST /me/visits` and the dashboard's `sinceLastVisit.since` relate? Is `since` the visit before this session's call?
 8. **Member gender:** the design uses gendered Hebrew for the member ("(את)", "את:"). Without a gender field the app uses the neutral "(אתם)" / "אתם:".
 9. **Department names:** the API sends `name` in `/departments`, but the contract also says enum codes are localized in the app. Which one is the source of truth?
+10. **Submitted survey answers:** "Completed surveys open read-only review", but the contract has no endpoint for submitted answers. The mock returns them from `GET /surveys/:id/draft`; should the backend do that, or add an endpoint?
+11. **More menu badges:** there's no summary endpoint, so the app makes three extra calls (documents, surveys, feed). A `GET /me/summary` (or counts in the dashboard) would be cheaper.
+12. **Signature consent text** is gendered in the Hebrew mock ("מאשרת שאני מורשית"); it comes from the API, so the backend needs the member's gender to get it right.
 
 ## Environment notes
 - **Node 20.19 pins:** TypeScript 6, Vitest 3 + jsdom 26, MSW 2, pnpm 9 (via `packageManager`). Details in [CLAUDE.md](CLAUDE.md).

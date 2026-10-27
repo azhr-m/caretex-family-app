@@ -70,6 +70,15 @@
     "rsvpButton": "RSVP to this event",
     "changeRsvp": "Change my RSVP",
     "rsvpBy": "Please reply by <ltr>{{date}}</ltr> so we can prepare seating.",
-    "rsvpClosed": "Replies closed on <ltr>{{date}}</ltr>."
+    "rsvpClosed": "Replies closed on <ltr>{{date}}</ltr>.",
+    "invitation": "Invitation",
+    "yourAnswer": "Your answer: {{answer}}",
+    "answer": {
+      "attending": "Attending",
+      "attendingGuests_one": "Attending · {{count}} guest",
+      "attendingGuests_other": "Attending · {{count}} guests",
+      "not_attending": "Not attending",
+      "undecided": "Not decided yet"
+    }
   }
 }

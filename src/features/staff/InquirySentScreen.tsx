@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { CircleCheck, Eye, Hash, List, Send, Sparkles, Type, type LucideIcon } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { CircleCheck, Eye, Hash, List, Send, Sparkles, Type } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { departmentsQuery, inquiryQuery } from '@/api/queries/inquiries'
 import { AppFrame } from '@/components/app/AppFrame'
 import { ListGroup } from '@/components/common/ListRow'
+import { SummaryRow } from '@/components/common/SummaryRow'
 import { Ltr } from '@/components/common/Ltr'
 import { QueryBoundary } from '@/components/states/QueryBoundary'
 import { ResultScreen } from '@/components/states/states'
@@ -51,33 +51,23 @@ export function InquirySentScreen({ rid, inquiryId }: { rid: string; inquiryId: 
               }
             >
               <ListGroup>
-                <Row icon={Hash} label={t('sent.reference')}>
+                <SummaryRow icon={Hash} label={t('sent.reference')}>
                   <Ltr>{q.ref}</Ltr>
-                </Row>
-                <Row icon={DEPARTMENT_META[q.department].icon} label={t('sent.department')}>
+                </SummaryRow>
+                <SummaryRow icon={DEPARTMENT_META[q.department].icon} label={t('sent.department')}>
                   {deptLabel}
-                </Row>
-                <Row icon={Type} label={t('sent.subject')}>
+                </SummaryRow>
+                <SummaryRow icon={Type} label={t('sent.subject')}>
                   {q.subject}
-                </Row>
-                <Row icon={Sparkles} label={t('sent.status')}>
+                </SummaryRow>
+                <SummaryRow icon={Sparkles} label={t('sent.status')}>
                   {t(`common:status.${INQUIRY_CHIP[q.status]}`)}
-                </Row>
+                </SummaryRow>
               </ListGroup>
             </ResultScreen>
           )
         }}
       </QueryBoundary>
     </AppFrame>
-  )
-}
-
-function Row({ icon: Icon, label, children }: { icon: LucideIcon; label: string; children: ReactNode }) {
-  return (
-    <div className="flex min-h-11 items-center gap-3 px-3.5 py-3">
-      <Icon aria-hidden size={19} className="text-text-2 shrink-0" />
-      <span className="text-secondary text-text-2 min-w-0 flex-1">{label}</span>
-      <span className="text-body-sm max-w-[60%] text-end font-bold wrap-break-word">{children}</span>
-    </div>
   )
 }

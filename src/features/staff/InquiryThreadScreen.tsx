@@ -3,10 +3,7 @@ import { Link } from '@tanstack/react-router'
 import {
   Archive,
   Clock,
-  Download,
-  FileText,
   Heart,
-  Image,
   Info,
   LoaderCircle,
   MessageSquarePlus,
@@ -25,11 +22,11 @@ import {
   useReply,
   type ReplyVars,
 } from '@/api/queries/inquiries'
-import type { Attachment } from '@/api/schemas/common'
 import type { InquiryDetail, TimelineEntry, TimelineMessage } from '@/api/schemas/inquiries'
 import { AppFrame, ScreenContent } from '@/components/app/AppFrame'
 import { TopBar } from '@/components/app/TopBar'
 import { Alert } from '@/components/common/Alert'
+import { AttachmentRow } from '@/components/common/AttachmentRow'
 import { Avatar } from '@/components/common/Avatar'
 import { IconTile } from '@/components/common/IconTile'
 import { Ltr } from '@/components/common/Ltr'
@@ -41,7 +38,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { MEMBER_TONE } from '@/lib/avatar'
 import { DEPARTMENT_META } from '@/lib/departments'
-import { date, dateTime, fileSize } from '@/lib/format'
+import { date, dateTime } from '@/lib/format'
 import { INQUIRY_CHIP, INQUIRY_STEPS, stepIndex } from '@/lib/inquiry'
 import { firstName } from '@/lib/names'
 import { ROLE_META } from '@/lib/staff'
@@ -192,33 +189,6 @@ function MessageCard({ message: m }: { message: TimelineMessage }) {
         <AttachmentRow key={a.id} attachment={a} />
       ))}
     </article>
-  )
-}
-
-function AttachmentRow({ attachment: a }: { attachment: Attachment }) {
-  const { t } = useTranslation('staff')
-  const Icon = a.mimeType.startsWith('image/') ? Image : FileText
-  const kind = a.mimeType === 'application/pdf' ? 'PDF' : (a.name.split('.').pop() ?? '').toUpperCase()
-  return (
-    <a
-      href={a.url}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={t('thread.openLabel', { name: a.name })}
-      className="rounded-tile bg-surface-2 flex min-h-14 items-center gap-3 px-3 py-2"
-    >
-      <Icon aria-hidden size={20} className="text-text-2 shrink-0" />
-      <span className="flex min-w-0 flex-1 flex-col">
-        <Ltr className="text-secondary truncate text-start font-bold">{a.name}</Ltr>
-        <Ltr className="text-tag text-text-2 text-start">
-          {kind} · {fileSize(a.sizeBytes)}
-        </Ltr>
-      </span>
-      <span className="text-meta text-link flex shrink-0 items-center gap-1 font-extrabold">
-        <Download aria-hidden size={16} />
-        {t('thread.open')}
-      </span>
-    </a>
   )
 }
 

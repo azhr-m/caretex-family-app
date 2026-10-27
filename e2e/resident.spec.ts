@@ -38,14 +38,15 @@ test('home shows every section with mock-clock data', async ({ page }) => {
   await noOverflow(page)
 })
 
-test('needs-attention cards and quick actions route to later-phase screens', async ({ page }) => {
+test('needs-attention cards and quick actions open their screens', async ({ page }) => {
+  test.setTimeout(90_000) // nine screens, all real now
   await signedIn(page)
   // Routes built in a later phase show their placeholder; built ones show their own heading.
   const cases: [string, RegExp, RegExp][] = [
-    ['Sign', /\/more\/documents\/doc_flu$/, /Coming in Phase/],
-    ['Read', /\/more\/feed\/nl_october$/, /Coming in Phase/],
-    ['Start', /\/more\/surveys\/sv_family_2026$/, /Coming in Phase/],
-    ['RSVP', /\/more\/events\/ev_hanukkah$/, /Coming in Phase/],
+    ['Sign', /\/more\/documents\/doc_flu$/, /Flu vaccine consent form 2026/],
+    ['Read', /\/more\/feed\/nl_october$/, /October family newsletter/],
+    ['Start', /\/more\/surveys\/sv_family_2026$/, /Family satisfaction survey 2026/],
+    ['RSVP', /\/more\/events\/ev_hanukkah$/, /Hanukkah family evening/],
     ['Reply', /\/staff\/inq_2041$/, /Winter clothing for Miriam/],
   ]
   for (const [cta, url, landing] of cases) {

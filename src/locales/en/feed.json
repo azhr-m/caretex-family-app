@@ -1,1 +1,102 @@
-{}
+{
+  "title": "Updates and Events",
+  "categories": {
+    "all": "All",
+    "updates": "Updates",
+    "newsletters": "Newsletters",
+    "activities": "Activities",
+    "events": "Events and invitations"
+  },
+  "kinds": {
+    "update": "Center update",
+    "newsletter": "Newsletter",
+    "activity": "Activity",
+    "event": "Event invitation"
+  },
+  "chips": {
+    "confirmReading": "Confirm reading",
+    "readConfirmed": "Read confirmed"
+  },
+  "cta": {
+    "read": "Read",
+    "view": "View",
+    "rsvp": "RSVP",
+    "viewEvent": "View event"
+  },
+  "empty": "No updates in this category",
+  "loadingMore": "Loading more…",
+  "viewArchive": "View archive",
+  "detail": {
+    "title": {
+      "update": "Update",
+      "newsletter": "Newsletter",
+      "activity": "Activity",
+      "event": "Event"
+    },
+    "iRead": "I have read and understood this newsletter",
+    "checkFirst": "Tick the box to confirm you read it",
+    "confirm": "Confirm I have read this",
+    "confirmedOn": "You confirmed reading on <ltr>{{date}}</ltr>",
+    "toast": "Read confirmed",
+    "toastBody": "{{author}} was notified that you read the newsletter",
+    "failed": "We couldn't confirm. Try again.",
+    "offline": "Connect to the internet to confirm."
+  },
+  "event": {
+    "title": "Invitation"
+  },
+  "rsvp": {
+    "title": "RSVP",
+    "willYou": "Will you attend?",
+    "options": {
+      "attending": "Attending",
+      "not_attending": "Not attending",
+      "undecided": "Not decided yet"
+    },
+    "statusRequired": "Choose one answer",
+    "guests": "Number of guests",
+    "less": "Less",
+    "more": "More",
+    "guestHelp_one": "Not including {{name}}. Up to {{count}} guest per resident.",
+    "guestHelp_other": "Not including {{name}}. Up to {{count}} guests per resident.",
+    "guestNames": "Guest names",
+    "guestN": "Guest {{n}}",
+    "guestPlaceholder": "Guest name",
+    "guestNameError": "Enter the guest's name",
+    "note": "Note to the activities team (optional)",
+    "noteHelp": "Dietary needs, accessibility or seating requests.",
+    "save": "Save my RSVP",
+    "offline": "Connect to the internet to save your RSVP.",
+    "changeUntil": "You can change your answer until <ltr>{{date}}</ltr>."
+  },
+  "saved": {
+    "chip": "Saved on {{date}}",
+    "title": "Your RSVP was saved",
+    "bodyAttending": "The activities team knows you're coming.",
+    "bodyAttendingGuests_one": "The activities team knows you're coming with {{count}} guest.",
+    "bodyAttendingGuests_other": "The activities team knows you're coming with {{count}} guests.",
+    "addedToCalendar": "We added the event to your calendar in the app.",
+    "bodyNotAttending": "The activities team knows you can't come. Thank you for letting us know.",
+    "bodyUndecided": "We saved your answer. You can change it until {{date}}.",
+    "event": "Event",
+    "when": "When",
+    "answer": "Your answer",
+    "back": "Back to events",
+    "calendar": "Open calendar"
+  },
+  "archive": {
+    "title": "Archive",
+    "search": "Search past updates and events",
+    "searchLabel": "Search the archive",
+    "clear": "Clear",
+    "noResults": "Nothing matches \"{{q}}\"",
+    "noResultsBody": "Try a different word.",
+    "empty": "The archive is empty",
+    "kinds": {
+      "update": "Update",
+      "newsletter": "Newsletter",
+      "activity": "Activity",
+      "event": "Event"
+    }
+  }
+}

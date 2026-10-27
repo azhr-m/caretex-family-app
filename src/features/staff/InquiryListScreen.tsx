@@ -15,12 +15,10 @@ import {
   MessageSquarePlus,
   MessagesSquare,
   Reply,
-  Search,
   SearchX,
   Sparkles,
-  X,
 } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useMember } from '@/api/queries/me'
 import { departmentsQuery, inquiriesQuery } from '@/api/queries/inquiries'
@@ -38,7 +36,7 @@ import { StateView } from '@/components/states/StateView'
 import { BottomSheet } from '@/components/ui/bottom-sheet'
 import { Button } from '@/components/ui/button'
 import { Fab } from '@/components/ui/fab'
-import { TextField } from '@/components/ui/fields'
+import { SearchField } from '@/components/ui/search-field'
 import { FilterChips, type ChipOption } from '@/components/ui/filter-chips'
 import { ListSkeleton } from '@/components/ui/skeleton'
 import { DEPARTMENT_META } from '@/lib/departments'
@@ -54,8 +52,6 @@ export type InquiryListSearch = {
   status?: InquiryStatus
   sort?: 'newest' | 'oldest'
 }
-
-const SEARCH_DEBOUNCE_MS = 300
 
 const STATUS_FILTERS = [
   { value: 'all', icon: List },
@@ -101,7 +97,13 @@ export function InquiryListScreen({ rid, search }: { rid: string; search: Inquir
         <p className="text-secondary text-text-2 m-0">{t('list.sub')}</p>
       </div>
 
-      <SearchBox committed={search.q ?? ''} onSearch={(q) => setSearch({ q: q || undefined })} />
+      <SearchField
+        committed={search.q ?? ''}
+        onSearch={(q) => setSearch({ q: q || undefined })}
+        label={t('list.searchLabel')}
+        placeholder={t('list.searchPlaceholder')}
+        clearLabel={t('list.clear')}
+      />
 
       <div className="flex flex-wrap gap-2">
         <button
@@ -191,56 +193,6 @@ export function InquiryListScreen({ rid, search }: { rid: string; search: Inquir
         icon={MessageSquarePlus}
         label={t('new.title')}
         onClick={() => void navigate({ to: '/r/$rid/staff/new', params: { rid } })}
-      />
-    </div>
-  )
-}
-
-/** Local input; the URL (and the query) update 300 ms after typing stops. */
-function SearchBox({ committed, onSearch }: { committed: string; onSearch: (q: string) => void }) {
-  const { t } = useTranslation('staff')
-  const [value, setValue] = useState(committed)
-  const [seen, setSeen] = useState(committed)
-  // The URL changed from outside (e.g. "Clear search and filters"): show that value.
-  if (committed !== seen) {
-    setSeen(committed)
-    if (committed !== value.trim()) setValue(committed)
-  }
-  const onSearchRef = useRef(onSearch)
-  useEffect(() => {
-    onSearchRef.current = onSearch
-  })
-  useEffect(() => {
-    if (value.trim() === committed) return
-    const id = setTimeout(() => onSearchRef.current(value.trim()), SEARCH_DEBOUNCE_MS)
-    return () => clearTimeout(id)
-  }, [value, committed])
-
-  return (
-    <div role="search">
-      <TextField
-        type="search"
-        icon={Search}
-        aria-label={t('list.searchLabel')}
-        placeholder={t('list.searchPlaceholder')}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        enterKeyHint="search"
-        trailing={
-          value ? (
-            <button
-              type="button"
-              onClick={() => {
-                setValue('')
-                onSearch('')
-              }}
-              className="text-meta text-text-2 flex min-h-11 shrink-0 items-center gap-1 px-1 font-extrabold"
-            >
-              <X aria-hidden size={16} />
-              {t('list.clear')}
-            </button>
-          ) : undefined
-        }
       />
     </div>
   )

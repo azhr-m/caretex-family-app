@@ -1,7 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { MoreMenuScreen } from '@/features/more/MoreMenuScreen'
 
 export const Route = createFileRoute('/_auth/r/$rid/more/')({
   staticData: { tabs: true },
-  component: () => <StubScreen phase={4} route="/r/$rid/more" tabs />,
+  component: function MoreMenuScreenRoute() {
+    const { rid } = Route.useParams()
+    return <MoreMenuScreen rid={rid} />
+  },
 })

@@ -2,10 +2,13 @@ import type { CalendarItemSummary } from '@/api/schemas/calendar'
 import type { AttentionItem, SinceLastVisit } from '@/api/schemas/dashboard'
 import type { MockLang } from '../http'
 import { mockToday } from '../time'
-import { calendarItem, calendarRange } from './calendar'
+import { calendarItem, calendarRange, rsvps } from './calendar'
+import { documents, tabOf } from './documents'
+import { pendingInvitations, readConfirmations } from './feed'
 import { inquiries } from './inquiries'
 import { memberFixture } from './member'
 import { scheduleItems } from './resident'
+import { findSurvey, summary as surveySummary } from './surveys'
 import { toSummary, updatesFor } from './updates'
 
 const link = (type: AttentionItem['link']['type'], id: string, residentId: string | null) => ({
@@ -124,12 +127,29 @@ function upcomingMiriam(lang: MockLang): CalendarItemSummary | null {
   return summary
 }
 
-/** Attention items disappear once the family has acted on them (reply sent, appointment confirmed). */
-function stillOpen(a: AttentionItem) {
-  if (a.kind === 'inquiry_reply_needed') {
-    return inquiries().find((i) => i.id === a.link.id)?.status === 'waiting_for_family'
+/** Attention items disappear once the family has acted on them; surveys show "Draft" once started. */
+function stillOpen(a: AttentionItem, lang: MockLang): AttentionItem | null {
+  switch (a.kind) {
+    case 'inquiry_reply_needed':
+      return inquiries().find((i) => i.id === a.link.id)?.status === 'waiting_for_family' ? a : null
+    case 'sign_document':
+    case 'approve_document': {
+      const d = documents().find((x) => x.id === a.link.id)
+      return d && tabOf(d) !== 'done' ? a : null
+    }
+    case 'confirm_read':
+      return readConfirmations.has(a.link.id) ? null : a
+    case 'rsvp':
+      return rsvps.has(a.link.id) ? null : a
+    case 'survey': {
+      const sv = findSurvey(a.link.id)
+      const status = sv ? surveySummary(sv, lang).status : 'submitted'
+      if (status === 'submitted' || status === 'closed') return null
+      return status === 'draft' ? { ...a, status: 'draft' } : a
+    }
+    default:
+      return a
   }
-  return true
 }
 
 export function dashboardFixture(rid: string, lang: MockLang, empty: boolean) {
@@ -142,6 +162,7 @@ export function dashboardFixture(rid: string, lang: MockLang, empty: boolean) {
   const toConfirm = empty
     ? 0
     : calendarRange(rid, today, '2099-12-31', lang).filter((c) => c.confirmation === 'pending').length
+  const docsToDo = empty ? 0 : documents().filter((d) => d.rid === rid && tabOf(d) !== 'done').length
   // Around "now", as in the design: breakfast → social activity, skipping the afternoon rest.
   const day = scheduleItems(rid, today, today, lang)
   return {
@@ -150,7 +171,7 @@ export function dashboardFixture(rid: string, lang: MockLang, empty: boolean) {
       since: PREVIOUS_VISIT[rid] ?? null,
       items: isMiriam && !empty ? sinceMiriam(lang, rid) : [],
     },
-    attention: isMiriam && !empty ? attentionMiriam(lang, rid).filter(stillOpen) : [],
+    attention: isMiriam && !empty ? attentionMiriam(lang, rid).flatMap((a) => stillOpen(a, lang) ?? []) : [],
     latestUpdate: updates[0] ? toSummary(updates[0]) : null,
     upcoming: isMiriam && !empty ? upcomingMiriam(lang) : null,
     dayPreview: empty ? [] : [1, 2, 3, 4, 6].map((i) => day[i]!),
@@ -160,10 +181,10 @@ export function dashboardFixture(rid: string, lang: MockLang, empty: boolean) {
         resident: newUpdates,
         staff: unreadReplies,
         calendar: toConfirm,
-        more: isMiriam && !empty ? 3 : 0,
+        more: docsToDo,
       },
-      documentsPending: isMiriam && !empty ? 2 : 0,
-      invitationsPending: isMiriam && !empty ? 1 : 0,
+      documentsPending: docsToDo,
+      invitationsPending: empty ? 0 : pendingInvitations(),
     },
   }
 }

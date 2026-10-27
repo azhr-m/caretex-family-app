@@ -8,12 +8,13 @@ import {
   CircleX,
   Clock,
   Hourglass,
+  Mail,
   MapPin,
   Users,
   type LucideIcon,
 } from 'lucide-react'
 import { Trans, useTranslation } from 'react-i18next'
-import type { EventDetail as Event, RsvpStatus } from '@/api/schemas/calendar'
+import type { EventDetail as Event, Rsvp, RsvpStatus } from '@/api/schemas/calendar'
 import { ImagePlaceholder } from '@/components/common/ImagePlaceholder'
 import { Ltr } from '@/components/common/Ltr'
 import { StatusChip } from '@/components/common/StatusChip'
@@ -21,7 +22,8 @@ import { Button } from '@/components/ui/button'
 import { appNow } from '@/lib/clock'
 import { date, dateTime, time, weekday } from '@/lib/format'
 import { useLang } from '@/lib/hooks'
-import type { Tone } from '@/lib/status'
+import { toneClasses, type Tone } from '@/lib/status'
+import { cn } from '@/lib/utils'
 import { DetailRows, type DetailRow } from './DetailRows'
 
 const RSVP_CHIP: Record<RsvpStatus | 'none', { tone: Tone; icon: LucideIcon }> = {
@@ -32,10 +34,20 @@ const RSVP_CHIP: Record<RsvpStatus | 'none', { tone: Tone; icon: LucideIcon }> =
 }
 
 /** Center event detail (design `calEvent` / 6.4). RSVP itself is the Phase 4 route. */
-export function EventDetail({ event: e, rid }: { event: Event; rid: string }) {
+export function EventDetail({
+  event: e,
+  rid,
+  variant = 'calendar',
+}: {
+  event: Event
+  rid: string
+  /** `invitation` (from Updates and Events) shows an "Invitation" chip instead of "Center event". */
+  variant?: 'calendar' | 'invitation'
+}) {
   const { t } = useTranslation('calendar')
   const lang = useLang()
   const rsvp = RSVP_CHIP[e.myRsvp?.status ?? 'none']
+  const answerTone = toneClasses[rsvp.tone]
   const closed = Date.parse(e.rsvpDeadline) < appNow()
   const when = e.endsAt ? `${date(e.startsAt)} · ${time(e.startsAt)}–${time(e.endsAt)}` : dateTime(e.startsAt)
 
@@ -61,12 +73,22 @@ export function EventDetail({ event: e, rid }: { event: Event; rid: string }) {
       )}
       <div className="flex flex-col gap-4 px-4 pt-4 pb-7">
         <div className="flex flex-wrap gap-2">
-          <StatusChip tone="pink" icon={Building2} label={t('legend.center')} />
+          {variant === 'invitation' ? (
+            <StatusChip tone="pink" icon={Mail} label={t('event.invitation')} />
+          ) : (
+            <StatusChip tone="pink" icon={Building2} label={t('legend.center')} />
+          )}
           <StatusChip tone={rsvp.tone} icon={rsvp.icon} label={t(`event.rsvp.${e.myRsvp?.status ?? 'none'}`)} />
         </div>
         <h1 className="text-title-md m-0 leading-[1.25] font-extrabold text-pretty wrap-break-word">{e.title}</h1>
         <p className="text-body text-text-2 m-0 whitespace-pre-line wrap-break-word">{e.body}</p>
         <DetailRows rows={rows} />
+        {e.myRsvp && (
+          <div className={cn('rounded-input text-body-sm flex items-center gap-2.5 border p-3.5 font-extrabold', answerTone.bg, answerTone.bd, answerTone.fg)}>
+            <rsvp.icon aria-hidden size={20} className="shrink-0" />
+            {t('event.yourAnswer', { answer: rsvpAnswer(e.myRsvp, t) })}
+          </div>
+        )}
         {e.program.length > 0 && (
           <section className="flex flex-col gap-2">
             <h2 className="text-tag text-label m-0 font-extrabold tracking-[.06em] uppercase rtl:tracking-normal">
@@ -103,4 +125,10 @@ export function EventDetail({ event: e, rid }: { event: Event; rid: string }) {
       </div>
     </article>
   )
+}
+
+/** "Attending · 2 guests" / "Not attending" / "Not decided yet". */
+export function rsvpAnswer(r: Pick<Rsvp, 'status' | 'guests'>, t: (k: string, o?: Record<string, unknown>) => string) {
+  if (r.status !== 'attending') return t(`event.answer.${r.status}`)
+  return r.guests ? t('event.answer.attendingGuests', { count: r.guests }) : t('event.answer.attending')
 }

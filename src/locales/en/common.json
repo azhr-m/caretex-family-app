@@ -76,5 +76,53 @@
     "release": "Release to refresh",
     "refreshing": "Refreshing…",
     "failed": "We couldn't refresh. Try again."
+  },
+  "attachment": {
+    "open": "Open",
+    "openLabel": "Open {{name}}"
+  },
+  "more": {
+    "relationOf": "{{relation}} of {{names}}",
+    "version": "App version",
+    "badge": {
+      "toDo_one": "{{count}} to do",
+      "toDo_other": "{{count}} to do",
+      "new_one": "{{count}} new",
+      "new_other": "{{count}} new"
+    },
+    "items": {
+      "documents": {
+        "label": "Documents and Approvals",
+        "desc": "Sign, approve or confirm documents from the center"
+      },
+      "surveys": {
+        "label": "Questionnaires and Surveys",
+        "desc": "Share your feedback with the care center"
+      },
+      "feed": {
+        "label": "Updates and Events",
+        "desc": "Newsletters, activities and invitations"
+      },
+      "services": {
+        "label": "Service Requests",
+        "desc": "Laundry, repairs, hairdresser and more"
+      },
+      "center": {
+        "label": "Center Information",
+        "desc": "Contacts, visiting hours and procedures"
+      },
+      "permissions": {
+        "label": "Family Members and Permissions",
+        "desc": "See what you can view for each resident"
+      },
+      "payments": {
+        "label": "Accounts and Payments",
+        "desc": "Invoices, receipts and balance"
+      },
+      "settings": {
+        "label": "Settings",
+        "desc": "Language, theme, notifications and password"
+      }
+    }
   }
 }

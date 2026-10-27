@@ -48,3 +48,4 @@ A floating **Dev panel** (only when `import.meta.env.DEV`) to switch language, t
 - pnpm comes from corepack and is pinned via `packageManager` (pnpm 9). If `pnpm` fails, use `corepack pnpm@9.15.9 <cmd>`.
 - Physical-direction classes are blocked by the local ESLint rule `eslint-rules/no-physical-direction.js` (checks `className` and `cn/cva/clsx` args).
 - Custom font-size tokens are registered with tailwind-merge in `src/lib/utils.ts`; add new `--text-*` tokens there too, or `cn()` will drop text colors.
+- Never name a font-size token like a color token: `text-label` is the label **color**; the 12px size is `text-tag` (a shared name made Tailwind emit only the color).

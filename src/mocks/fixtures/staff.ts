@@ -25,7 +25,7 @@ export const STAFF = {
     id: 'st_yael',
     name: { en: 'Yael Mizrahi', he: 'יעל מזרחי' },
     initials: { en: 'YM', he: 'ימ' },
-    role: { en: 'Social worker', he: 'עובדת סוציאלית' },
+    role: { en: 'Social worker, Ward B', he: 'עובדת סוציאלית, מחלקה ב׳' },
     roleCode: 'social_worker',
     department: 'social_work',
   },
@@ -60,6 +60,22 @@ export const STAFF = {
     role: { en: 'Nurse, Ward D', he: 'אח, מחלקה ד׳' },
     roleCode: 'nurse',
     department: 'nursing',
+  },
+  michal: {
+    id: 'st_michal',
+    name: { en: 'Michal Avraham', he: 'מיכל אברהם' },
+    initials: { en: 'MA', he: 'מא' },
+    role: { en: 'Dietitian', he: 'דיאטנית' },
+    roleCode: 'dietitian',
+    department: 'nutrition',
+  },
+  oren: {
+    id: 'st_oren',
+    name: { en: 'Oren Levi', he: 'אורן לוי' },
+    initials: { en: 'OL', he: 'אל' },
+    role: { en: 'Finance office', he: 'מחלקת כספים' },
+    roleCode: 'finance',
+    department: 'finance',
   },
 } satisfies Record<string, StaffFixture>
 

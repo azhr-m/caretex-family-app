@@ -55,7 +55,7 @@ export function ListRow({
     >
       <IconTile icon={icon} tone={tone} size={42} />
       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-        {kind && <span className={cn('text-label font-extrabold', toneClasses[tone].fg)}>{kind}</span>}
+        {kind && <span className={cn('text-tag text-label font-extrabold', toneClasses[tone].fg)}>{kind}</span>}
         <span className="text-body-sm leading-[1.3] font-bold text-pretty wrap-break-word">{title}</span>
         {meta && <span className="text-meta text-text-2">{meta}</span>}
       </div>

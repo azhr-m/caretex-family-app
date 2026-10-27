@@ -45,7 +45,7 @@ export function Stepper({
             </span>
             <span
               className={cn(
-                'text-label line-clamp-2 px-0.5 text-center wrap-break-word',
+                'text-tag text-label line-clamp-2 px-0.5 text-center wrap-break-word',
                 state === 'active' ? 'text-text font-extrabold' : 'text-text-2 font-semibold',
               )}
             >

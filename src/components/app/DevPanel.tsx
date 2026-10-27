@@ -38,7 +38,7 @@ const SCENARIO_LABEL: Record<Scenario, string> = {
 function Group({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="flex flex-col gap-2">
-      <h3 className="text-label text-label m-0 font-extrabold tracking-[.06em] uppercase">{title}</h3>
+      <h3 className="text-tag text-label text-tag text-label m-0 font-extrabold tracking-[.06em] uppercase">{title}</h3>
       {children}
     </section>
   )
@@ -69,7 +69,7 @@ export function DevPanel() {
         type="button"
         onClick={() => setOpen(true)}
         className={cn(
-          'rounded-pill text-label shadow-fab fixed start-2 bottom-[calc(var(--tabbar-h,0px)+88px)] z-[60] flex min-h-11 items-center gap-1.5 px-3 font-extrabold',
+          'rounded-pill text-tag text-label shadow-fab fixed start-2 bottom-[calc(var(--tabbar-h,0px)+88px)] z-[60] flex min-h-11 items-center gap-1.5 px-3 font-extrabold',
           simulator === 'normal' ? 'bg-toast-bg text-toast-fg' : 'bg-red-fg text-white',
         )}
       >

@@ -48,7 +48,7 @@ const boxClasses = (bad: boolean, good = false) =>
     'rounded-input bg-surface flex min-h-[54px] items-center gap-2.5 border-[1.5px] px-3.5 transition-colors',
     'focus-within:border-primary focus-within:border-2 focus-within:px-[13.5px]',
     bad
-      ? 'border-danger border-2 px-[13.5px]'
+      ? 'border-danger focus-within:border-danger border-2 px-[13.5px]'
       : good
         ? 'border-green-fg border-2 px-[13.5px]'
         : 'border-border',
@@ -199,7 +199,7 @@ export function TextArea({
           className={cn(
             'rounded-input bg-surface text-body placeholder:text-text-2 w-full resize-none border-[1.5px] p-3.5 leading-normal outline-none',
             'focus:border-primary focus:border-2 focus:p-[13.5px]',
-            error ? 'border-danger border-2 p-[13.5px]' : 'border-border',
+            error ? 'border-danger focus:border-danger border-2 p-[13.5px]' : 'border-border',
             className,
           )}
           {...props}

@@ -54,7 +54,7 @@ export function PasswordRules({
   const rules = passwordRules(policy, password, confirm)
   return (
     <div className="rounded-btn border-border bg-surface flex flex-col border">
-      <h2 className="text-label text-label m-0 px-3.5 pt-3 pb-1 font-extrabold tracking-[.06em] rtl:tracking-normal">
+      <h2 className="text-tag text-label text-tag text-label m-0 px-3.5 pt-3 pb-1 font-extrabold tracking-[.06em] rtl:tracking-normal">
         {t('password.rules')}
       </h2>
       <ul className="m-0 list-none p-0">
@@ -72,7 +72,7 @@ export function PasswordRules({
                 components={{ ltr: <Ltr /> }}
               />
             </span>
-            <span className="text-label font-extrabold">{ok ? t('password.met') : t('password.notYet')}</span>
+            <span className="text-tag text-label font-extrabold">{ok ? t('password.met') : t('password.notYet')}</span>
           </li>
         ))}
       </ul>

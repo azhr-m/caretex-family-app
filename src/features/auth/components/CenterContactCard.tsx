@@ -12,7 +12,7 @@ function Row({ icon: Icon, label, children }: { icon: LucideIcon; label: string;
     <div className="flex min-h-11 items-center gap-3 px-3.5 py-3">
       <Icon aria-hidden size={20} className="text-text-2 shrink-0" />
       <div className="flex min-w-0 flex-col">
-        <span className="text-label text-text-2 font-bold">{label}</span>
+        <span className="text-tag text-text-2 font-bold">{label}</span>
         <span className="text-body-sm font-bold wrap-break-word">{children}</span>
       </div>
     </div>

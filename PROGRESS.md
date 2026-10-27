@@ -7,8 +7,8 @@ What each phase delivered, how to try it and what's still open. The plan itself 
 | 0 | Foundation | ✅ Done (2026-10-27) |
 | 1 | Onboarding, auth and security | ✅ Done (2026-10-27) |
 | 2 | Home and Resident tab | ✅ Done (2026-10-27) |
-| 3 | Contact Staff and Calendar | ⏳ Next |
-| 4 | Documents, Surveys, Updates & Events | — |
+| 3 | Contact Staff and Calendar | ✅ Done (2026-10-27) |
+| 4 | Documents, Surveys, Updates & Events | ⏳ Next |
 | 5 | Services, Center, Permissions, Payments, Settings, Notifications | — |
 | 6 | Hardening (visual/e2e/a11y/perf/PWA, backend integration doc) | — |
 
@@ -215,6 +215,62 @@ Home makes one `GET /dashboard` call, and each section is validated separately. 
 
 ---
 
+## Phase 3 — Contact Staff and Calendar
+
+### What's built
+
+**Contact Staff** — [src/features/staff/](src/features/staff/)
+
+| Screen | Route | Highlights |
+|---|---|---|
+| Inquiry list | `/staff?q=&dept=&status=&sort=` | Search (updates the URL 300 ms after typing stops), department sheet, Newest / Oldest, status chips with counts. Cards: department tile, subject, red "New reply" marker and blue border when unread, 2-line preview ("Yael: …" / "You: …"), status chip, `INQ-2041`. Infinite scroll. "New inquiry" floating button. Everything in the URL survives reload |
+| No results / empty | same | "No inquiries match your search" names the query and department, with "Clear search and filters" + "New inquiry". With no inquiries at all: "You haven't opened any inquiries yet" |
+| New inquiry | `/staff/new?step=department\|message` | 2-step stepper. Department grid (10 departments, hints from the API, "Selected" check; Continue disabled until one is picked). Message step: "Sending to Physiotherapy · Ward B" with Change, subject (3–80), message (10–1000, counter amber at 900), attachments, amber "not for emergencies" box with the nurses' station phone. Leaving with unsaved text asks "Discard this inquiry?" |
+| Attachments | (in the form and the reply bar) | "Add photo" (camera) and "Add file". Up to 5 files, 10 MB each, JPG / PNG / HEIC / PDF. Each file uploads right away with a progress bar; rejected files get their own message ("notes.docx can't be attached…"); failed uploads keep a Retry button; Send waits ("Uploading 1 file…") |
+| Sent | `/staff/new/sent/$id` | Green result screen, "Sent on DD.MM.YYYY HH:mm", expected reply time from the department, summary (reference, department, subject, status), View inquiry / Back to my inquiries |
+| Thread | `/staff/$id` | Header card with status and what it means; 6-step status stepper; message cards (yours on the `mine` background) with attachment rows (Open); centered status events ("Read by Social work", "Status: In progress"). Opening it marks replies read (badges update). Sticky reply bar: Attach, text box that grows to 5 lines, Send, footnote. Sent reply → toast "Sent · Your reply was sent to Social work" |
+| Offline reply | thread | Sending while offline shows the reply right away as a dashed card with "Waiting to send" and "Will send when you're back online". Replies send in order on reconnect, each with the latest version (`If-Match`) |
+| Closed thread | thread | No reply bar; slate box "This inquiry is closed · Closed by Oren Levi on …" and "Open a new inquiry on this topic" (same department and subject) |
+
+**Calendar** — [src/features/calendar/](src/features/calendar/)
+
+| Screen | Route | Highlights |
+|---|---|---|
+| Month | `/calendar?view=month&date=` | Month / Week / List control, legend chips ("Personal · Miriam" dot, "Center event" diamond). Grid starts on Sunday; today outlined, selected day filled; blue dots for personal items, pink diamonds for center events. Month arrows. Selected day's items below, or "Nothing is scheduled for this day." |
+| Week | `?view=week` | "This week" + `11.10.2026 – 17.10.2026`, previous / next week, 7 day rows (today filled) with items or "Nothing scheduled" |
+| List | `?view=list` | The next 4 months grouped by day ("Today · Wednesday · 14.10.2026") |
+| Appointment | `/calendar/$id` | Chips (Personal, Needs your confirmation / Confirmed), details (date and time, place, with, purpose, "Moved from … on …", notes), "Confirm I will attend" → green "Confirmed · see you there" + toast "Ward B was notified…" (queues offline like replies). "Ask a question" (new inquiry to the right department) and "Add to my calendar" (downloads an `.ics`) |
+| Center event | `/calendar/$id` | Shared event detail (Phase 4 reuses it): cover, chips (Center event, Awaiting your RSVP), text, date and time, place, who can come, accessibility, program, "RSVP to this event" → the Phase 4 RSVP route, reply-by date |
+
+**Mock backend**
+- Endpoints: `/departments`, inquiries list (search, department, status, sort, cursor, counts), detail, create (idempotent), reply (`If-Match` → 409 on mismatch, 410 when closed), mark read, `POST /attachments` (10 MB → 413, wrong type → 415), files at `/media/files/:id`; calendar range, item detail, confirm, `.ics`, `/events/:id`.
+- The 6 inquiries from the design for Miriam (and one for Avraham); 6 personal appointments and 5 center events between October and December.
+- Home now follows this data: the Contact Staff badge counts unread replies, the Calendar badge counts appointments to confirm, and "Reply needed" disappears from Home after you reply.
+
+### Acceptance
+- ✅ Sending a reply while Offline queues it, shows "Will send when you're back online", and sends on reconnect (e2e, using the Dev panel's Offline → Normal).
+- ✅ Month grid starts on Sunday; today outlined, selected day filled, dots + diamonds; in Hebrew the grid reads right-to-left (e2e checks Sunday is the rightmost column).
+- ✅ Search, department, status, sort, calendar view and date all survive reload (e2e).
+- ✅ Also tested: the full new-inquiry flow with an upload and a rejected file, validation messages, the discard prompt, the closed thread, confirming an appointment, the `.ics` download, center event → RSVP route, no horizontal overflow at 320 / 430 px in Hebrew.
+- ✅ Network simulator: Force 403 → no-permission state, Offline → offline state, Very slow → slow note then data (scripted run).
+- Totals: typecheck, lint, i18n check and build pass; 43 unit tests and 44 e2e tests pass.
+
+### Fixed during checks
+- **12px text was never 12px (since Phase 0).** The font-size token `text-label` had the same name as the `label` color, so Tailwind only produced the color. Every chip, section header, list-row kind label and stepper label was rendering at the inherited size. The size token is now `text-tag`; text and chips across all screens are now at the design's 12px. **Don't give a font-size token the same name as a color token.**
+- Invalid fields lost their red border while focused (the focus color won); errors now stay red.
+- The "Force 401" simulator could be used up by a photo request on Home, so the session didn't lock (a flaky Phase 1 test). Images and files no longer trigger it.
+
+### Decisions (where the spec didn't say)
+- **New inquiry while offline:** Send is disabled with "Connect to the internet to send your inquiry." (replies and appointment confirmations do queue). Queuing a new inquiry would need a "pending inquiry" in the list; tell me if you want it.
+- **Department names** are localized in the app from the code (the contract says enum codes are localized in the app); the API's `hint` and `expectedResponse` are shown as sent.
+- **A department link opens the message step directly** (e.g. "Inquiry" on a staff contact); Change goes back to the grid.
+- **Status descriptions for Read and Handled** weren't designed; I wrote them (see new copy).
+- **Center events open inside the Calendar** (`/calendar/$id`, back to Calendar) using the shared event detail; `/more/events/$id` will use the same component in Phase 4.
+- **Hebrew "(you)"** uses the neutral "(אתם)" because the member's gender isn't known (the design writes "(את)").
+- **Uploads and replies with attachments** need a connection (Attach is disabled offline); text-only replies queue.
+
+---
+
 ## New copy added (not in the design files)
 All added in both languages; **the Hebrew needs a native-speaker review.**
 
@@ -231,6 +287,12 @@ All added in both languages; **the Hebrew needs a native-speaker review.**
   - Day: "Cancelled", "Nothing scheduled", Previous / Next day.
   - Permissions: a general not-shared message and "Ask the staff".
   - Status: "Not started".
+- **Phase 3:**
+  - Inquiries: "All", sort labels, department sheet title, no-results text without a department / for filters only, empty-state body, loading more.
+  - New inquiry: discard sheet (title, body, Discard, Keep writing), offline note, upload states (Uploading…, Upload failed, Retry, Remove label), validation messages for subject, message, reply and files.
+  - Thread: Read / Handled descriptions, "closed meanwhile" and "couldn't send" messages, "Closed on …" without a name.
+  - Calendar: "Today ·" headers, previous / next month and week labels, "All day", empty list, day-cell screen-reader labels, notes, download failed.
+  - Events: RSVP chips (attending / not attending / undecided), "Change my RSVP", "Replies closed on …", program.
 
 ## Open questions
 1. **Shared status labels in Hebrew:** they use one grammatical form; the design uses different forms per item type (סגור / סגורה). Each screen can override the label. OK?
@@ -240,6 +302,8 @@ All added in both languages; **the Hebrew needs a native-speaker review.**
 5. **Resident gender:** the design writes "(בת 87)", which depends on the resident's gender. The API has no gender field, so the Hebrew uses the neutral "(גיל 87)". Should the API add one?
 6. **Colors:** staff avatars and care-plan goals have no color in the API, so the app derives them. Is that OK, or should the API send them?
 7. **Since your last visit:** how do `POST /me/visits` and the dashboard's `sinceLastVisit.since` relate? Is `since` the visit before this session's call?
+8. **Member gender:** the design uses gendered Hebrew for the member ("(את)", "את:"). Without a gender field the app uses the neutral "(אתם)" / "אתם:".
+9. **Department names:** the API sends `name` in `/departments`, but the contract also says enum codes are localized in the app. Which one is the source of truth?
 
 ## Environment notes
 - **Node 20.19 pins:** TypeScript 6, Vitest 3 + jsdom 26, MSW 2, pnpm 9 (via `packageManager`). Details in [CLAUDE.md](CLAUDE.md).

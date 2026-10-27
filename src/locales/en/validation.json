@@ -5,5 +5,13 @@
   "passwordRequired": "Enter your password",
   "phoneInvalid": "Enter a valid mobile number, for example 50-123-4567",
   "passwordReused": "You used this password recently. Choose a different one.",
-  "passwordPolicy": "This password doesn't meet the rules. Check the list and try again."
+  "passwordPolicy": "This password doesn't meet the rules. Check the list and try again.",
+  "subjectRequired": "Enter a subject",
+  "subjectLength": "Use 3–80 characters",
+  "messageRequired": "Write a message",
+  "messageLength": "Write at least 10 characters",
+  "replyRequired": "Write a reply before sending",
+  "fileType": "{{name}} can't be attached. Use JPG, PNG or PDF.",
+  "fileSize": "{{name}} is larger than 10 MB.",
+  "fileCount": "You can attach up to 5 files."
 }

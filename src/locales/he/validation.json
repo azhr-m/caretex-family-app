@@ -5,5 +5,13 @@
   "passwordRequired": "הזינו סיסמה",
   "phoneInvalid": "הזינו מספר נייד תקין, לדוגמה 50-123-4567",
   "passwordReused": "השתמשתם בסיסמה הזו לאחרונה. בחרו סיסמה אחרת.",
-  "passwordPolicy": "הסיסמה לא עומדת בכללים. בדקו את הרשימה ונסו שוב."
+  "passwordPolicy": "הסיסמה לא עומדת בכללים. בדקו את הרשימה ונסו שוב.",
+  "subjectRequired": "הזינו נושא",
+  "subjectLength": "השתמשו ב-3 עד 80 תווים",
+  "messageRequired": "כתבו הודעה",
+  "messageLength": "כתבו לפחות 10 תווים",
+  "replyRequired": "כתבו תשובה לפני השליחה",
+  "fileType": "אי אפשר לצרף את {{name}}. השתמשו ב-JPG, PNG או PDF.",
+  "fileSize": "הקובץ {{name}} גדול מ-10MB.",
+  "fileCount": "אפשר לצרף עד 5 קבצים."
 }

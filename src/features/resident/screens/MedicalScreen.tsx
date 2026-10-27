@@ -93,7 +93,7 @@ function CategoryCard({ category: c }: { category: Category }) {
             )}
           </div>
           <span className="text-secondary text-text-2 wrap-break-word">{i.detail}</span>
-          <span className="text-label flex items-center gap-[5px]">
+          <span className="text-tag text-label flex items-center gap-[5px]">
             <Building2 aria-hidden size={13} className="shrink-0" />
             <span className="min-w-0">
               <Trans t={t} i18nKey="medical.sharedOn" values={{ date: date(i.sharedAt) }} components={{ ltr: <Ltr /> }} />

@@ -58,7 +58,7 @@ export function TabBar({ rid, badges = {} }: { rid: string; badges?: Partial<Rec
             </span>
             <span
               className={cn(
-                'text-label line-clamp-2 max-w-full text-center leading-[1.15] text-balance',
+                'text-tag text-label line-clamp-2 max-w-full text-center leading-[1.15] text-balance',
                 isActive ? 'font-extrabold' : 'font-semibold',
               )}
             >

@@ -2,6 +2,8 @@ import type { CalendarItemSummary } from '@/api/schemas/calendar'
 import type { AttentionItem, SinceLastVisit } from '@/api/schemas/dashboard'
 import type { MockLang } from '../http'
 import { mockToday } from '../time'
+import { calendarItem, calendarRange } from './calendar'
+import { inquiries } from './inquiries'
 import { memberFixture } from './member'
 import { scheduleItems } from './resident'
 import { toSummary, updatesFor } from './updates'
@@ -114,23 +116,20 @@ function attentionMiriam(lang: MockLang, rid: string): AttentionItem[] {
   ]
 }
 
-function upcomingMiriam(lang: MockLang): CalendarItemSummary {
-  const he = lang === 'he'
-  return {
-    id: 'cal_dr_shapiro',
-    kind: 'personal',
-    category: 'doctor',
-    title: he ? 'ביקור רופא · ד״ר אבי שפירא' : 'Doctor visit · Dr. Avi Shapiro',
-    startsAt: '2026-10-16T11:00:00+03:00',
-    endsAt: '2026-10-16T11:30:00+03:00',
-    allDay: false,
-    location: he ? 'מרפאת מחלקה ב׳, קומה 1' : 'Ward B clinic, 1st floor',
-    requiresConfirmation: true,
-    confirmation: 'pending',
-    rsvp: null,
-    eventId: null,
-    changed: { from: '2026-10-15T10:00:00+03:00', at: '2026-10-11T14:40:00+03:00' },
+/** Next appointment from the calendar store, so confirming it updates Home too. */
+function upcomingMiriam(lang: MockLang): CalendarItemSummary | null {
+  const item = calendarItem('cal_dr_shapiro', lang)
+  if (!item) return null
+  const { with: _w, purpose: _p, notes: _n, version: _v, rid: _r, ...summary } = item
+  return summary
+}
+
+/** Attention items disappear once the family has acted on them (reply sent, appointment confirmed). */
+function stillOpen(a: AttentionItem) {
+  if (a.kind === 'inquiry_reply_needed') {
+    return inquiries().find((i) => i.id === a.link.id)?.status === 'waiting_for_family'
   }
+  return true
 }
 
 export function dashboardFixture(rid: string, lang: MockLang, empty: boolean) {
@@ -139,6 +138,10 @@ export function dashboardFixture(rid: string, lang: MockLang, empty: boolean) {
   const updates = empty ? [] : updatesFor(rid, lang)
   const newUpdates = updates.filter((u) => u.isNew).length
   const today = mockToday()
+  const unreadReplies = empty ? 0 : inquiries().filter((i) => i.rid === rid && i.hasUnreadReply).length
+  const toConfirm = empty
+    ? 0
+    : calendarRange(rid, today, '2099-12-31', lang).filter((c) => c.confirmation === 'pending').length
   // Around "now", as in the design: breakfast → social activity, skipping the afternoon rest.
   const day = scheduleItems(rid, today, today, lang)
   return {
@@ -147,7 +150,7 @@ export function dashboardFixture(rid: string, lang: MockLang, empty: boolean) {
       since: PREVIOUS_VISIT[rid] ?? null,
       items: isMiriam && !empty ? sinceMiriam(lang, rid) : [],
     },
-    attention: isMiriam && !empty ? attentionMiriam(lang, rid) : [],
+    attention: isMiriam && !empty ? attentionMiriam(lang, rid).filter(stillOpen) : [],
     latestUpdate: updates[0] ? toSummary(updates[0]) : null,
     upcoming: isMiriam && !empty ? upcomingMiriam(lang) : null,
     dayPreview: empty ? [] : [1, 2, 3, 4, 6].map((i) => day[i]!),
@@ -155,8 +158,8 @@ export function dashboardFixture(rid: string, lang: MockLang, empty: boolean) {
       notificationsUnread: empty ? 0 : 5,
       tabs: {
         resident: newUpdates,
-        staff: isMiriam && !empty ? 2 : 0,
-        calendar: isMiriam && !empty ? 1 : 0,
+        staff: unreadReplies,
+        calendar: toConfirm,
         more: isMiriam && !empty ? 3 : 0,
       },
       documentsPending: isMiriam && !empty ? 2 : 0,

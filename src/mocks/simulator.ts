@@ -41,7 +41,8 @@ export const simulatorHandler = http.all(url('/*'), async ({ request }) => {
     return apiError(503, 'SERVICE_UNAVAILABLE', 'Service temporarily unavailable', { retryable: true })
   }
 
-  if (mode === 'expire' && !path.includes('/auth/')) {
+  // Images and files aren't API calls (no token, no refresh), so they must not consume the one-shot 401.
+  if (mode === 'expire' && !path.includes('/auth/') && !path.includes('/media/')) {
     refreshMustFail = true
     net.setSimulator('normal')
     return apiError(401, 'TOKEN_EXPIRED', 'Access token expired')

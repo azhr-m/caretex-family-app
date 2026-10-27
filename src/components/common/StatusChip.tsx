@@ -24,10 +24,10 @@ export function StatusChip({ status, label, tone, icon, size = 'md', className }
       className={cn(
         'rounded-pill inline-flex max-w-full items-center gap-[5px] border font-extrabold whitespace-nowrap',
         size === 'sm'
-          ? 'text-label px-2 py-0.5'
+          ? 'text-tag text-label px-2 py-0.5'
           : size === 'lg'
             ? 'text-meta px-3 py-1'
-            : 'text-label px-2.5 py-1',
+            : 'text-tag text-label px-2.5 py-1',
         c.bg,
         c.fg,
         c.bd,

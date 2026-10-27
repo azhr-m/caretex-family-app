@@ -196,7 +196,7 @@ function Timeline({ items, autoScroll }: { items: ScheduleItem[]; autoScroll: bo
                 >
                   {d.title}
                 </span>
-                <span className="text-label text-text-2 wrap-break-word">{d.place}</span>
+                <span className="text-tag text-text-2 wrap-break-word">{d.place}</span>
               </div>
               <ScheduleChip status={d.status} />
             </div>

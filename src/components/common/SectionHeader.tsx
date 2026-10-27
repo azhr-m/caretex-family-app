@@ -20,13 +20,13 @@ export function SectionHeader({
 }) {
   const t = toneClasses[countTone]
   return (
-    <div className={cn('text-label flex items-center gap-2', className)}>
+    <div className={cn('text-tag text-label flex items-center gap-2', className)}>
       {Icon && <Icon aria-hidden size={16} className="shrink-0" />}
-      <h2 className="text-label m-0 min-w-0 flex-1 font-extrabold tracking-[.06em] wrap-break-word uppercase rtl:tracking-normal rtl:normal-case">
+      <h2 className="text-tag text-label m-0 min-w-0 flex-1 font-extrabold tracking-[.06em] wrap-break-word uppercase rtl:tracking-normal rtl:normal-case">
         {children}
       </h2>
       {count !== undefined && (
-        <span className={cn('rounded-pill text-label px-2 py-0.5 font-extrabold tabular-nums', t.bg, t.fg)}>
+        <span className={cn('rounded-pill text-tag text-label px-2 py-0.5 font-extrabold tabular-nums', t.bg, t.fg)}>
           {count}
         </span>
       )}

@@ -89,7 +89,7 @@ function Plan({ plan, name }: { plan: Plan; name: string }) {
             <div className="flex items-start gap-3">
               <IconTile icon={goalIcon(g.icon)} tone={goalTone(i)} size={44} />
               <div className="flex min-w-0 flex-1 flex-col items-start gap-1.5">
-                <span className="text-label font-extrabold tracking-[.04em] uppercase rtl:tracking-normal">
+                <span className="text-tag text-label font-extrabold tracking-[.04em] uppercase rtl:tracking-normal">
                   {t('care.goal')}
                 </span>
                 <h2 className="text-body m-0 leading-[1.3] font-extrabold text-pretty wrap-break-word">{g.title}</h2>
@@ -119,7 +119,7 @@ function Plan({ plan, name }: { plan: Plan; name: string }) {
 
 function NavyChip({ icon: Icon, children }: { icon: LucideIcon; children: ReactNode }) {
   return (
-    <span className="rounded-pill text-label inline-flex items-center gap-[5px] bg-white/12 px-2.5 py-1 font-bold">
+    <span className="rounded-pill text-tag text-label inline-flex items-center gap-[5px] bg-white/12 px-2.5 py-1 font-bold">
       <Icon aria-hidden size={14} className="shrink-0" />
       <span>{children}</span>
     </span>

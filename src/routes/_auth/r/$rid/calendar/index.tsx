@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { CalendarScreen } from '@/features/calendar/CalendarScreen'
 
 export const Route = createFileRoute('/_auth/r/$rid/calendar/')({
   validateSearch: z.object({
@@ -12,5 +12,9 @@ export const Route = createFileRoute('/_auth/r/$rid/calendar/')({
       .catch(undefined),
   }),
   staticData: { tabs: true },
-  component: () => <StubScreen phase={3} route="/r/$rid/calendar" tabs />,
+  component: function CalendarRoute() {
+    const { rid } = Route.useParams()
+    const search = Route.useSearch()
+    return <CalendarScreen rid={rid} search={search} />
+  },
 })

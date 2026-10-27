@@ -40,18 +40,19 @@ test('home shows every section with mock-clock data', async ({ page }) => {
 
 test('needs-attention cards and quick actions route to later-phase screens', async ({ page }) => {
   await signedIn(page)
-  const cases: [string, RegExp][] = [
-    ['Sign', /\/more\/documents\/doc_flu$/],
-    ['Read', /\/more\/feed\/nl_october$/],
-    ['Start', /\/more\/surveys\/sv_family_2026$/],
-    ['RSVP', /\/more\/events\/ev_hanukkah$/],
-    ['Reply', /\/staff\/inq_2041$/],
+  // Routes built in a later phase show their placeholder; built ones show their own heading.
+  const cases: [string, RegExp, RegExp][] = [
+    ['Sign', /\/more\/documents\/doc_flu$/, /Coming in Phase/],
+    ['Read', /\/more\/feed\/nl_october$/, /Coming in Phase/],
+    ['Start', /\/more\/surveys\/sv_family_2026$/, /Coming in Phase/],
+    ['RSVP', /\/more\/events\/ev_hanukkah$/, /Coming in Phase/],
+    ['Reply', /\/staff\/inq_2041$/, /Winter clothing for Miriam/],
   ]
-  for (const [cta, url] of cases) {
+  for (const [cta, url, landing] of cases) {
     await page.goto('/r/res_miriam/home')
     await page.getByRole('link', { name: cta, exact: true }).click()
     await expect(page).toHaveURL(url)
-    await expect(page.getByText(/Coming in Phase/)).toBeVisible()
+    await expect(page.getByText(landing).first()).toBeVisible()
   }
   const quick: [RegExp, RegExp][] = [
     [/New inquiry/, /\/staff\/new$/],

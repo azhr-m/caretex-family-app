@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { departmentCodeSchema } from '@/api/schemas/common'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { NewInquiryScreen } from '@/features/staff/NewInquiryScreen'
 
 /** `dept`, `subject` and `ref` ("update:<id>") prefill the form when opened from another screen. */
 export const Route = createFileRoute('/_auth/r/$rid/staff/new/')({
@@ -15,5 +15,9 @@ export const Route = createFileRoute('/_auth/r/$rid/staff/new/')({
       .optional()
       .catch(undefined),
   }),
-  component: () => <StubScreen phase={3} route="/r/$rid/staff/new" />,
+  component: function NewInquiryRoute() {
+    const { rid } = Route.useParams()
+    const search = Route.useSearch()
+    return <NewInquiryScreen rid={rid} search={search} />
+  },
 })

@@ -232,11 +232,11 @@ export function UpcomingSection({
               b.bd,
             )}
           >
-            <span className="text-label font-extrabold uppercase rtl:normal-case">
+            <span className="text-tag text-label font-extrabold uppercase rtl:normal-case">
               {weekday(item.startsAt, lang, 'short')}
             </span>
             <span className="text-title-lg leading-[1.1] font-black tabular-nums">{day}</span>
-            <span className="text-label font-extrabold uppercase rtl:normal-case">{month}</span>
+            <span className="text-tag text-label font-extrabold uppercase rtl:normal-case">{month}</span>
           </div>
           <div className="flex min-w-0 flex-1 flex-col gap-1">
             <span className="text-body font-extrabold text-pretty wrap-break-word">{item.title}</span>
@@ -376,7 +376,7 @@ export function QuickActionsSection({ rid, counts }: { rid: string; counts: Dash
             <IconTile icon={q.icon} tone={q.tone} size={44} />
             <span className="flex min-w-0 flex-col">
               <span className="text-body-sm font-extrabold wrap-break-word">{q.label}</span>
-              <span className="text-label text-text-2 wrap-break-word">{q.sub}</span>
+              <span className="text-tag text-text-2 wrap-break-word">{q.sub}</span>
             </span>
           </Link>
         ))}
@@ -388,7 +388,7 @@ export function QuickActionsSection({ rid, counts }: { rid: string; counts: Dash
 function CountChip({ tone, children }: { tone: Tone; children: React.ReactNode }) {
   const c = toneClasses[tone]
   return (
-    <span className={cn('rounded-pill text-label shrink-0 px-2 py-0.5 font-extrabold whitespace-nowrap', c.bg, c.fg)}>
+    <span className={cn('rounded-pill text-tag text-label shrink-0 px-2 py-0.5 font-extrabold whitespace-nowrap', c.bg, c.fg)}>
       {children}
     </span>
   )

@@ -20,7 +20,7 @@ const PAGE_SIZE = 20
 const empty = () => currentScenario() === 'emptyEverything'
 
 /** Checks the token and that the resident is linked to the member; returns an error response if not. */
-function guard(request: Request, rid: string) {
+export function guard(request: Request, rid: string) {
   if (!authed(request)) return apiError(401, 'TOKEN_EXPIRED', 'Access token expired')
   const linked = memberFixture('en', { singleResident: currentScenario() === 'singleResident' }).residents
   if (!linked.some((r) => r.id === rid)) return apiError(403, 'PERMISSION_DENIED', 'Resident not linked')
@@ -28,7 +28,7 @@ function guard(request: Request, rid: string) {
 }
 
 /** `denied` → 403, `not_shared` → 200 `{ state: "not_shared" }`, `hidden` → 404, else null. */
-function sectionGate(rid: string, key: PermissionKey, lang: MockLang) {
+export function sectionGate(rid: string, key: PermissionKey, lang: MockLang) {
   const value = permissionsFixture(rid, lang)[key]
   if (value === 'denied') return apiError(403, 'PERMISSION_DENIED', 'You do not have permission to view this')
   if (value === 'not_shared') return HttpResponse.json({ state: 'not_shared' })

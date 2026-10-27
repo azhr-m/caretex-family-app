@@ -41,7 +41,7 @@ export function isoDay(d: DateInput) {
   return `${year}-${month}-${day}`
 }
 
-export function weekday(d: DateInput, lang: Lang, style: 'long' | 'short' = 'long') {
+export function weekday(d: DateInput, lang: Lang, style: 'long' | 'short' | 'narrow' = 'long') {
   return new Intl.DateTimeFormat(locale(lang), { timeZone: TIME_ZONE, weekday: style }).format(toDate(d))
 }
 
@@ -130,4 +130,32 @@ export const bidiIsolate = (value: string) => `\u2066${value}\u2069`
 
 export function count(n: number, max = 99) {
   return n > max ? `${max}+` : String(n)
+}
+
+/** 0 = Sunday … 6 = Saturday for a YYYY-MM-DD day. */
+export function weekdayIndex(iso: string) {
+  const [y, m, d] = iso.split('-').map(Number) as [number, number, number]
+  return new Date(Date.UTC(y, m - 1, d)).getUTCDay()
+}
+
+/** The Sunday that starts the week containing `iso` (weeks start on Sunday in Israel). */
+export const startOfWeek = (iso: string) => addDays(iso, -weekdayIndex(iso))
+
+export const monthStart = (iso: string) => `${iso.slice(0, 7)}-01`
+
+export function addMonths(iso: string, n: number) {
+  const [y, m] = iso.split('-').map(Number) as [number, number]
+  const t = new Date(Date.UTC(y, m - 1 + n, 1))
+  return t.toISOString().slice(0, 10)
+}
+
+/** Whole weeks (Sunday → Saturday) covering the month of `iso`: 35 or 42 days. */
+export function monthGrid(iso: string) {
+  const first = monthStart(iso)
+  const last = addDays(addMonths(first, 1), -1)
+  const start = startOfWeek(first)
+  const end = addDays(startOfWeek(last), 6)
+  const days: string[] = []
+  for (let d = start; d <= end; d = addDays(d, 1)) days.push(d)
+  return days
 }

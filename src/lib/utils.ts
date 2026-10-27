@@ -18,7 +18,7 @@ const twMerge = extendTailwindMerge({
         'body-sm',
         'secondary',
         'meta',
-        'label',
+        'tag',
         'micro',
       ],
     },

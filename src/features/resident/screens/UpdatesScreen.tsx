@@ -1,13 +1,13 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { Calendar, ChevronRight, LoaderCircle, Newspaper } from 'lucide-react'
-import { useEffect, useRef } from 'react'
+import { Calendar, ChevronRight, Newspaper } from 'lucide-react'
 import { Trans, useTranslation } from 'react-i18next'
 import { useMember } from '@/api/queries/me'
 import { updatesQuery } from '@/api/queries/residents'
 import type { UpdateSummary } from '@/api/schemas/resident'
 import { PullToRefresh, refetchAll } from '@/components/app/PullToRefresh'
 import { DirIcon } from '@/components/common/DirIcon'
+import { LoadMore } from '@/components/common/LoadMore'
 import { Ltr } from '@/components/common/Ltr'
 import { PhotoImage } from '@/components/common/PhotoImage'
 import { SectionHeader } from '@/components/common/SectionHeader'
@@ -58,7 +58,8 @@ function UpdatesQuery({ rid }: { rid: string }) {
               hasNext={query.hasNextPage}
               loading={query.isFetchingNextPage}
               onLoad={() => void query.fetchNextPage()}
-              showEnd={d.pages.length > 1}
+              loadingLabel={t('updates.loadingMore')}
+              endLabel={d.pages.length > 1 ? t('updates.end') : undefined}
             />
           </div>
         )}
@@ -140,48 +141,5 @@ function UpdateCard({ update: u, rid }: { update: UpdateSummary; rid: string }) 
         <DirIcon icon={ChevronRight} size={17} />
       </span>
     </Link>
-  )
-}
-
-/** Infinite scroll: loads the next page when the sentinel scrolls into view. */
-function LoadMore({
-  hasNext,
-  loading,
-  onLoad,
-  showEnd,
-}: {
-  hasNext: boolean
-  loading: boolean
-  onLoad: () => void
-  showEnd: boolean
-}) {
-  const { t } = useTranslation('resident')
-  const ref = useRef<HTMLDivElement>(null)
-  const onLoadRef = useRef(onLoad)
-  useEffect(() => {
-    onLoadRef.current = onLoad
-  })
-  useEffect(() => {
-    const el = ref.current
-    if (!el || !hasNext) return
-    const io = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) onLoadRef.current()
-    })
-    io.observe(el)
-    return () => io.disconnect()
-  }, [hasNext, loading])
-
-  if (!hasNext) {
-    return showEnd ? <p className="text-meta text-text-2 m-0 py-2 text-center">{t('updates.end')}</p> : null
-  }
-  return (
-    <div ref={ref} className="text-meta text-text-2 flex min-h-11 items-center justify-center gap-2 py-2" role="status">
-      {loading && (
-        <>
-          <LoaderCircle aria-hidden size={16} className="animate-spin" />
-          {t('updates.loadingMore')}
-        </>
-      )}
-    </div>
   )
 }

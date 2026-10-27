@@ -1,6 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { CalendarItemScreen } from '@/features/calendar/CalendarItemScreen'
 
 export const Route = createFileRoute('/_auth/r/$rid/calendar/$itemId')({
-  component: () => <StubScreen phase={3} route="/r/$rid/calendar/$itemId" />,
+  component: function CalendarItemRoute() {
+    const { rid, itemId } = Route.useParams()
+    return <CalendarItemScreen key={itemId} rid={rid} itemId={itemId} />
+  },
 })

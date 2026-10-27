@@ -1,1 +1,75 @@
-{}
+{
+  "status": {
+    "opened": "Opened",
+    "assigned": "Assigned",
+    "in_progress": "In progress",
+    "handled": "Handled",
+    "closed": "Closed",
+    "cancelled": "Cancelled"
+  },
+  "types": {
+    "maintenance": "Maintenance",
+    "laundry": "Laundry / Clothing",
+    "hairdresser": "Hairdresser",
+    "equipment": "Personal equipment",
+    "conversation": "Request a conversation",
+    "finance": "Finance",
+    "other": "Other"
+  },
+  "list": {
+    "title": "Service requests",
+    "intro": "Requests for everyday services for {{name}}. Each request has a status, and you'll be notified when it changes.",
+    "newRequest": "New request",
+    "empty": "No service requests yet",
+    "loadingMore": "Loading more requests…",
+    "metaOpened": "Opened {{date}}",
+    "metaScheduled": "Scheduled {{date}}",
+    "metaHandled": "Handled {{date}}",
+    "metaClosed": "Closed {{date}}",
+    "metaCancelled": "Cancelled {{date}}"
+  },
+  "new": {
+    "title": "New request",
+    "what": "What do you need?",
+    "whatSub": "Choose the type of service. The request goes straight to the right team.",
+    "description": "Describe the request",
+    "descriptionHelp": "Include sizes, quantities or the location of the problem.",
+    "preferredTime": "Preferred time",
+    "addPhoto": "Add a photo (optional)",
+    "send": "Send request",
+    "offline": "Connect to the internet to send your request."
+  },
+  "sent": {
+    "chip": "Sent on {{date}}",
+    "title": "Your request was sent",
+    "body": "The {{type}} team will take care of it. You'll be notified when its status changes.",
+    "reference": "Reference",
+    "type": "Type",
+    "view": "View request",
+    "all": "All my requests"
+  },
+  "detail": {
+    "title": "Request",
+    "back": "Requests",
+    "opened": "Opened <ltr>{{date}}</ltr>",
+    "stepsLabel": "Request status",
+    "cancelledNote": "This request was cancelled.",
+    "yourRequest": "Your request",
+    "preferredTime": "Preferred time",
+    "assignedTo": "Assigned to",
+    "expected": "Expected",
+    "activity": "Activity",
+    "addComment": "Add a comment",
+    "comment": "Comment",
+    "sendComment": "Send comment",
+    "commentSent": "Your comment was added to the request",
+    "cancel": "Cancel request",
+    "cancelTitle": "Cancel this request?",
+    "cancelBody": "The team will stop working on it. You can open a new request at any time.",
+    "cancelReason": "Reason (optional)",
+    "keep": "Keep request",
+    "cancelConfirm": "Cancel request",
+    "cancelledToast": "The request was cancelled",
+    "cannotCancel": "This request is already in progress and can't be cancelled"
+  }
+}

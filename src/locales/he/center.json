@@ -12,5 +12,19 @@
     "fri": "ו׳",
     "sat": "ש׳"
   },
-  "hours": "{{days}} {{range}}"
+  "hours": "{{days}} {{range}}",
+  "info": {
+    "title": "מידע על המרכז",
+    "call": "חיוג",
+    "email": "דוא״ל",
+    "directions": "ניווט",
+    "callLabel": "חיוג אל {{name}}",
+    "visitingHours": "שעות ביקור",
+    "contacts": "אנשי צוות לפי תפקיד",
+    "guideTitle": "נהלים ומדריך לביקור",
+    "guideSub": "מה להביא, שעות מענה, שירותים ומספרי טלפון"
+  },
+  "guide": {
+    "title": "מדריך לביקור"
+  }
 }

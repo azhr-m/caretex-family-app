@@ -13,5 +13,9 @@
   "replyRequired": "Write a reply before sending",
   "fileType": "{{name}} can't be attached. Use JPG, PNG or PDF.",
   "fileSize": "{{name}} is larger than 10 MB.",
-  "fileCount": "You can attach up to 5 files."
+  "fileCount": "You can attach up to 5 files.",
+  "typeRequired": "Choose the type of service",
+  "descriptionRequired": "Describe the request",
+  "descriptionLength": "Write at least 5 characters",
+  "commentRequired": "Write a comment before sending"
 }

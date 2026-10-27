@@ -1,1 +1,82 @@
-{}
+{
+  "title": "Settings",
+  "language": "Language",
+  "theme": "Theme",
+  "themes": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "themeHelp": "System follows your phone's light or dark setting.",
+  "notifications": {
+    "title": "Notifications",
+    "saveFailed": "We couldn't save your change. Try again.",
+    "items": {
+      "updates": { "label": "Updates about {{name}}", "desc": "New personal updates and photos" },
+      "inquiries": { "label": "Inquiry replies", "desc": "When staff reply or change a status" },
+      "documents": { "label": "Documents and approvals", "desc": "New documents to sign or confirm" },
+      "events": { "label": "Events and invitations", "desc": "New events and RSVP reminders" },
+      "surveys": { "label": "Surveys", "desc": "New surveys and closing reminders" },
+      "lockScreen": { "label": "Message previews on lock screen", "desc": "Always off · medical details are never shown" }
+    }
+  },
+  "security": {
+    "title": "Security and privacy",
+    "changePassword": "Change password",
+    "lastChanged": "Last changed <ltr>{{date}}</ltr>",
+    "faceId": "Unlock with Face ID",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use"
+  },
+  "logout": {
+    "button": "Log out",
+    "title": "Log out of CARETEX Family?",
+    "body": "You'll need your phone number and password to sign in again. Survey drafts saved on this phone will be kept.",
+    "confirm": "Log out",
+    "stay": "Stay signed in"
+  },
+  "password": {
+    "title": "Change password",
+    "sub": "Enter your current password, then choose a new one you haven't used before in this app.",
+    "current": "Current password",
+    "currentWrong": "The current password is incorrect",
+    "failed": "We couldn't change your password. Try again.",
+    "save": "Save new password"
+  },
+  "permissions": {
+    "title": "Permissions",
+    "intro": "Permissions are managed by the care center. This is a read-only view of what you can see and do for each resident.",
+    "residentLabel": "Choose a resident",
+    "primaryContact": "Primary family contact",
+    "updated": "Updated by the center on <ltr>{{date}}</ltr>",
+    "allowed": "Allowed",
+    "notShared": "Not yet shared",
+    "notAllowed": "Not allowed",
+    "items": {
+      "general": { "label": "General info", "desc": "Details, ward and staff" },
+      "updates": { "label": "Personal updates", "desc": "Updates and photos" },
+      "medical": { "label": "Medical information", "desc": "Medications, diagnoses, tests" },
+      "carePlan": { "label": "Care plan", "desc": "Goals and team actions" },
+      "schedule": { "label": "The resident's day", "desc": "Daily timeline" },
+      "documents": { "label": "Sign documents", "desc": "Consents and approvals" },
+      "inquiries": { "label": "Contact staff", "desc": "Open and reply to inquiries" },
+      "serviceRequests": { "label": "Service requests", "desc": "Laundry, repairs and more" },
+      "billing": { "label": "Accounts and payments", "desc": "Invoices and balance" }
+    },
+    "ask": "Ask the social worker about permissions",
+    "askSubject": "A question about my permissions"
+  },
+  "payments": {
+    "title": "Payments",
+    "heading": "Accounts and Payments are coming soon",
+    "body": "Soon you'll be able to see invoices, receipts and your balance here.",
+    "preview": {
+      "balance": "Current balance",
+      "upToDate": "All invoices are paid",
+      "pill": "Preview only"
+    },
+    "notify": "Notify me when it's ready",
+    "notifySub": "We'll send one notification",
+    "meanwhile": "In the meantime, for payment questions call Finance at"
+  }
+}

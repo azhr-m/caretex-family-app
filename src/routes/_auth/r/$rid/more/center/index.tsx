@@ -1,6 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { CenterInfoScreen } from '@/features/center/CenterScreens'
 
 export const Route = createFileRoute('/_auth/r/$rid/more/center/')({
-  component: () => <StubScreen phase={5} route="/r/$rid/more/center" />,
+  component: function CenterInfoScreenRoute() {
+    const { rid } = Route.useParams()
+    return <CenterInfoScreen rid={rid} />
+  },
 })

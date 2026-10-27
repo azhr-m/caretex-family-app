@@ -9,8 +9,8 @@ What each phase delivered, how to try it and what's still open. The plan itself 
 | 2 | Home and Resident tab | ✅ Done (2026-10-27) |
 | 3 | Contact Staff and Calendar | ✅ Done (2026-10-27) |
 | 4 | Documents, Surveys, Updates & Events | ✅ Done (2026-10-27) |
-| 5 | Services, Center, Permissions, Payments, Settings, Notifications | ⏳ Next |
-| 6 | Hardening (visual/e2e/a11y/perf/PWA, backend integration doc) | — |
+| 5 | Services, Center, Permissions, Payments, Settings, Notifications | ✅ Done (2026-10-27) |
+| 6 | Hardening (visual/e2e/a11y/perf/PWA, backend integration doc) | ⏳ Next |
 
 All data is mocked (MSW). Connecting to `caretex-api` comes later.
 
@@ -338,6 +338,62 @@ Home makes one `GET /dashboard` call, and each section is validated separately. 
 
 ---
 
+## Phase 5 — Services, Center, Permissions, Payments, Settings, Notifications
+
+Every route from the architecture doc is now a real screen; no "Coming in Phase N" placeholders are left.
+
+### What's built
+
+**Service requests** — [src/features/services/](src/features/services/)
+
+| Screen | Route | Highlights |
+|---|---|---|
+| List | `/more/services` | Cards with type · `SR-1193`, a status line (opened / scheduled / handled / closed date), status chip; closed and cancelled at 80% opacity. "New request" floating button. Empty: "No service requests yet" |
+| New | `/more/services/new` | 2-column grid of 7 types, description (5–500), preferred-time chips that change with the type (from the API), up to 3 photos, red "We couldn't send your request" box with Try again that keeps the text |
+| Sent | `/more/services/sent/$id` | Result screen, reference and type, View request / All my requests |
+| Detail | `/more/services/$id` | Header, 5-step stepper (Opened → Assigned → In progress → Handled → Closed), details (your request, preferred time, assigned to, expected), activity log, "Add a comment" sheet, "Cancel request" with a confirm sheet (only while Opened or Assigned). When staff change the request while it's open, the amber "This information has changed since you opened it" banner appears and Refresh shows the new version |
+
+**Center** — [src/features/center/](src/features/center/): navy header with Call (`tel:`), Email (`mailto:`), Directions (maps URL); visiting hours with quiet hours in amber; staff contacts by role with Call; link to the visit guide. The guide shows 7 cards (response hours, procedures, may bring with green checks, don't bring with red x, preparing, services, phone numbers with `tel:` links and emergency 101 in red).
+
+**Permissions** — `/more/permissions?resident=`: read-only. Blue info box, resident switcher (avatar + name), relation / primary-contact chip and "Updated by the center on …", 9 permissions each with Allowed (green) / Not yet shared (amber) / Not allowed (red) and the center's note when there is one. "Ask the social worker about permissions".
+
+**Payments** — `/more/payments`: "Coming soon", a dimmed preview with placeholder bars and a "Preview only" pill, "Notify me when it's ready" toggle (saved in preferences), Finance phone.
+
+**Settings** — [src/features/settings/](src/features/settings/)
+- Language: English / עברית, each label in its own font. Switching re-renders the whole app in place and keeps the route.
+- Theme: Light / Dark / System. System follows the phone's setting live.
+- Notifications: 5 toggles saved immediately (optimistic, rolled back with an error toast if the save fails) + "Saved · Your notification preferences were updated"; lock-screen previews always off ("Locked").
+- Security and privacy: Change password (current + new password with the same live rules, `?view=password`), Face ID, privacy policy and terms marked "Coming soon".
+- Log out → "Log out of CARETEX Family?" sheet (Log out / Stay signed in). App version.
+
+**Notifications** — `/notifications` (the bell): grouped by day ("Today · 14.10.2026", "Yesterday · …", weekday · date), unread rows with a dot, tinted background and bold title, "Documents · 09:05 · New". Tapping marks it read and opens the right screen; if it belongs to another resident, the app switches resident first and says "Now viewing …". "Mark all read" in the top bar. The bell count updates at once (optimistic).
+
+**Push** — [PUSH.md](PUSH.md): payload rules, a payload builder that can only produce the fixed generic sentences (unit-tested), and a subscription stub that stays off until a VAPID key and the app's own service worker exist (Phase 6).
+
+**Mock backend**
+- Service request types with time options, requests (create, comment, cancel; 409 if already in progress), center, notifications (read, read all), preferences (`PATCH /me/preferences`), password change (`PUT /me/password`: wrong current password → 401, reused / weak → 422), billing (`coming_soon`), devices.
+- Dev panel: "Staff updates SR-1193" moves that request to In progress, to show the "changed" banner.
+- Home's bell and "unread" count follow the notifications.
+
+### Acceptance
+- ✅ Every notification row opens the right screen; the Avraham update, opened from Miriam, switches resident first ("Now viewing Avraham Cohen", active resident saved) (e2e).
+- ✅ Theme "System" follows OS changes live (e2e with emulated light / dark).
+- ✅ Changing language in Settings re-renders in place, keeps the URL, and doesn't reload the page (e2e checks a marker on `window` survives) (e2e).
+- ✅ Also tested: mark read / mark all read and the bell, toggles with toast, locked lock-screen toggle, change password (wrong current password, then success), log out sheet, new service request with validation, comment, cancel, the "changed" banner and Refresh, center links, guide emergency number, permissions per resident, payments toggle, no horizontal overflow at 320 / 430 px in Hebrew.
+- Totals: typecheck, lint, i18n check and build pass; 50 unit tests and 68 e2e tests pass.
+
+### Decisions (where the spec didn't say)
+- **Notification titles are generic** ("A new personal update was shared") instead of the design's "…about Miriam": the contract says titles carry no personal information.
+- **Change password** opens as a step inside Settings (`?view=password`) rather than a new route; the architecture lists only `/more/settings`.
+- **Privacy policy and Terms of use** show "Coming soon": there are no documents or URLs for them yet. Tell me where they live and I'll link them.
+- **Language and theme** apply locally right away and are sent to the server in the background; a failed save keeps the local choice (it's retried on the next change, not on a timer).
+- **Payments preview** uses placeholder bars, not sample amounts, so nothing looks like a real balance.
+- **New service request title**: the form has no title field, so the mock uses the start of the description; the real backend decides.
+- **New service request offline**: Send is disabled with a note, like new inquiries.
+- **Surveys notifications default to off**, as in the design.
+
+---
+
 ## New copy added (not in the design files)
 All added in both languages; **the Hebrew needs a native-speaker review.**
 
@@ -365,6 +421,12 @@ All added in both languages; **the Hebrew needs a native-speaker review.**
   - Documents: type names, "All years", empty "No completed documents yet", "Was due …", "Zoom out", "checkbox first" messages, declined / read-confirmed status and dates, offline notes, decline sheet (title, body, reason, error, Send decline), generic result titles and bodies ("Approval sent", "View the document"), "Please sign inside the box", "Sign the document".
   - Surveys: "Identified" body, closed note, validation messages (choose at least / up to, date range, too long), per-type help texts, date / dropdown placeholders, "Your answers", "Submitted on …", identified reminder, missing-answers alert, thank-you body for identified surveys.
   - Feed: "View" / "View event" actions, detail titles, newsletter confirmation texts and errors, invitation answer lines, RSVP validation and offline texts, RSVP-saved bodies per answer, archive search label, no results and empty texts.
+- **Phase 5:**
+  - Service requests: "Cancelled" status, list meta lines (opened / scheduled / handled / closed / cancelled), offline note, sent body, comment sheet texts, cancel sheet (title, body, reason, keep), cancelled note and toasts, "can't cancel", validation messages.
+  - Center: action labels, call labels, guide title.
+  - Settings: save-failed toast, password step (intro, current password, wrong / failed messages), permissions resident label and ask subject, payments body (without the center name).
+  - Notifications: kind labels, "Read", empty body, mark-failed, "no longer have access".
+  - Push bodies for event, update and request (PUSH.md).
 
 ## Open questions
 1. **Shared status labels in Hebrew:** they use one grammatical form; the design uses different forms per item type (סגור / סגורה). Each screen can override the label. OK?
@@ -379,6 +441,9 @@ All added in both languages; **the Hebrew needs a native-speaker review.**
 10. **Submitted survey answers:** "Completed surveys open read-only review", but the contract has no endpoint for submitted answers. The mock returns them from `GET /surveys/:id/draft`; should the backend do that, or add an endpoint?
 11. **More menu badges:** there's no summary endpoint, so the app makes three extra calls (documents, surveys, feed). A `GET /me/summary` (or counts in the dashboard) would be cheaper.
 12. **Signature consent text** is gendered in the Hebrew mock ("מאשרת שאני מורשית"); it comes from the API, so the backend needs the member's gender to get it right.
+13. **Password changed date:** the design shows "Last changed 14.10.2026", but `/me` has no such field. The app only shows it after a change in the same session. Add `passwordChangedAt` to `Member`?
+14. **Service request title:** `title` is optional on create and the form has none. What should the backend use?
+15. **Privacy policy / Terms of use:** where are they hosted?
 
 ## Environment notes
 - **Node 20.19 pins:** TypeScript 6, Vitest 3 + jsdom 26, MSW 2, pnpm 9 (via `packageManager`). Details in [CLAUDE.md](CLAUDE.md).

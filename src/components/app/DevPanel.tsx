@@ -1,6 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { Bug } from 'lucide-react'
+import { API_BASE } from '@/api/client'
 import { useLogout } from '@/app/session'
 import { useResolvedTheme } from '@/app/theme'
 import { Ltr } from '@/components/common/Ltr'
@@ -182,6 +183,21 @@ export function DevPanel() {
                   }}
                 >
                   Sign out
+                </Button>
+              )}
+              {session.accessToken && (
+                <Button
+                  size="compact"
+                  variant="secondary"
+                  onClick={() => {
+                    // Mock-only: the laundry team moves SR-1193 forward, so an open request shows "changed".
+                    void fetch(`${API_BASE}/dev/service-update`, { method: 'POST' }).then(() =>
+                      qc.invalidateQueries({ queryKey: ['service'] }),
+                    )
+                    setOpen(false)
+                  }}
+                >
+                  Staff updates SR-1193
                 </Button>
               )}
             </div>

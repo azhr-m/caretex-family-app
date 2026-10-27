@@ -7,6 +7,7 @@ import { OfflineBanner } from '@/components/app/OfflineBanner'
 import { ResidentSwitcherSheet } from '@/components/app/ResidentSwitcherSheet'
 import { TabBar } from '@/components/app/TabBar'
 import { useMember } from '@/api/queries/me'
+import { notificationsCountQuery } from '@/api/queries/account'
 import { dashboardQuery } from '@/api/queries/residents'
 import { residentTone } from '@/lib/avatar'
 import { useSessionStore } from '@/stores/session'
@@ -36,6 +37,7 @@ function ResidentShell() {
   const openSwitcher = useUiStore((s) => s.setResidentSheetOpen)
   const setActiveResident = useSessionStore((s) => s.setActiveResident)
   const counts = useQuery({ ...dashboardQuery(rid), select: (d) => d.counts }).data
+  const unread = useQuery(notificationsCountQuery()).data
 
   useEffect(() => setActiveResident(rid), [rid, setActiveResident])
 
@@ -61,7 +63,7 @@ function ResidentShell() {
               place: `${resident.ward} · ${resident.room}`,
               tone: residentTone(index),
             }}
-            unread={counts?.notificationsUnread ?? 0}
+            unread={unread ?? counts?.notificationsUnread ?? 0}
             onSwitch={() => openSwitcher(true)}
             onNotifications={() => void navigate({ to: '/r/$rid/notifications', params: { rid } })}
           />

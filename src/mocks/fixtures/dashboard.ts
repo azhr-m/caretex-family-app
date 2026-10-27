@@ -2,6 +2,7 @@ import type { CalendarItemSummary } from '@/api/schemas/calendar'
 import type { AttentionItem, SinceLastVisit } from '@/api/schemas/dashboard'
 import type { MockLang } from '../http'
 import { mockToday } from '../time'
+import { notificationRecords } from './account'
 import { calendarItem, calendarRange, rsvps } from './calendar'
 import { documents, tabOf } from './documents'
 import { pendingInvitations, readConfirmations } from './feed'
@@ -63,7 +64,7 @@ function sinceMiriam(lang: MockLang, rid: string): SinceLastVisit['items'] {
       title: he ? 'דלת הארון בחדר 12 תוקנה' : 'Wardrobe door in Room 12 was repaired',
       occurredAt: '2026-10-10T12:10:00+03:00',
       actor: null,
-      link: link('service_request', 'sr_1190', rid),
+      link: link('service_request', 'sr_1182', rid),
     },
   ]
 }
@@ -176,7 +177,7 @@ export function dashboardFixture(rid: string, lang: MockLang, empty: boolean) {
     upcoming: isMiriam && !empty ? upcomingMiriam(lang) : null,
     dayPreview: empty ? [] : [1, 2, 3, 4, 6].map((i) => day[i]!),
     counts: {
-      notificationsUnread: empty ? 0 : 5,
+      notificationsUnread: empty ? 0 : notificationRecords().filter((r) => !r.readAt).length,
       tabs: {
         resident: newUpdates,
         staff: unreadReplies,

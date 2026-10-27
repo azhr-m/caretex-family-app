@@ -38,6 +38,11 @@ export const DANA_USERNAME = 'dana.cohen'
 export const DEMO_PASSWORD = 'Dana!2026'
 export const DEMO_OTP = '481927'
 
+/** Preferences changed with PATCH /me/preferences this session. */
+export const savedPreferences: Partial<Omit<Member['preferences'], 'notifications'>> & {
+  notifications?: Partial<Member['preferences']['notifications']>
+} = {}
+
 export function memberFixture(lang: MockLang, opts: { singleResident?: boolean } = {}): Member {
   const residents = (opts.singleResident ? RESIDENTS.slice(0, 1) : RESIDENTS).map((r) => ({
     ...r,
@@ -59,8 +64,16 @@ export function memberFixture(lang: MockLang, opts: { singleResident?: boolean }
     preferences: {
       language: lang,
       theme: 'system',
-      notifications: { updates: true, inquiries: true, documents: true, events: true, surveys: true },
-      notifyPaymentsAvailable: false,
+      ...savedPreferences,
+      notifications: {
+        updates: true,
+        inquiries: true,
+        documents: true,
+        events: true,
+        surveys: false,
+        ...savedPreferences.notifications,
+      },
+      notifyPaymentsAvailable: savedPreferences.notifyPaymentsAvailable ?? false,
     },
   }
 }

@@ -1,6 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { NotificationsScreen } from '@/features/notifications/NotificationsScreen'
 
 export const Route = createFileRoute('/_auth/r/$rid/notifications')({
-  component: () => <StubScreen phase={5} route="/r/$rid/notifications" />,
+  component: function NotificationsScreenRoute() {
+    const { rid } = Route.useParams()
+    return <NotificationsScreen rid={rid} />
+  },
 })

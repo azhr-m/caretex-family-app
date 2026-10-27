@@ -33,7 +33,7 @@ function loginOk(request: Request, mustChangePassword: boolean) {
   })
 }
 
-function policyError(pw: string) {
+export function policyError(pw: string) {
   if (!meetsPolicy(DEFAULT_PASSWORD_POLICY, pw)) {
     return apiError(422, 'VALIDATION_FAILED', 'Password does not meet the policy', {
       fields: { newPassword: 'policy' },

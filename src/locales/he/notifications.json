@@ -1,1 +1,23 @@
-{}
+{
+  "title": "התראות",
+  "markAll": "סימון הכל כנקרא",
+  "markFailed": "לא הצלחנו לעדכן את ההתראות. נסו שוב.",
+  "empty": "הכול מעודכן",
+  "emptyBody": "התראות חדשות יופיעו כאן.",
+  "loadingMore": "טוען התראות נוספות…",
+  "today": "היום",
+  "yesterday": "אתמול",
+  "kinds": {
+    "document": "מסמכים",
+    "inquiry_reply": "פנייה לצוות",
+    "event": "אירועים",
+    "calendar_change": "יומן",
+    "update": "הדייר",
+    "service_request": "בקשות שירות",
+    "survey": "סקרים",
+    "newsletter": "עלונים"
+  },
+  "new": "חדש",
+  "read": "נקרא",
+  "notLinked": "אין לכם עוד גישה לדייר הזה"
+}

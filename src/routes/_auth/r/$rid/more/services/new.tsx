@@ -1,6 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { NewServiceScreen } from '@/features/services/ServicesScreens'
 
 export const Route = createFileRoute('/_auth/r/$rid/more/services/new')({
-  component: () => <StubScreen phase={5} route="/r/$rid/more/services/new" />,
+  component: function NewServiceScreenRoute() {
+    const { rid } = Route.useParams()
+    return <NewServiceScreen rid={rid} />
+  },
 })

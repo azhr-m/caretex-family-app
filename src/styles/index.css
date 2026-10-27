@@ -129,6 +129,14 @@ html[lang='he'] {
   --font-app: 'Rubik', system-ui, sans-serif;
 }
 
+/* A label in the other language (e.g. "עברית" on an English page) uses that language's font. */
+:where(body [lang='he']) {
+  font-family: 'Rubik', system-ui, sans-serif;
+}
+:where(body [lang='en']) {
+  font-family: 'Nunito', system-ui, sans-serif;
+}
+
 @theme inline {
   --color-*: initial;
   --color-transparent: transparent;

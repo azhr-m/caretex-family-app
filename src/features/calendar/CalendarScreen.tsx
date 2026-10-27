@@ -63,7 +63,7 @@ export function CalendarScreen({ rid, search }: { rid: string; search: CalendarS
   const name = firstName(useMember()?.residents.find((r) => r.id === rid)?.name ?? '')
 
   const set = (patch: CalendarSearch) =>
-    void navigate({ to: '/r/$rid/calendar', params: { rid }, search: (prev) => ({ ...prev, ...patch }), replace: true })
+    void navigate({ to: '/r/$rid/calendar', params: { rid }, search: { ...search, ...patch }, replace: true })
 
   return (
     <div className="flex flex-col gap-3.5">

@@ -13,5 +13,9 @@
   "replyRequired": "כתבו תשובה לפני השליחה",
   "fileType": "אי אפשר לצרף את {{name}}. השתמשו ב-JPG, PNG או PDF.",
   "fileSize": "הקובץ {{name}} גדול מ-10MB.",
-  "fileCount": "אפשר לצרף עד 5 קבצים."
+  "fileCount": "אפשר לצרף עד 5 קבצים.",
+  "typeRequired": "בחרו את סוג השירות",
+  "descriptionRequired": "תארו את הבקשה",
+  "descriptionLength": "כתבו לפחות 5 תווים",
+  "commentRequired": "כתבו הערה לפני השליחה"
 }

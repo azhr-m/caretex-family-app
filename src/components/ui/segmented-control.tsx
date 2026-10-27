@@ -7,6 +7,8 @@ export type SegmentOption<T extends string> = {
   label: string
   icon?: LucideIcon
   disabled?: boolean
+  /** Label language, so "עברית" renders in Rubik even on an English page. */
+  lang?: string
 }
 
 export function SegmentedControl<T extends string>({
@@ -30,7 +32,7 @@ export function SegmentedControl<T extends string>({
       aria-label={label}
       className={cn('rounded-btn bg-surface-2 flex gap-1 p-1', className)}
     >
-      {options.map(({ value: v, label: l, icon: Icon, disabled }) => (
+      {options.map(({ value: v, label: l, icon: Icon, disabled, lang }) => (
         <ToggleGroup.Item
           key={v}
           value={v}
@@ -41,7 +43,9 @@ export function SegmentedControl<T extends string>({
           )}
         >
           {Icon && <Icon aria-hidden size={17} className="shrink-0" />}
-          <span className="truncate">{l}</span>
+          <span lang={lang} className="truncate">
+            {l}
+          </span>
         </ToggleGroup.Item>
       ))}
     </ToggleGroup.Root>

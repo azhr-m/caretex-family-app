@@ -1,7 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { CarePlanScreen } from '@/features/resident/screens/CarePlanScreen'
 
 export const Route = createFileRoute('/_auth/r/$rid/resident/care-plan')({
   staticData: { tabs: true },
-  component: () => <StubScreen phase={2} route="/r/$rid/resident/care-plan" tabs />,
+  component: function CarePlanRoute() {
+    const { rid } = Route.useParams()
+    return <CarePlanScreen rid={rid} />
+  },
 })

@@ -33,7 +33,8 @@
     "tryAgain": "ניסיון חוזר",
     "refresh": "רענון",
     "selected": "נבחר",
-    "more": "עוד"
+    "more": "עוד",
+    "call": "חיוג"
   },
   "toggle": {
     "on": "פועל",
@@ -42,6 +43,7 @@
   },
   "status": {
     "new": "חדש",
+    "not_started": "טרם התחיל",
     "in_progress": "בטיפול",
     "needs_action": "נדרשת פעולה",
     "waiting_for_you": "ממתין לכם",
@@ -70,5 +72,11 @@
   },
   "stub": {
     "comingIn": "יגיע בשלב {{phase}}"
+  },
+  "refresh": {
+    "pull": "משכו לרענון",
+    "release": "שחררו לרענון",
+    "refreshing": "מרענן…",
+    "failed": "לא הצלחנו לרענן. נסו שוב."
   }
 }

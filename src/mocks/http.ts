@@ -10,6 +10,8 @@ export function langOf(request: Request): MockLang {
   return request.headers.get('Accept-Language')?.startsWith('he') ? 'he' : 'en'
 }
 
+export const authed = (request: Request) => request.headers.get('Authorization')?.startsWith('Bearer ') ?? false
+
 /** Pick the localized variant of a fixture string pair. */
 export const pick = <T>(lang: MockLang, pair: { en: T; he: T }) => pair[lang]
 

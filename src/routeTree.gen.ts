@@ -23,6 +23,7 @@ import { Route as WelcomeLanguageRouteImport } from './routes/welcome/language'
 import { Route as AuthRRidRouteImport } from './routes/_auth/r/$rid'
 import { Route as AuthRRidHomeRouteImport } from './routes/_auth/r/$rid/home'
 import { Route as AuthRRidNotificationsRouteImport } from './routes/_auth/r/$rid/notifications'
+import { Route as AuthRRidResidentRouteRouteImport } from './routes/_auth/r/$rid/resident/route'
 import { Route as AuthRRidCalendarIndexRouteImport } from './routes/_auth/r/$rid/calendar/index'
 import { Route as AuthRRidCalendarItemIdRouteImport } from './routes/_auth/r/$rid/calendar/$itemId'
 import { Route as AuthRRidMoreIndexRouteImport } from './routes/_auth/r/$rid/more/index'
@@ -131,6 +132,11 @@ const AuthRRidNotificationsRoute = AuthRRidNotificationsRouteImport.update({
   path: '/notifications',
   getParentRoute: () => AuthRRidRoute,
 } as any)
+const AuthRRidResidentRouteRoute = AuthRRidResidentRouteRouteImport.update({
+  id: '/resident',
+  path: '/resident',
+  getParentRoute: () => AuthRRidRoute,
+} as any)
 const AuthRRidCalendarIndexRoute = AuthRRidCalendarIndexRouteImport.update({
   id: '/calendar/',
   path: '/calendar/',
@@ -162,30 +168,30 @@ const AuthRRidMoreSettingsRoute = AuthRRidMoreSettingsRouteImport.update({
   getParentRoute: () => AuthRRidRoute,
 } as any)
 const AuthRRidResidentIndexRoute = AuthRRidResidentIndexRouteImport.update({
-  id: '/resident/',
-  path: '/resident/',
-  getParentRoute: () => AuthRRidRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthRRidResidentRouteRoute,
 } as any)
 const AuthRRidResidentCarePlanRoute =
   AuthRRidResidentCarePlanRouteImport.update({
-    id: '/resident/care-plan',
-    path: '/resident/care-plan',
-    getParentRoute: () => AuthRRidRoute,
+    id: '/care-plan',
+    path: '/care-plan',
+    getParentRoute: () => AuthRRidResidentRouteRoute,
   } as any)
 const AuthRRidResidentDayRoute = AuthRRidResidentDayRouteImport.update({
-  id: '/resident/day',
-  path: '/resident/day',
-  getParentRoute: () => AuthRRidRoute,
+  id: '/day',
+  path: '/day',
+  getParentRoute: () => AuthRRidResidentRouteRoute,
 } as any)
 const AuthRRidResidentGeneralRoute = AuthRRidResidentGeneralRouteImport.update({
-  id: '/resident/general',
-  path: '/resident/general',
-  getParentRoute: () => AuthRRidRoute,
+  id: '/general',
+  path: '/general',
+  getParentRoute: () => AuthRRidResidentRouteRoute,
 } as any)
 const AuthRRidResidentMedicalRoute = AuthRRidResidentMedicalRouteImport.update({
-  id: '/resident/medical',
-  path: '/resident/medical',
-  getParentRoute: () => AuthRRidRoute,
+  id: '/medical',
+  path: '/medical',
+  getParentRoute: () => AuthRRidResidentRouteRoute,
 } as any)
 const AuthRRidStaffIndexRoute = AuthRRidStaffIndexRouteImport.update({
   id: '/staff/',
@@ -253,9 +259,9 @@ const AuthRRidMoreSurveysIndexRoute =
   } as any)
 const AuthRRidResidentUpdatesIndexRoute =
   AuthRRidResidentUpdatesIndexRouteImport.update({
-    id: '/resident/updates/',
-    path: '/resident/updates/',
-    getParentRoute: () => AuthRRidRoute,
+    id: '/updates/',
+    path: '/updates/',
+    getParentRoute: () => AuthRRidResidentRouteRoute,
   } as any)
 const AuthRRidStaffNewIndexRoute = AuthRRidStaffNewIndexRouteImport.update({
   id: '/staff/new/',
@@ -306,9 +312,9 @@ const AuthRRidMoreSurveysSurveyIdReviewRoute =
   } as any)
 const AuthRRidResidentUpdatesUpdateIdIndexRoute =
   AuthRRidResidentUpdatesUpdateIdIndexRouteImport.update({
-    id: '/resident/updates/$updateId/',
-    path: '/resident/updates/$updateId/',
-    getParentRoute: () => AuthRRidRoute,
+    id: '/updates/$updateId/',
+    path: '/updates/$updateId/',
+    getParentRoute: () => AuthRRidResidentRouteRoute,
   } as any)
 const AuthRRidStaffNewSentInquiryIdRoute =
   AuthRRidStaffNewSentInquiryIdRouteImport.update({
@@ -336,9 +342,9 @@ const AuthRRidMoreSurveysSurveyIdQQuestionIdRoute =
   } as any)
 const AuthRRidResidentUpdatesUpdateIdPhotosIndexRoute =
   AuthRRidResidentUpdatesUpdateIdPhotosIndexRouteImport.update({
-    id: '/resident/updates/$updateId/photos/$index',
-    path: '/resident/updates/$updateId/photos/$index',
-    getParentRoute: () => AuthRRidRoute,
+    id: '/updates/$updateId/photos/$index',
+    path: '/updates/$updateId/photos/$index',
+    getParentRoute: () => AuthRRidResidentRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -353,6 +359,7 @@ export interface FileRoutesByFullPath {
   '/welcome/language': typeof WelcomeLanguageRoute
   '/login/': typeof LoginIndexRoute
   '/r/$rid': typeof AuthRRidRouteWithChildren
+  '/r/$rid/resident': typeof AuthRRidResidentRouteRouteWithChildren
   '/r/$rid/home': typeof AuthRRidHomeRoute
   '/r/$rid/notifications': typeof AuthRRidNotificationsRoute
   '/r/$rid/calendar/$itemId': typeof AuthRRidCalendarItemIdRoute
@@ -461,6 +468,7 @@ export interface FileRoutesById {
   '/welcome/language': typeof WelcomeLanguageRoute
   '/login/': typeof LoginIndexRoute
   '/_auth/r/$rid': typeof AuthRRidRouteWithChildren
+  '/_auth/r/$rid/resident': typeof AuthRRidResidentRouteRouteWithChildren
   '/_auth/r/$rid/home': typeof AuthRRidHomeRoute
   '/_auth/r/$rid/notifications': typeof AuthRRidNotificationsRoute
   '/_auth/r/$rid/calendar/$itemId': typeof AuthRRidCalendarItemIdRoute
@@ -516,6 +524,7 @@ export interface FileRouteTypes {
     | '/welcome/language'
     | '/login/'
     | '/r/$rid'
+    | '/r/$rid/resident'
     | '/r/$rid/home'
     | '/r/$rid/notifications'
     | '/r/$rid/calendar/$itemId'
@@ -623,6 +632,7 @@ export interface FileRouteTypes {
     | '/welcome/language'
     | '/login/'
     | '/_auth/r/$rid'
+    | '/_auth/r/$rid/resident'
     | '/_auth/r/$rid/home'
     | '/_auth/r/$rid/notifications'
     | '/_auth/r/$rid/calendar/$itemId'
@@ -778,6 +788,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRRidNotificationsRouteImport
       parentRoute: typeof AuthRRidRoute
     }
+    '/_auth/r/$rid/resident': {
+      id: '/_auth/r/$rid/resident'
+      path: '/resident'
+      fullPath: '/r/$rid/resident'
+      preLoaderRoute: typeof AuthRRidResidentRouteRouteImport
+      parentRoute: typeof AuthRRidRoute
+    }
     '/_auth/r/$rid/calendar/': {
       id: '/_auth/r/$rid/calendar/'
       path: '/calendar'
@@ -822,38 +839,38 @@ declare module '@tanstack/react-router' {
     }
     '/_auth/r/$rid/resident/': {
       id: '/_auth/r/$rid/resident/'
-      path: '/resident'
+      path: '/'
       fullPath: '/r/$rid/resident/'
       preLoaderRoute: typeof AuthRRidResidentIndexRouteImport
-      parentRoute: typeof AuthRRidRoute
+      parentRoute: typeof AuthRRidResidentRouteRoute
     }
     '/_auth/r/$rid/resident/care-plan': {
       id: '/_auth/r/$rid/resident/care-plan'
-      path: '/resident/care-plan'
+      path: '/care-plan'
       fullPath: '/r/$rid/resident/care-plan'
       preLoaderRoute: typeof AuthRRidResidentCarePlanRouteImport
-      parentRoute: typeof AuthRRidRoute
+      parentRoute: typeof AuthRRidResidentRouteRoute
     }
     '/_auth/r/$rid/resident/day': {
       id: '/_auth/r/$rid/resident/day'
-      path: '/resident/day'
+      path: '/day'
       fullPath: '/r/$rid/resident/day'
       preLoaderRoute: typeof AuthRRidResidentDayRouteImport
-      parentRoute: typeof AuthRRidRoute
+      parentRoute: typeof AuthRRidResidentRouteRoute
     }
     '/_auth/r/$rid/resident/general': {
       id: '/_auth/r/$rid/resident/general'
-      path: '/resident/general'
+      path: '/general'
       fullPath: '/r/$rid/resident/general'
       preLoaderRoute: typeof AuthRRidResidentGeneralRouteImport
-      parentRoute: typeof AuthRRidRoute
+      parentRoute: typeof AuthRRidResidentRouteRoute
     }
     '/_auth/r/$rid/resident/medical': {
       id: '/_auth/r/$rid/resident/medical'
-      path: '/resident/medical'
+      path: '/medical'
       fullPath: '/r/$rid/resident/medical'
       preLoaderRoute: typeof AuthRRidResidentMedicalRouteImport
-      parentRoute: typeof AuthRRidRoute
+      parentRoute: typeof AuthRRidResidentRouteRoute
     }
     '/_auth/r/$rid/staff/': {
       id: '/_auth/r/$rid/staff/'
@@ -941,10 +958,10 @@ declare module '@tanstack/react-router' {
     }
     '/_auth/r/$rid/resident/updates/': {
       id: '/_auth/r/$rid/resident/updates/'
-      path: '/resident/updates'
+      path: '/updates'
       fullPath: '/r/$rid/resident/updates/'
       preLoaderRoute: typeof AuthRRidResidentUpdatesIndexRouteImport
-      parentRoute: typeof AuthRRidRoute
+      parentRoute: typeof AuthRRidResidentRouteRoute
     }
     '/_auth/r/$rid/staff/new/': {
       id: '/_auth/r/$rid/staff/new/'
@@ -1004,10 +1021,10 @@ declare module '@tanstack/react-router' {
     }
     '/_auth/r/$rid/resident/updates/$updateId/': {
       id: '/_auth/r/$rid/resident/updates/$updateId/'
-      path: '/resident/updates/$updateId'
+      path: '/updates/$updateId'
       fullPath: '/r/$rid/resident/updates/$updateId/'
       preLoaderRoute: typeof AuthRRidResidentUpdatesUpdateIdIndexRouteImport
-      parentRoute: typeof AuthRRidRoute
+      parentRoute: typeof AuthRRidResidentRouteRoute
     }
     '/_auth/r/$rid/staff/new/sent/$inquiryId': {
       id: '/_auth/r/$rid/staff/new/sent/$inquiryId'
@@ -1039,29 +1056,54 @@ declare module '@tanstack/react-router' {
     }
     '/_auth/r/$rid/resident/updates/$updateId/photos/$index': {
       id: '/_auth/r/$rid/resident/updates/$updateId/photos/$index'
-      path: '/resident/updates/$updateId/photos/$index'
+      path: '/updates/$updateId/photos/$index'
       fullPath: '/r/$rid/resident/updates/$updateId/photos/$index'
       preLoaderRoute: typeof AuthRRidResidentUpdatesUpdateIdPhotosIndexRouteImport
-      parentRoute: typeof AuthRRidRoute
+      parentRoute: typeof AuthRRidResidentRouteRoute
     }
   }
 }
 
+interface AuthRRidResidentRouteRouteChildren {
+  AuthRRidResidentCarePlanRoute: typeof AuthRRidResidentCarePlanRoute
+  AuthRRidResidentDayRoute: typeof AuthRRidResidentDayRoute
+  AuthRRidResidentGeneralRoute: typeof AuthRRidResidentGeneralRoute
+  AuthRRidResidentMedicalRoute: typeof AuthRRidResidentMedicalRoute
+  AuthRRidResidentIndexRoute: typeof AuthRRidResidentIndexRoute
+  AuthRRidResidentUpdatesIndexRoute: typeof AuthRRidResidentUpdatesIndexRoute
+  AuthRRidResidentUpdatesUpdateIdIndexRoute: typeof AuthRRidResidentUpdatesUpdateIdIndexRoute
+  AuthRRidResidentUpdatesUpdateIdPhotosIndexRoute: typeof AuthRRidResidentUpdatesUpdateIdPhotosIndexRoute
+}
+
+const AuthRRidResidentRouteRouteChildren: AuthRRidResidentRouteRouteChildren = {
+  AuthRRidResidentCarePlanRoute: AuthRRidResidentCarePlanRoute,
+  AuthRRidResidentDayRoute: AuthRRidResidentDayRoute,
+  AuthRRidResidentGeneralRoute: AuthRRidResidentGeneralRoute,
+  AuthRRidResidentMedicalRoute: AuthRRidResidentMedicalRoute,
+  AuthRRidResidentIndexRoute: AuthRRidResidentIndexRoute,
+  AuthRRidResidentUpdatesIndexRoute: AuthRRidResidentUpdatesIndexRoute,
+  AuthRRidResidentUpdatesUpdateIdIndexRoute:
+    AuthRRidResidentUpdatesUpdateIdIndexRoute,
+  AuthRRidResidentUpdatesUpdateIdPhotosIndexRoute:
+    AuthRRidResidentUpdatesUpdateIdPhotosIndexRoute,
+}
+
+const AuthRRidResidentRouteRouteWithChildren =
+  AuthRRidResidentRouteRoute._addFileChildren(
+    AuthRRidResidentRouteRouteChildren,
+  )
+
 interface AuthRRidRouteChildren {
+  AuthRRidResidentRouteRoute: typeof AuthRRidResidentRouteRouteWithChildren
   AuthRRidHomeRoute: typeof AuthRRidHomeRoute
   AuthRRidNotificationsRoute: typeof AuthRRidNotificationsRoute
   AuthRRidCalendarItemIdRoute: typeof AuthRRidCalendarItemIdRoute
   AuthRRidMorePaymentsRoute: typeof AuthRRidMorePaymentsRoute
   AuthRRidMorePermissionsRoute: typeof AuthRRidMorePermissionsRoute
   AuthRRidMoreSettingsRoute: typeof AuthRRidMoreSettingsRoute
-  AuthRRidResidentCarePlanRoute: typeof AuthRRidResidentCarePlanRoute
-  AuthRRidResidentDayRoute: typeof AuthRRidResidentDayRoute
-  AuthRRidResidentGeneralRoute: typeof AuthRRidResidentGeneralRoute
-  AuthRRidResidentMedicalRoute: typeof AuthRRidResidentMedicalRoute
   AuthRRidStaffInquiryIdRoute: typeof AuthRRidStaffInquiryIdRoute
   AuthRRidCalendarIndexRoute: typeof AuthRRidCalendarIndexRoute
   AuthRRidMoreIndexRoute: typeof AuthRRidMoreIndexRoute
-  AuthRRidResidentIndexRoute: typeof AuthRRidResidentIndexRoute
   AuthRRidStaffIndexRoute: typeof AuthRRidStaffIndexRoute
   AuthRRidMoreCenterGuideRoute: typeof AuthRRidMoreCenterGuideRoute
   AuthRRidMoreFeedItemIdRoute: typeof AuthRRidMoreFeedItemIdRoute
@@ -1073,7 +1115,6 @@ interface AuthRRidRouteChildren {
   AuthRRidMoreFeedIndexRoute: typeof AuthRRidMoreFeedIndexRoute
   AuthRRidMoreServicesIndexRoute: typeof AuthRRidMoreServicesIndexRoute
   AuthRRidMoreSurveysIndexRoute: typeof AuthRRidMoreSurveysIndexRoute
-  AuthRRidResidentUpdatesIndexRoute: typeof AuthRRidResidentUpdatesIndexRoute
   AuthRRidStaffNewIndexRoute: typeof AuthRRidStaffNewIndexRoute
   AuthRRidMoreDocumentsDocIdDoneRoute: typeof AuthRRidMoreDocumentsDocIdDoneRoute
   AuthRRidMoreServicesSentRequestIdRoute: typeof AuthRRidMoreServicesSentRequestIdRoute
@@ -1083,28 +1124,22 @@ interface AuthRRidRouteChildren {
   AuthRRidMoreDocumentsDocIdIndexRoute: typeof AuthRRidMoreDocumentsDocIdIndexRoute
   AuthRRidMoreEventsEventIdIndexRoute: typeof AuthRRidMoreEventsEventIdIndexRoute
   AuthRRidMoreSurveysSurveyIdIndexRoute: typeof AuthRRidMoreSurveysSurveyIdIndexRoute
-  AuthRRidResidentUpdatesUpdateIdIndexRoute: typeof AuthRRidResidentUpdatesUpdateIdIndexRoute
   AuthRRidMoreEventsEventIdRsvpDoneRoute: typeof AuthRRidMoreEventsEventIdRsvpDoneRoute
   AuthRRidMoreSurveysSurveyIdQQuestionIdRoute: typeof AuthRRidMoreSurveysSurveyIdQQuestionIdRoute
-  AuthRRidResidentUpdatesUpdateIdPhotosIndexRoute: typeof AuthRRidResidentUpdatesUpdateIdPhotosIndexRoute
   AuthRRidMoreEventsEventIdRsvpIndexRoute: typeof AuthRRidMoreEventsEventIdRsvpIndexRoute
 }
 
 const AuthRRidRouteChildren: AuthRRidRouteChildren = {
+  AuthRRidResidentRouteRoute: AuthRRidResidentRouteRouteWithChildren,
   AuthRRidHomeRoute: AuthRRidHomeRoute,
   AuthRRidNotificationsRoute: AuthRRidNotificationsRoute,
   AuthRRidCalendarItemIdRoute: AuthRRidCalendarItemIdRoute,
   AuthRRidMorePaymentsRoute: AuthRRidMorePaymentsRoute,
   AuthRRidMorePermissionsRoute: AuthRRidMorePermissionsRoute,
   AuthRRidMoreSettingsRoute: AuthRRidMoreSettingsRoute,
-  AuthRRidResidentCarePlanRoute: AuthRRidResidentCarePlanRoute,
-  AuthRRidResidentDayRoute: AuthRRidResidentDayRoute,
-  AuthRRidResidentGeneralRoute: AuthRRidResidentGeneralRoute,
-  AuthRRidResidentMedicalRoute: AuthRRidResidentMedicalRoute,
   AuthRRidStaffInquiryIdRoute: AuthRRidStaffInquiryIdRoute,
   AuthRRidCalendarIndexRoute: AuthRRidCalendarIndexRoute,
   AuthRRidMoreIndexRoute: AuthRRidMoreIndexRoute,
-  AuthRRidResidentIndexRoute: AuthRRidResidentIndexRoute,
   AuthRRidStaffIndexRoute: AuthRRidStaffIndexRoute,
   AuthRRidMoreCenterGuideRoute: AuthRRidMoreCenterGuideRoute,
   AuthRRidMoreFeedItemIdRoute: AuthRRidMoreFeedItemIdRoute,
@@ -1116,7 +1151,6 @@ const AuthRRidRouteChildren: AuthRRidRouteChildren = {
   AuthRRidMoreFeedIndexRoute: AuthRRidMoreFeedIndexRoute,
   AuthRRidMoreServicesIndexRoute: AuthRRidMoreServicesIndexRoute,
   AuthRRidMoreSurveysIndexRoute: AuthRRidMoreSurveysIndexRoute,
-  AuthRRidResidentUpdatesIndexRoute: AuthRRidResidentUpdatesIndexRoute,
   AuthRRidStaffNewIndexRoute: AuthRRidStaffNewIndexRoute,
   AuthRRidMoreDocumentsDocIdDoneRoute: AuthRRidMoreDocumentsDocIdDoneRoute,
   AuthRRidMoreServicesSentRequestIdRoute:
@@ -1128,14 +1162,10 @@ const AuthRRidRouteChildren: AuthRRidRouteChildren = {
   AuthRRidMoreDocumentsDocIdIndexRoute: AuthRRidMoreDocumentsDocIdIndexRoute,
   AuthRRidMoreEventsEventIdIndexRoute: AuthRRidMoreEventsEventIdIndexRoute,
   AuthRRidMoreSurveysSurveyIdIndexRoute: AuthRRidMoreSurveysSurveyIdIndexRoute,
-  AuthRRidResidentUpdatesUpdateIdIndexRoute:
-    AuthRRidResidentUpdatesUpdateIdIndexRoute,
   AuthRRidMoreEventsEventIdRsvpDoneRoute:
     AuthRRidMoreEventsEventIdRsvpDoneRoute,
   AuthRRidMoreSurveysSurveyIdQQuestionIdRoute:
     AuthRRidMoreSurveysSurveyIdQQuestionIdRoute,
-  AuthRRidResidentUpdatesUpdateIdPhotosIndexRoute:
-    AuthRRidResidentUpdatesUpdateIdPhotosIndexRoute,
   AuthRRidMoreEventsEventIdRsvpIndexRoute:
     AuthRRidMoreEventsEventIdRsvpIndexRoute,
 }

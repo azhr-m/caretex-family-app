@@ -1,10 +1,8 @@
 import { HttpResponse, http } from 'msw'
 import { centerPublicFixture } from '../fixtures/center'
 import { memberFixture } from '../fixtures/member'
-import { apiError, langOf, url } from '../http'
+import { apiError, authed, langOf, url } from '../http'
 import { currentScenario } from '../scenarios'
-
-const authed = (request: Request) => request.headers.get('Authorization')?.startsWith('Bearer ')
 
 export const meHandlers = [
   http.get(url('/me'), ({ request }) => {

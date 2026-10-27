@@ -3,6 +3,7 @@ import {
   Ban,
   CircleAlert,
   CircleCheck,
+  CircleDashed,
   Clock,
   ClockAlert,
   Eye,
@@ -35,6 +36,7 @@ export const toneClasses: Record<Tone, { fg: string; bg: string; bd: string; sol
 
 export type Status =
   | 'new'
+  | 'not_started'
   | 'in_progress'
   | 'needs_action'
   | 'waiting_for_you'
@@ -64,6 +66,7 @@ const m = (tone: Tone, icon: LucideIcon, s: Status): StatusMeta => ({ tone, icon
 
 export const STATUS: Record<Status, StatusMeta> = {
   new: m('blue', Sparkles, 'new'),
+  not_started: m('blue', CircleDashed, 'not_started'),
   in_progress: m('amber', Loader, 'in_progress'),
   needs_action: m('violet', CircleAlert, 'needs_action'),
   waiting_for_you: m('violet', Reply, 'waiting_for_you'),

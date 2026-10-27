@@ -1,7 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { GeneralScreen } from '@/features/resident/screens/GeneralScreen'
 
 export const Route = createFileRoute('/_auth/r/$rid/resident/general')({
   staticData: { tabs: true },
-  component: () => <StubScreen phase={2} route="/r/$rid/resident/general" tabs />,
+  component: function GeneralRoute() {
+    const { rid } = Route.useParams()
+    return <GeneralScreen rid={rid} />
+  },
 })

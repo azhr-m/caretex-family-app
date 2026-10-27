@@ -31,7 +31,8 @@
     "tryAgain": "Try again",
     "refresh": "Refresh",
     "selected": "Selected",
-    "more": "More"
+    "more": "More",
+    "call": "Call"
   },
   "toggle": {
     "on": "On",
@@ -40,6 +41,7 @@
   },
   "status": {
     "new": "New",
+    "not_started": "Not started",
     "in_progress": "In progress",
     "needs_action": "Needs action",
     "waiting_for_you": "Waiting for you",
@@ -68,5 +70,11 @@
   },
   "stub": {
     "comingIn": "Coming in Phase {{phase}}"
+  },
+  "refresh": {
+    "pull": "Pull to refresh",
+    "release": "Release to refresh",
+    "refreshing": "Refreshing…",
+    "failed": "We couldn't refresh. Try again."
   }
 }

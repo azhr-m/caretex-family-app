@@ -1,1 +1,74 @@
-{}
+{
+  "greeting": {
+    "morning": "Good morning, {{name}}",
+    "afternoon": "Good afternoon, {{name}}",
+    "evening": "Good evening, {{name}}",
+    "night": "Good night, {{name}}"
+  },
+  "dateLine": "{{weekday}}, <ltr>{{date}}</ltr>",
+  "residentCard": {
+    "profile": "Profile",
+    "profileLabel": "Open {{name}}'s profile"
+  },
+  "since": {
+    "title": "Since your last visit · <ltr>{{date}}</ltr>",
+    "titleNoDate": "Since your last visit",
+    "count_one": "{{count}} new",
+    "count_other": "{{count}} new",
+    "empty": "Nothing new since your last visit",
+    "kind": {
+      "update": "New update",
+      "inquiry_reply": "New reply",
+      "document": "New document",
+      "calendar_change": "Calendar change",
+      "request_handled": "Request handled",
+      "survey": "New survey",
+      "event": "New event"
+    }
+  },
+  "attention": {
+    "title": "Needs your attention",
+    "count_one": "{{count}} to do",
+    "count_other": "{{count}} to do",
+    "allCaughtUp": "You're all caught up",
+    "cta": {
+      "sign_document": "Sign",
+      "confirm_read": "Read",
+      "approve_document": "Review",
+      "survey": "Start",
+      "surveyDraft": "Continue",
+      "rsvp": "RSVP",
+      "inquiry_reply_needed": "Reply",
+      "appointment_confirm": "Confirm"
+    }
+  },
+  "latest": {
+    "title": "Latest update",
+    "read": "Read the full update"
+  },
+  "upcoming": {
+    "title": "Upcoming appointment",
+    "personal": "Personal · {{name}}",
+    "centerEvent": "Center event",
+    "confirm": "Confirm"
+  },
+  "day": {
+    "title": "{{name}}'s day · Today",
+    "seeAll": "See the full day"
+  },
+  "quick": {
+    "title": "Quick actions",
+    "newInquiry": "New inquiry",
+    "newInquirySub": "Write to a department",
+    "service": "Service request",
+    "serviceSub": "Laundry, repairs and more",
+    "documents": "Documents",
+    "documentsSub_one": "{{count}} waiting for you",
+    "documentsSub_other": "{{count}} waiting for you",
+    "documentsNone": "Nothing waiting",
+    "events": "Events",
+    "eventsSub_one": "{{count}} invitation",
+    "eventsSub_other": "{{count}} invitations",
+    "eventsNone": "No new invitations"
+  }
+}

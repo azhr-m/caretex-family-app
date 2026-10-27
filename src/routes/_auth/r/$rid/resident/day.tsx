@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
-import { StubScreen } from '@/components/app/ComingSoon'
+import { DayScreen } from '@/features/resident/screens/DayScreen'
 
 export const Route = createFileRoute('/_auth/r/$rid/resident/day')({
   validateSearch: z.object({
@@ -11,5 +11,9 @@ export const Route = createFileRoute('/_auth/r/$rid/resident/day')({
       .catch(undefined),
   }),
   staticData: { tabs: true },
-  component: () => <StubScreen phase={2} route="/r/$rid/resident/day" tabs />,
+  component: function DayRoute() {
+    const { rid } = Route.useParams()
+    const { date } = Route.useSearch()
+    return <DayScreen rid={rid} date={date} />
+  },
 })

@@ -1,1 +1,78 @@
-{}
+{
+  "greeting": {
+    "morning": "בוקר טוב, {{name}}",
+    "afternoon": "צהריים טובים, {{name}}",
+    "evening": "ערב טוב, {{name}}",
+    "night": "לילה טוב, {{name}}"
+  },
+  "dateLine": "{{weekday}}, <ltr>{{date}}</ltr>",
+  "residentCard": {
+    "profile": "פרופיל",
+    "profileLabel": "פתיחת הפרופיל של {{name}}"
+  },
+  "since": {
+    "title": "מאז הביקור האחרון · <ltr>{{date}}</ltr>",
+    "titleNoDate": "מאז הביקור האחרון",
+    "count_one": "חדש אחד",
+    "count_two": "{{count}} חדשים",
+    "count_other": "{{count}} חדשים",
+    "empty": "אין חדש מאז הביקור האחרון",
+    "kind": {
+      "update": "עדכון חדש",
+      "inquiry_reply": "תשובה חדשה",
+      "document": "מסמך חדש",
+      "calendar_change": "שינוי ביומן",
+      "request_handled": "בקשה טופלה",
+      "survey": "סקר חדש",
+      "event": "אירוע חדש"
+    }
+  },
+  "attention": {
+    "title": "דורש את תשומת לבכם",
+    "count_one": "משימה אחת",
+    "count_two": "{{count}} לביצוע",
+    "count_other": "{{count}} לביצוע",
+    "allCaughtUp": "הכול מעודכן",
+    "cta": {
+      "sign_document": "לחתימה",
+      "confirm_read": "לקריאה",
+      "approve_document": "לעיון",
+      "survey": "התחלה",
+      "surveyDraft": "המשך",
+      "rsvp": "אישור הגעה",
+      "inquiry_reply_needed": "מענה",
+      "appointment_confirm": "אישור"
+    }
+  },
+  "latest": {
+    "title": "העדכון האחרון",
+    "read": "לקריאת העדכון המלא"
+  },
+  "upcoming": {
+    "title": "התור הקרוב",
+    "personal": "אישי · {{name}}",
+    "centerEvent": "אירוע במרכז",
+    "confirm": "אישור"
+  },
+  "day": {
+    "title": "היום של {{name}} · היום",
+    "seeAll": "לכל היום"
+  },
+  "quick": {
+    "title": "פעולות מהירות",
+    "newInquiry": "פנייה חדשה",
+    "newInquirySub": "כתיבה למחלקה",
+    "service": "בקשת שירות",
+    "serviceSub": "כביסה, תיקונים ועוד",
+    "documents": "מסמכים",
+    "documentsSub_one": "מסמך אחד ממתין לכם",
+    "documentsSub_two": "{{count}} ממתינים לכם",
+    "documentsSub_other": "{{count}} ממתינים לכם",
+    "documentsNone": "אין מסמכים ממתינים",
+    "events": "אירועים",
+    "eventsSub_one": "הזמנה אחת",
+    "eventsSub_two": "{{count}} הזמנות",
+    "eventsSub_other": "{{count}} הזמנות",
+    "eventsNone": "אין הזמנות חדשות"
+  }
+}

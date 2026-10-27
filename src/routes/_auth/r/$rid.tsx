@@ -1,4 +1,5 @@
 import { Outlet, createFileRoute, redirect, useMatches, useNavigate } from '@tanstack/react-router'
+import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { AppFrame } from '@/components/app/AppFrame'
 import { AppHeader, AppHeaderSkeleton } from '@/components/app/AppHeader'
@@ -6,6 +7,7 @@ import { OfflineBanner } from '@/components/app/OfflineBanner'
 import { ResidentSwitcherSheet } from '@/components/app/ResidentSwitcherSheet'
 import { TabBar } from '@/components/app/TabBar'
 import { useMember } from '@/api/queries/me'
+import { dashboardQuery } from '@/api/queries/residents'
 import { residentTone } from '@/lib/avatar'
 import { useSessionStore } from '@/stores/session'
 import { useUiStore } from '@/stores/ui'
@@ -33,6 +35,7 @@ function ResidentShell() {
   const resident = index >= 0 ? member!.residents[index] : undefined
   const openSwitcher = useUiStore((s) => s.setResidentSheetOpen)
   const setActiveResident = useSessionStore((s) => s.setActiveResident)
+  const counts = useQuery({ ...dashboardQuery(rid), select: (d) => d.counts }).data
 
   useEffect(() => setActiveResident(rid), [rid, setActiveResident])
 
@@ -58,7 +61,7 @@ function ResidentShell() {
               place: `${resident.ward} · ${resident.room}`,
               tone: residentTone(index),
             }}
-            unread={0}
+            unread={counts?.notificationsUnread ?? 0}
             onSwitch={() => openSwitcher(true)}
             onNotifications={() => void navigate({ to: '/r/$rid/notifications', params: { rid } })}
           />
@@ -66,10 +69,15 @@ function ResidentShell() {
           <AppHeaderSkeleton />
         )}
         <OfflineBanner />
-        <main className="min-h-0 flex-1 scrollbar-none overflow-x-hidden overflow-y-auto overscroll-contain px-4 pt-4 pb-7">
+        <main
+          id="app-main"
+          data-scroll-root
+          data-scroll-restoration-id="app-main"
+          className="min-h-0 flex-1 scrollbar-none overflow-x-hidden overflow-y-auto overscroll-contain px-4 pt-4 pb-7"
+        >
           <Outlet key={rid} />
         </main>
-        <TabBar rid={rid} />
+        <TabBar rid={rid} badges={counts?.tabs} />
       </div>
       <ResidentSwitcherSheet rid={rid} />
     </AppFrame>

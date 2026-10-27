@@ -1,4 +1,4 @@
-import type { UseQueryResult } from '@tanstack/react-query'
+import type { FetchStatus } from '@tanstack/react-query'
 import { useEffect, useState, type ReactNode } from 'react'
 import { isApiError } from '@/api/errors'
 import { ErrorState, PermissionState, SlowNotice } from './states'
@@ -20,8 +20,19 @@ export function useElapsed(active: boolean, ms: number) {
   return active && elapsed
 }
 
+/** The parts of a query (regular or infinite) the boundary reads. */
+export type BoundaryQuery<T> = {
+  data: T | undefined
+  error: unknown
+  isPending: boolean
+  isError: boolean
+  isRefetching: boolean
+  fetchStatus: FetchStatus
+  refetch: () => Promise<unknown>
+}
+
 type Props<T> = {
-  query: UseQueryResult<T>
+  query: BoundaryQuery<T>
   skeleton: ReactNode
   children: (data: T) => ReactNode
   isEmpty?: (data: T) => boolean
@@ -58,7 +69,7 @@ export function QueryBoundary<T>({
     if (isNotShared?.(data)) return permission?.notShared ?? <PermissionState kind="notShared" />
     return (
       <>
-        {query.isFetching && <RefetchLine />}
+        {query.isRefetching && <RefetchLine />}
         {isEmpty?.(data) ? empty : children(data)}
       </>
     )

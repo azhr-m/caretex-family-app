@@ -9,6 +9,8 @@ export function createAppRouter(queryClient: QueryClient) {
     defaultPreload: 'intent',
     defaultPendingMs: 300,
     scrollRestoration: true,
+    // The tab shell scrolls inside <main>, not the window: new pages start at the top, Back restores.
+    scrollToTopSelectors: ['#app-main'],
   })
 }
 

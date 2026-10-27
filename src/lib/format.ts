@@ -1,3 +1,5 @@
+import { appDate } from './clock'
+
 export const TIME_ZONE = 'Asia/Jerusalem'
 type Lang = 'en' | 'he'
 type DateInput = Date | string | number
@@ -53,7 +55,7 @@ export function monthYear(d: DateInput, lang: Lang) {
 
 export type DayGroupLabels = { today: string; yesterday: string }
 
-export function dayGroupLabel(d: DateInput, labels: DayGroupLabels, now: DateInput = new Date()) {
+export function dayGroupLabel(d: DateInput, labels: DayGroupLabels, now: DateInput = appDate()) {
   const day = isoDay(d)
   const today = isoDay(now)
   const yesterday = isoDay(toDate(now).getTime() - 86_400_000)
@@ -67,19 +69,48 @@ export function fileSize(bytes: number) {
   return `${(bytes / 1_000_000).toFixed(1).replace(/\.0$/, '')} MB`
 }
 
-export function age(dob: string, now: DateInput = new Date()) {
+export function age(dob: string, now: DateInput = appDate()) {
   const [y, m, d] = dob.split('-').map(Number) as [number, number, number]
   const [ny, nm, nd] = isoDay(now).split('-').map(Number) as [number, number, number]
   return ny - y - (nm < m || (nm === m && nd < d) ? 1 : 0)
 }
 
-export type Greeting = 'morning' | 'afternoon' | 'evening'
+export type Greeting = 'morning' | 'afternoon' | 'evening' | 'night'
 
-export function relativeGreeting(now: DateInput = new Date()): Greeting {
+/** Morning 05–12, afternoon 12–17, evening 17–22, night otherwise. */
+export function relativeGreeting(now: DateInput = appDate()): Greeting {
   const hour = Number(parts(now).hour)
   if (hour >= 5 && hour < 12) return 'morning'
-  if (hour >= 12 && hour < 18) return 'afternoon'
-  return 'evening'
+  if (hour >= 12 && hour < 17) return 'afternoon'
+  if (hour >= 17 && hour < 22) return 'evening'
+  return 'night'
+}
+
+/** Day of month and short month name ("16", "Oct" / "אוק׳") for date blocks. */
+export function dayMonth(d: DateInput, lang: Lang) {
+  const day = String(Number(parts(d).day))
+  const month = new Intl.DateTimeFormat(locale(lang), { timeZone: TIME_ZONE, month: 'short' }).format(toDate(d))
+  return { day, month }
+}
+
+/** Calendar arithmetic on YYYY-MM-DD strings (no time zone involved). */
+export function addDays(iso: string, n: number) {
+  const [y, m, d] = iso.split('-').map(Number) as [number, number, number]
+  const t = new Date(Date.UTC(y, m - 1, d + n))
+  return t.toISOString().slice(0, 10)
+}
+
+/** Noon in Israel on that calendar day, safe for weekday/date formatting. */
+export const dayInstant = (iso: string) => new Date(`${iso}T12:00:00+03:00`)
+
+export type RelativeDay = 'yesterday' | 'today' | 'tomorrow'
+
+export function relativeDay(iso: string, now: DateInput = appDate()): RelativeDay | null {
+  const today = isoDay(now)
+  if (iso === today) return 'today'
+  if (iso === addDays(today, -1)) return 'yesterday'
+  if (iso === addDays(today, 1)) return 'tomorrow'
+  return null
 }
 
 /** "+97235550100" → "03-555-0100", "+972501234567" → "050-123-4567". */

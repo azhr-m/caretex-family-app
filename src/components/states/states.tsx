@@ -1,4 +1,7 @@
 import {
+  Ban,
+  Building2,
+  Clock,
   CloudAlert,
   FileQuestion,
   Hourglass,
@@ -11,6 +14,7 @@ import {
 } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import { InfoBox } from '@/components/common/Card'
 import { Ltr } from '@/components/common/Ltr'
 import { Button } from '@/components/ui/button'
 import { StateView, type StateViewProps } from './StateView'
@@ -88,16 +92,19 @@ export function ErrorState({
   )
 }
 
+/** 3.8a no permission (slate lock) / 3.8b not yet shared (amber hourglass), with a note box and actions. */
 export function PermissionState({
   kind,
   title,
   body,
-  action,
+  note,
+  actions,
 }: {
   kind: 'denied' | 'notShared'
   title?: ReactNode
   body?: ReactNode
-  action?: ReactNode
+  note?: ReactNode
+  actions?: ReactNode
 }) {
   const { t } = useTranslation('states')
   const denied = kind === 'denied'
@@ -105,11 +112,17 @@ export function PermissionState({
     <StateView
       icon={denied ? Lock : Hourglass}
       tone={denied ? 'slate' : 'amber'}
-      status={denied ? 'no_permission' : 'not_shared'}
+      status={denied ? 'no_permission' : undefined}
+      statusLabel={denied ? undefined : t('permission.notSharedChip')}
+      statusIcon={denied ? Ban : Clock}
       title={title ?? (denied ? t('permission.noPermissionTitle') : t('permission.notSharedTitle'))}
       body={body ?? (denied ? t('permission.noPermissionBody') : t('permission.notSharedBody'))}
-      actions={action}
-    />
+      actions={actions}
+    >
+      <InfoBox icon={Building2}>
+        {note ?? (denied ? t('permission.noPermissionNote') : t('permission.notSharedNote'))}
+      </InfoBox>
+    </StateView>
   )
 }
 

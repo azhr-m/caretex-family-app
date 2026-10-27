@@ -1,1 +1,116 @@
-{}
+{
+  "segments": {
+    "label": "Resident sections",
+    "general": "General",
+    "updates": "Updates",
+    "medical": "Medical",
+    "carePlan": "Care plan",
+    "day": "{{name}}'s day",
+    "denied": "{{label}}, no permission",
+    "notShared": "{{label}}, not yet shared"
+  },
+  "general": {
+    "photoLabel": "Photo of {{name}}",
+    "details": "Details",
+    "dob": "Date of birth",
+    "dobValue": "<ltr>{{date}}</ltr> (age {{age}})",
+    "ward": "Ward",
+    "room": "Room",
+    "admitted": "Admitted",
+    "languages": "Languages",
+    "primaryContact": "Primary family contact",
+    "you": "{{name}} (you)",
+    "staffContacts": "Staff contacts",
+    "inquiry": "Inquiry",
+    "inquiryLabel": "Send an inquiry to {{name}}",
+    "call": "Call",
+    "callLabel": "Call {{label}}"
+  },
+  "updates": {
+    "intro": "Personal updates from the staff about {{name}}, newest first.",
+    "dateHeader": "{{weekday}} · <ltr>{{date}}</ltr>",
+    "read": "Read the full update",
+    "morePhotos": "+{{count}}",
+    "empty": "No updates yet",
+    "emptyBody": "When the staff share an update about {{name}}, it will appear here.",
+    "loadingMore": "Loading more updates…",
+    "end": "That's all the updates"
+  },
+  "update": {
+    "title": "Update",
+    "tapPhoto": "Tap a photo to open it full screen",
+    "sharedOn": "Shared by the care center on <ltr>{{date}}</ltr>",
+    "ask": "Ask the staff about this update",
+    "askSubject": "About the update: {{title}}",
+    "openPhoto": "Open photo {{index}} of {{count}}"
+  },
+  "category": {
+    "activities": "Activities",
+    "health": "Health",
+    "social": "Social",
+    "daily_life": "Daily life",
+    "other": "Other"
+  },
+  "photo": {
+    "viewer": "Photo {{index}} of {{count}}",
+    "counter": "{{index}} / {{count}}",
+    "save": "Save",
+    "previous": "Previous",
+    "next": "Next",
+    "unavailable": "Photo unavailable"
+  },
+  "medical": {
+    "intro": "This information is shared by the care center for your awareness. For any question, contact the medical staff through Contact Staff.",
+    "category": {
+      "medications": "Medications",
+      "diagnoses": "Diagnoses",
+      "allergies": "Allergies and sensitivities",
+      "doctor_visits": "Doctor visits",
+      "tests": "Test results",
+      "nutrition": "Nutrition",
+      "physiotherapy": "Physiotherapy"
+    },
+    "active_one": "{{count}} active",
+    "active_other": "{{count}} active",
+    "last": "Last: <ltr>{{date}}</ltr>",
+    "allergy": "Allergy",
+    "sharedOn": "Shared by the care center on <ltr>{{date}}</ltr>",
+    "empty": "No medical information shared yet",
+    "emptyBody": "When the medical team shares information about {{name}}, it will appear here."
+  },
+  "care": {
+    "title": "{{name}}'s care plan, in brief",
+    "sub": "A family-friendly summary of the goals the multidisciplinary team set together with {{name}}.",
+    "reviewed": "Reviewed <ltr>{{date}}</ltr>",
+    "nextReview": "Next review <ltr>{{date}}</ltr>",
+    "goal": "Goal",
+    "team": "What the team does",
+    "family": "How you can help",
+    "status": {
+      "on_track": "On track",
+      "achieved": "Achieved",
+      "monitoring": "Monitoring",
+      "needs_attention": "Needs attention"
+    },
+    "empty": "No goals shared yet"
+  },
+  "day": {
+    "yesterday": "Yesterday",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "dateLabel": "{{weekday}} <ltr>{{date}}</ltr>",
+    "prevLabel": "Previous day",
+    "nextLabel": "Next day",
+    "note": "Times may change according to {{name}}'s needs. Last updated by {{by}} at <ltr>{{time}}</ltr>.",
+    "status": {
+      "done": "Done",
+      "now": "Now",
+      "upcoming": "Upcoming",
+      "cancelled": "Cancelled"
+    },
+    "empty": "Nothing scheduled for this day"
+  },
+  "permission": {
+    "notSharedMedical": "The medical team hasn't shared {{name}}'s medical information in the app yet. We'll send you a notification as soon as it's available."
+  }
+}

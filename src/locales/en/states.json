@@ -34,12 +34,18 @@
   "stillSending": "Still sending…",
   "queued": "Will send when you're back online",
   "permission": {
-    "noPermissionTitle": "No permission",
-    "noPermissionBody": "Permissions are managed by the care center. You can ask the social worker to review them.",
+    "noPermissionTitle": "You don't have permission to view this section",
+    "noPermissionBody": "The care center decides which information each family member can see.",
+    "noPermissionNote": "Permissions are managed by the care center. You can ask the social worker to review them.",
+    "notSharedChip": "Waiting for the care center",
     "notSharedTitle": "Not yet shared by the care center",
-    "notSharedBody": "You have permission to see this section once it is shared.",
+    "notSharedBody": "The care center hasn't shared this information in the app yet. We'll send you a notification as soon as it's available.",
+    "notSharedNote": "You have permission to see this section once it is shared.",
     "askSocialWorker": "Ask the social worker",
-    "viewMyPermissions": "View my permissions"
+    "viewMyPermissions": "View my permissions",
+    "askMedical": "Ask the medical staff",
+    "askStaff": "Ask the staff",
+    "backToGeneral": "Back to general info"
   },
   "toast": {
     "saved": "Saved",

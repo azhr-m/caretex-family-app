@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 /** Current time, re-rendering every `intervalMs` while enabled. */
 export function useNow(intervalMs = 1000, enabled = true) {
@@ -14,3 +15,9 @@ export function useNow(intervalMs = 1000, enabled = true) {
 /** "mm:ss" for a non-negative number of seconds. */
 export const mmss = (sec: number) =>
   `${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(Math.floor(sec % 60)).padStart(2, '0')}`
+
+/** Current UI language as the formatter type. */
+export function useLang(): 'en' | 'he' {
+  const { i18n } = useTranslation()
+  return i18n.language === 'he' ? 'he' : 'en'
+}
